@@ -236,7 +236,7 @@ public class Astyanax {
     //
     public static Keyspace getKeyspaceContext(){
         
-        //WORKS WITH OLD STYLE Interface
+        //Normal KS
         AstyanaxContext<Keyspace> context = new AstyanaxContext.Builder()
         .forCluster(_CLUSTER_)
         .forKeyspace(_KEYSPACE_)

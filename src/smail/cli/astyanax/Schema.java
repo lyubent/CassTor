@@ -115,21 +115,13 @@ public class Schema {
     // Creates a keyspace from an astyanax context
     // @param Keyspace from an astyanax context initialiased with KS name
     //
-    public static boolean createNetworkKeyspace(Keyspace keyspace){
+    public static boolean createKeyspace(Keyspace keyspace){
         try {
             
             keyspace.createKeyspace(ImmutableMap.<String, Object>builder()
                 .put("strategy_options", ImmutableMap.<String, Object>builder()
-                .put("us-east", "3")
-                .put("eu-west", "3")
-                .put("replication_factor", "1").build())
-                .put("strategy_class", "NetworkTopologyStrategy").build());
-            
-            //WORKS WITH OLD Interface!
-//            keyspace.createKeyspace(ImmutableMap.<String, Object>builder()
-//                .put("strategy_options", ImmutableMap.<String, Object>builder()
-//                .put("replication_factor", "2").build())
-//                .put("strategy_class","SimpleStrategy").build());
+                .put("replication_factor", "2").build())
+                .put("strategy_class","SimpleStrategy").build());
             
             return true; // Success
             
@@ -165,7 +157,7 @@ public class Schema {
     
     
     
-    // Removes an unwanted column family
+    // Drops an unwanted column family
     // @param Requires a keyspace object, and the column family to be dropped
     //
     public static boolean dropColumnFamily(Keyspace keyspace, ColumnFamily<String, String> CF_COMPOSITE){
@@ -173,6 +165,23 @@ public class Schema {
         try {
             keyspace.dropColumnFamily(CF_COMPOSITE);
         } catch (ConnectionException ex) {
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
+    
+    // Drops an unused / unwanted keyspace
+    // @param Requires a keyspace object storing the KS to be dropped
+    //
+    public static boolean dropKeyspace(Keyspace keyspace){
+        
+        try {
+            Astyanax.execCQL(keyspace, keyspace.getKeyspaceName());
+        } catch (Exception ex) {
             Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }

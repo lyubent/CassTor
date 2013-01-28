@@ -43,9 +43,8 @@ public class Main {
                 try {
                     LoginFrame loginFrame = new LoginFrame();
                     
-//                    Keyspace ks = Astyanax.getKeyspaceContext();
-//                    SchemaCreationTest jj = new SchemaCreationTest(ks);
-//                    jj.runTest();
+                    SchemaCreationTest jj = new SchemaCreationTest();
+                    jj.runTest();
                     
                 } catch (Exception ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
