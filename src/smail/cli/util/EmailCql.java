@@ -73,4 +73,12 @@ public class EmailCql {
                 return "";   
         }
     }
+    
+    
+    
+    // Permenantly Removes email from the DB.
+    //
+    public static String hardDeleteEmail(String __KEY__){
+        return "DELETE FROM MESSAGE where KEY = '" + __KEY__ + "'";
+    }
 }

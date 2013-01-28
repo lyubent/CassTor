@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import smail.cli.astyanax.Astyanax;
 import smail.cli.gui.LoginFrame;
-import smail.cli.test.SchemaCreationTest;
+import smail.cli.test.SchemaTest;
 import smail.cli.util.Crypto;
 
 
@@ -41,10 +41,11 @@ public class Main {
             @Override
             public void run(){
                 try {
-                    LoginFrame loginFrame = new LoginFrame();
+                    //LoginFrame loginFrame = new LoginFrame();
                     
-                    SchemaCreationTest jj = new SchemaCreationTest();
-                    jj.runTest();
+                    //run tests
+                    smail.cli.test.TestSuite test = new smail.cli.test.TestSuite();
+                    test.runTests();
                     
                 } catch (Exception ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

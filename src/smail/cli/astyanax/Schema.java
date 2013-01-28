@@ -180,7 +180,7 @@ public class Schema {
     public static boolean dropKeyspace(Keyspace keyspace){
         
         try {
-            Astyanax.execCQL(keyspace, keyspace.getKeyspaceName());
+            keyspace.dropKeyspace();
         } catch (Exception ex) {
             Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
             return false;

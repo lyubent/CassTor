@@ -181,7 +181,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 animateProgressBar(progress);
             }
         } catch(Exception ex) {
-            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
    

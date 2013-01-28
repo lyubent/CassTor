@@ -24,8 +24,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import smail.cli.Main;
 import smail.cli.util.DateUtil;
+import smail.cli.util.EmailCql;
 import smail.cli.util.EmailFormatter;
 
 /**
@@ -55,7 +55,7 @@ public class Astyanax {
                        "CREATE TABLE employees (empID int, deptID text, first_name text, last_name text, PRIMARY KEY (empID, deptID));")
             .execute();
         } catch (ConnectionException ex) { 
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         
@@ -81,7 +81,7 @@ public class Astyanax {
             return result;
                
         } catch (ConnectionException ex) { 
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
@@ -128,7 +128,9 @@ public class Astyanax {
     // Inserts a dynamic range of colums specified bellow
     // @param Requires a keyspace context, the user's username and a list of input 
     //
-    public static boolean insertEmail(Keyspace keyspace, String user, List<String> uinput){
+    public static String insertEmail(Keyspace keyspace, String user, List<String> uinput){
+        
+        String __KEY__ = String.valueOf(user + "@" + DateUtil.getUnixTimestamp());
         
         ColumnFamily<String, String> mail = new ColumnFamily<>( "MESSAGE", // CF Name
             StringSerializer.get(), StringSerializer.get());
@@ -138,7 +140,7 @@ public class Astyanax {
         String wiki = "You can use the cqlsh commands described in this section to create a keyspace. In creating an example keyspace for Twissandra, we will assume a desired replication factor of 3 and implementation of the NetworkTopologyStrategy replica placement strategy. For more information on these keyspace options, see About Replication in Cassandra.";
         String wiki2 = "Installing Thrift - All CQL drivers require Thrift 0.6. If you run CQL commands on a Cassandra 0.8 node, the required Thrift jar files are already present in the environment. However, to run CQL commands from a remote machine, you must install Thrift 0.6 as described in the Cassandra Wiki.";
         
-        mbatch.withRow(mail, String.valueOf(user + "@" + DateUtil.getUnixTimestamp()))
+        mbatch.withRow(mail, __KEY__)
             .putColumn("RECEIVER", uinput.get(0), null)
             .putColumn("SENDER", user, null)
             .putColumn("SUBJECT", uinput.get(1), null)
@@ -152,11 +154,11 @@ public class Astyanax {
             result.toString();
         }
         catch (ConnectionException ex) { 
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
         }
         
-        return true;
+        return __KEY__;
     }
     
     
@@ -188,10 +190,25 @@ public class Astyanax {
             result.toString();
         }
         catch (ConnectionException ex) { 
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         
+        return true;
+    }
+    
+    
+    
+    // Deletes an email by Key
+    // @param Keyspace object and UID Key of the email
+    //
+    public static boolean deleteEmail(Keyspace keyspace, String __KEY__){
+        
+        try {
+        Astyanax.execCQL(keyspace, EmailCql.hardDeleteEmail(__KEY__));
+        } catch (Exception ex) {
+            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
     }
     
@@ -224,7 +241,9 @@ public class Astyanax {
                 System.out.println("Name: " + c.getName() + " Val:" + c.getValue(new StringSerializer()));
             }
 
-        } catch (ConnectionException ex){ Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex); }
+        } catch (ConnectionException ex){ 
+            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex); 
+        }
             
         return true;
     }
