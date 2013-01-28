@@ -1,6 +1,6 @@
-CassTor `By Lyuben Todorov`
+CassTor 
 =======
-
+`By Lyuben Todorov`
 [Project homepage]
 
   - Secure Email
@@ -41,6 +41,7 @@ License
   [Project homepage]: https://lyuben.herokuapp.com/casstor/
   [Silvertunnel Netlib]: https://silvertunnel.org/
   [Netbeans]: http://netbeans.org/
+  [Astyanax]: https://github.com/Netflix/astyanax
   [Java]: http://www.oracle.com/technetwork/java/javase/downloads/index.html
   [Github]: https://github.com/
   [SWING]: http://en.wikipedia.org/wiki/Swing_(Java)
