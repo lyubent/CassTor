@@ -8,6 +8,11 @@ import com.netflix.astyanax.serializers.StringSerializer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class Schema {
     
     private Keyspace keyspace;

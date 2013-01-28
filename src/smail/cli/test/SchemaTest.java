@@ -2,6 +2,11 @@ package smail.cli.test;
 
 import com.netflix.astyanax.Keyspace;
 
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class SchemaTest {
     
     private Keyspace keyspace;

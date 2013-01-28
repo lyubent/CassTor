@@ -1,15 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package smail.cli.test;
 
 import com.netflix.astyanax.Keyspace;
 
-/**
- *
- * @author lyubentodorov
- */
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class QueryingTest {
     
     private Keyspace keyspace;

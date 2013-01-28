@@ -3,10 +3,15 @@ package smail.cli.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class EmailFormatter {
     
-    //
-    //
+    // Builds the message in HTML to be displayed in the list view.
+    // @param requires multiple strings that represent parts of the email
     //
     public static String structureMessage(String key, String body, String from, String date, String subject){
                 

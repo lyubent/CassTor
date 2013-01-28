@@ -18,6 +18,11 @@ import smail.cli.astyanax.Astyanax;
 import smail.cli.util.EmailCql;
 import smail.cli.util.EmailFormatter;
 
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class MailHomeFrame extends javax.swing.JFrame {
     
     private Keyspace keyspace;

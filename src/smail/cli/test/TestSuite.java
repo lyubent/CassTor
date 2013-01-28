@@ -1,56 +1,61 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package smail.cli.test;
 
 import com.netflix.astyanax.Keyspace;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import smail.cli.Main;
+import org.junit.Test;
 
-/**
- *
- * @author lyubentodorov
- */
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class TestSuite {
     
-    private static final String __SEEDS__ = "134.36.36.188";
+    private static final String __SEEDS__ = "127.0.0.1";//"134.36.36.188";
     private static final String __CLUSTER__ = "Test Cluster";
     private static final String __KEYSPACE__ = "TestKS";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
     
-    
-    
+    @Test
     public void runTests(){
         SchemaTest schemaTester = new SchemaTest(getTestAstyanaxContext());
         QueryingTest queryTester = new QueryingTest(getTestAstyanaxContext());
         
         try {
-//            
-//            schemaTester.createKS();
-//            System.out.println("Created KS");
-//            
-//            schemaTester.createCF();
-//            System.out.println("Created CF");
-//            
-//            //insertion/deletion tests
-//            String key = queryTester.insertEmail();
-//            System.out.println("Inserting email, KEY=" + key);
-//
-//            //String key = "TestUsr@1359412341";
-//            queryTester.deleteEmail(key);
-//            System.out.println("Deleting email");
-
-            schemaTester.dropCF(); 
-            System.out.println("Droped CF");
             
-            schemaTester.dropKS();
-            System.out.println("Droped KS");
+            // Create the keyspace
+            org.junit.Assert.assertTrue(schemaTester.createKS());
+            System.out.println("\tTest:\tCreated KS");
+            
+            // Create the column family
+            org.junit.Assert.assertTrue(schemaTester.createCF());
+            System.out.println("\tTest:\tCreated CF");
+            
+            //insert and email into cassandra
+            String key = queryTester.insertEmail();
+            org.junit.Assert.assertNotNull(key);
+            System.out.println("\tTest:\tInserting email, KEY=" + key);
+            
+            //delete an email from cassandra
+            org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
+            System.out.println("\tTest:\tDeleting email");
+
+            //drop the previously created column family
+            org.junit.Assert.assertTrue(schemaTester.dropCF()); 
+            System.out.println("\tTest:\tDroped CF");
+            
+            //drop the previously created keyspace
+            org.junit.Assert.assertTrue(schemaTester.dropKS());
+            System.out.println("\tTest:\tDroped KS");
+                        
+            System.out.println(ANSI_GREEN + "\tTest:\tUnit tests PASSED");
             
         } catch(Exception ex){
+            System.out.println(ANSI_RED + "\tTest:\tUnit tests FAILED");
             Logger.getLogger(TestSuite.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //junit.framework.Assert.assertTrue(createNetKS());
     }
     
     

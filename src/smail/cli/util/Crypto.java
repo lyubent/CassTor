@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package smail.cli.util;
 
 import java.math.BigInteger;
@@ -10,15 +6,12 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import javax.crypto.Cipher;
-import org.apache.commons.codec.binary.Hex;
 
-
-
-
-/**
- *
- * @author lyubentodorov
- */
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class Crypto {
   private static byte[] encrypt(byte[] inpBytes, PublicKey key,
       String xform) throws Exception {

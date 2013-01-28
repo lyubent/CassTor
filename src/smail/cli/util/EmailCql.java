@@ -1,5 +1,10 @@
 package smail.cli.util;
 
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class EmailCql {
    
     // Builds CQL for retreiving all emails that haven't been deleted

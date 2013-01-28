@@ -1,21 +1,23 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package smail.cli.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-/**
- *
- * @author lyubentodorov
- */
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class XMLReader {
     
     private static String getTagValue(String sTag, Element eElement) {
@@ -52,8 +54,8 @@ public class XMLReader {
  
 		   }
 		}
-	  } catch (Exception ex) {
-		ex.printStackTrace();
+	  } catch (ParserConfigurationException | SAXException | IOException ex) {
+		Logger.getLogger(XMLReader.class.getName()).log(Level.SEVERE, null, ex);
 	  }
     }
     
