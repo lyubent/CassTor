@@ -1,5 +1,4 @@
-# OS generated files #
-######################
+# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -8,9 +7,12 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+README.TXT
 
-# Packages #
-############
+# Packages 
 *.dmg
 *.jar
 *.zip
+
+# Build Directories
+dist

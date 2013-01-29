@@ -1,6 +1,8 @@
 package smail.cli.test;
 
 import com.netflix.astyanax.Keyspace;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -15,24 +17,88 @@ public class SchemaTest {
         this.keyspace = keyspace;
     }
     
-    //Tested and working - 28 Jan 2013
+    
+    
+    // Test to create a keyspace into Cassandra
+    // Tested and working - 28 Jan 2013
+    //
     public boolean createKS(){
-        return smail.cli.astyanax.Schema.createKeyspace(keyspace);
+        
+        boolean stats = false;
+        System.out.print("\tTest:\tCreating KS\t");
+        
+        try{
+            stats = smail.cli.astyanax.Schema.createKeyspace(keyspace);
+            System.out.println("...\tcreated KS successfully!");
+        } catch (Exception ex) {
+            Logger.getLogger(SchemaTest.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.out.println("...\tfailed to create KS!");
+            return stats;
+        }
     }
     
-    //Tested and working - 28 Jan 2013
+    
+    
+    // Tested and working - 28 Jan 2013
+    // Test to createa a Column Family into Cassandra
+    //
     public boolean createCF() throws Exception{
-        return smail.cli.astyanax.Schema.createIndexedColumnFamilyStrings(keyspace);
+        
+        boolean stats = false;
+        System.out.print("\tTest:\tCreating CF\t");
+        
+        try {
+            stats = smail.cli.astyanax.Schema.createIndexedColumnFamilyStrings(keyspace);
+            System.out.println("...\tcreated CF successfully!");
+        } catch (Exception ex) {
+            Logger.getLogger(SchemaTest.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.out.println("...\tfailed to create CF!");
+            return stats;
+        }
     }
     
-    //Tested and working - 28 Jan 2013
+    
+    
+    // Tested and working - 28 Jan 2013
+    // Drops an existing column family from Cassandra
+    //
     public boolean dropCF(){
-        return smail.cli.astyanax.Schema.dropColumnFamily
+        
+        boolean stats = false;
+        System.out.print("\tTest:\tDroping CF\t");
+        
+        try {
+            stats = smail.cli.astyanax.Schema.dropColumnFamily
                 (keyspace, smail.cli.astyanax.Astyanax.getColumnFamilyStructure());
+            System.out.println("...\tdroped CF successfully!");
+        } catch (Exception ex) {
+            Logger.getLogger(SchemaTest.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.out.println("...\tfailed to drop CF.");
+            return stats;
+        }
     }
     
-    //Tested and working - 28 Jan 2013
+    
+    
+    // Tested and working - 28 Jan 2013
+    // Drops an existing keyspace from Cassandra
+    //
     public boolean dropKS(){
-        return smail.cli.astyanax.Schema.dropKeyspace(keyspace);
+        
+        boolean stats = false;
+        System.out.print("\tTest:\tDroping KS\t");
+        
+        try {
+            stats = smail.cli.astyanax.Schema.dropKeyspace(keyspace);
+            System.out.println("...\tdroped KS successfully!");
+        } catch (Exception ex){
+            Logger.getLogger(SchemaTest.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.out.println("...\tfailed to drop KS!");
+            return stats;
+        }
     }
 }

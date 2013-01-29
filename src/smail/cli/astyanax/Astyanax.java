@@ -204,7 +204,7 @@ public class Astyanax {
     public static boolean deleteEmail(Keyspace keyspace, String __KEY__){
         
         try {
-        Astyanax.execCQL(keyspace, EmailCql.hardDeleteEmail(__KEY__));
+            Astyanax.execCQL(keyspace, EmailCql.hardDeleteEmail(__KEY__));
         } catch (Exception ex) {
             Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
         }

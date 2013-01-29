@@ -21,7 +21,7 @@ public class Main {
             public void run(){
                 try {
                     
-                    LoginFrame loginFrame = new LoginFrame();
+                    //LoginFrame loginFrame = new LoginFrame();
                     
                     //run tests
                     new smail.cli.test.TestSuite().runTests();

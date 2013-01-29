@@ -12,7 +12,7 @@ import org.junit.Test;
 //
 public class TestSuite {
     
-    private static final String __SEEDS__ = "127.0.0.1";//"134.36.36.188";
+    private static final String __SEEDS__ = "134.36.36.188";
     private static final String __CLUSTER__ = "Test Cluster";
     private static final String __KEYSPACE__ = "TestKS";
     public static final String ANSI_RED = "\u001B[31m";
@@ -25,30 +25,27 @@ public class TestSuite {
         
         try {
             
-            // Create the keyspace
+            // Create the keyspace  WORKS
             org.junit.Assert.assertTrue(schemaTester.createKS());
-            System.out.println("\tTest:\tCreated KS");
             
-            // Create the column family
+            //Create the column family WORKS
             org.junit.Assert.assertTrue(schemaTester.createCF());
-            System.out.println("\tTest:\tCreated CF");
             
             //insert and email into cassandra
             String key = queryTester.insertEmail();
             org.junit.Assert.assertNotNull(key);
-            System.out.println("\tTest:\tInserting email, KEY=" + key);
+            
             
             //delete an email from cassandra
+            
             org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
-            System.out.println("\tTest:\tDeleting email");
+            
 
             //drop the previously created column family
-            org.junit.Assert.assertTrue(schemaTester.dropCF()); 
-            System.out.println("\tTest:\tDroped CF");
+            org.junit.Assert.assertTrue(schemaTester.dropCF());
             
             //drop the previously created keyspace
             org.junit.Assert.assertTrue(schemaTester.dropKS());
-            System.out.println("\tTest:\tDroped KS");
                         
             System.out.println(ANSI_GREEN + "\tTest:\tUnit tests PASSED");
             

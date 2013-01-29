@@ -1,6 +1,8 @@
 package smail.cli.test;
 
 import com.netflix.astyanax.Keyspace;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -16,12 +18,48 @@ public class QueryingTest {
         this.keyspace = keyspace;
     }
     
+    
+    
+    // Test to insert an email into Cassandra
+    // Tested and working - 29 Jan 2013
+    //
     public String insertEmail(){
-        return smail.cli.astyanax.Astyanax.insertEmail(keyspace, __USER__, 
+        
+        String key = "";
+        System.out.print("\tTest:\tInserting email\t");
+        
+        try{
+            key = smail.cli.astyanax.Astyanax.insertEmail(keyspace, __USER__, 
                 java.util.Arrays.asList("Receiver", "Subject", "Body"));
+            System.out.println("...\tinserted email successfully! KEY=" + key);
+        } catch (Exception ex) {
+            Logger.getLogger(QueryingTest.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.out.println("...\tfailed to insert email!");
+            return key;
+        }
     }
     
-    public boolean deleteEmail(String __KEY__){
-        return smail.cli.astyanax.Astyanax.deleteEmail(keyspace, __KEY__);
+    
+    
+    // Test to delete an email from Cassandra
+    // Tested and working - 29 Jan 2013
+    //
+    public boolean deleteEmail(String __KEY__) throws InterruptedException{
+        
+        boolean stats = false;
+        System.out.print("\tTest:\tDeleting email\t");
+        
+        try {
+            //Yes cassandra is infact so fast we need to slow stuff down a bit.
+            Thread.sleep(1000);
+            stats = smail.cli.astyanax.Astyanax.deleteEmail(keyspace, __KEY__);
+            System.out.println("...\tdeleted successfully!");
+        } catch (Exception ex) {
+            Logger.getLogger(QueryingTest.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.out.println("...\tfailed to delete email!");
+            return stats;
+        }
     }
 }
