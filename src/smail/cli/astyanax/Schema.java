@@ -21,6 +21,46 @@ public class Schema {
         this.keyspace = keyspace;
     }
     
+    
+    
+    // Sets up the database for use by adding the CASSTOR keyspace and adding the __COLUMNFAMILY__
+    // keyspace. (look at createIndexedColumnFamilyStrings for details of structure)
+    // THIS METHOD SHOULD ONLY BE RUN ONCE FOR THE ENTIRE LIFE OF THE CLUSTER!
+    //
+    public static boolean buildSchema(Keyspace keyspace){
+        try {
+            Schema.createKeyspace(keyspace);
+            Schema.createIndexedColumnFamilyStrings(keyspace);
+        } catch (Exception ex) {
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
+    
+    // Remove the database and drop the __COLUMNFAMILY__ keyspace. 
+    // SHOULD ONLY BE RUN ONCE FOR THE ENTIRE LIFE OF THE CLUSTER 
+    // (presumably when you want to kill it!)
+    //
+    public static boolean destroySchema(Keyspace keyspace){
+        try {
+            //drop CF
+            Schema.dropColumnFamily(keyspace, Astyanax.getColumnFamilyStructure());
+            //drop KS
+            Schema.dropKeyspace(keyspace);
+        } catch (Exception ex) {
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
+    
     // Creates a CF with 3 indexed
     // @param Keyspace from an astyanax context initialiased with KS name
     //

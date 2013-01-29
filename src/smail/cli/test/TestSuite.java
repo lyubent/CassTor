@@ -1,6 +1,7 @@
 package smail.cli.test;
 
 import com.netflix.astyanax.Keyspace;
+import com.netflix.astyanax.model.ConsistencyLevel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
@@ -15,7 +16,7 @@ public class TestSuite {
     private static final String __SEEDS__ = "134.36.36.188";
     private static final String __CLUSTER__ = "Test Cluster";
     private static final String __KEYSPACE__ = "TestKS";
-    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_GREEN = "\u001B[32m";
     
     @Test
@@ -28,8 +29,10 @@ public class TestSuite {
             // Create the keyspace  WORKS
             org.junit.Assert.assertTrue(schemaTester.createKS());
             
+            
             //Create the column family WORKS
             org.junit.Assert.assertTrue(schemaTester.createCF());
+            
             
             //insert and email into cassandra
             String key = queryTester.insertEmail();
@@ -37,20 +40,21 @@ public class TestSuite {
             
             
             //delete an email from cassandra
-            
+            //String key = "TestUsr@1359483724";
             org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
             
-
+            
             //drop the previously created column family
             org.junit.Assert.assertTrue(schemaTester.dropCF());
+            
             
             //drop the previously created keyspace
             org.junit.Assert.assertTrue(schemaTester.dropKS());
                         
-            System.out.println(ANSI_GREEN + "\tTest:\tUnit tests PASSED");
+            System.out.println(ANSI_GREEN + "\t============\tTest:\tUnit tests PASSED\t==========\n\n");
             
         } catch(Exception ex){
-            System.out.println(ANSI_RED + "\tTest:\tUnit tests FAILED");
+            System.out.println(ANSI_PURPLE + "\t============\tTest:\tUnit tests FAILED\t============\n\n");
             Logger.getLogger(TestSuite.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -66,6 +70,8 @@ public class TestSuite {
         .forKeyspace(__KEYSPACE__) //NetworkKS
         .withAstyanaxConfiguration(
          new com.netflix.astyanax.impl.AstyanaxConfigurationImpl()      
+        .setDefaultReadConsistencyLevel(ConsistencyLevel.CL_QUORUM) // Data should be consistent
+        .setDefaultWriteConsistencyLevel(ConsistencyLevel.CL_QUORUM)
         .setDiscoveryType(com.netflix.astyanax.connectionpool.NodeDiscoveryType.NONE) // NONE FOR BASIK KS
         .setCqlVersion("3.0.0")) //using CQL3 (fails, its still CQL2)
         .withConnectionPoolConfiguration(

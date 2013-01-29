@@ -1,8 +1,11 @@
 package smail.cli;
 
+import com.netflix.astyanax.Keyspace;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
+import smail.cli.astyanax.Astyanax;
+import smail.cli.astyanax.Schema;
 import smail.cli.gui.LoginFrame;
 
 // @author lyubentodorov
@@ -20,6 +23,9 @@ public class Main {
             @Override
             public void run(){
                 try {
+                    
+                    //Schema.buildSchema(Astyanax.getKeyspaceContext());
+                    
                     
                     //LoginFrame loginFrame = new LoginFrame();
                     

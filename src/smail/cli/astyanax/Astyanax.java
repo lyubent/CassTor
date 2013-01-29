@@ -1,23 +1,18 @@
 package smail.cli.astyanax;
 
-import com.netflix.astyanax.AstyanaxContext;
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.MutationBatch;
-import com.netflix.astyanax.connectionpool.NodeDiscoveryType;
 import com.netflix.astyanax.connectionpool.OperationResult;
 import com.netflix.astyanax.connectionpool.exceptions.ConnectionException;
-import com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl;
-import com.netflix.astyanax.connectionpool.impl.Slf4jConnectionPoolMonitorImpl;
-import com.netflix.astyanax.impl.AstyanaxConfigurationImpl;
 import com.netflix.astyanax.model.Column;
 import com.netflix.astyanax.model.ColumnFamily;
 import com.netflix.astyanax.model.ColumnList;
+import com.netflix.astyanax.model.ConsistencyLevel;
 import com.netflix.astyanax.model.CqlResult;
 import com.netflix.astyanax.model.Row;
 import com.netflix.astyanax.serializers.BytesArraySerializer;
 import com.netflix.astyanax.serializers.IntegerSerializer;
 import com.netflix.astyanax.serializers.StringSerializer;
-import com.netflix.astyanax.thrift.ThriftFamilyFactory;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -33,9 +28,10 @@ import smail.cli.util.EmailFormatter;
 //
 public class Astyanax {
     
-    private static final String _KEYSPACE_ = "NetworkKS";//"KeyspaceName";
-    private static final String _CLUSTER_ = "Test Cluster";
-    private static final String _SEEDS_ = "134.36.36.188"; //"94.168.172.237:9160, 127.0.0.1:9160";
+    private static final String __KEYSPACE__ = "MAIL_KS";//"KeyspaceName";
+    private static final String __COLUMNFAMILY__ = "MESSAGE_CF";//"KeyspaceName";
+    private static final String __CLUSTER__ = "Test Cluster";
+    private static final String __SEEDS__ = "134.36.36.188"; //"94.168.172.237:9160, 127.0.0.1:9160";
     
     // Executes a CQL3 statement creatin a table with composite key
     // FAILS - Astyanax can not execute cql3 
@@ -70,7 +66,7 @@ public class Astyanax {
         try {
             
             ColumnFamily<String, String> mail = new ColumnFamily<>(
-            "MESSAGE", // CF Name
+            __COLUMNFAMILY__, // CF Name
             StringSerializer.get(),   // Key Serializer
             StringSerializer.get());  // Column Serializer
             
@@ -130,15 +126,10 @@ public class Astyanax {
     public static String insertEmail(Keyspace keyspace, String user, List<String> uinput){
         
         String __KEY__ = String.valueOf(user + "@" + DateUtil.getUnixTimestamp());
-        
-        ColumnFamily<String, String> mail = new ColumnFamily<>( "MESSAGE", // CF Name
+        ColumnFamily<String, String> mail = new ColumnFamily<>( __COLUMNFAMILY__, // CF Name
             StringSerializer.get(), StringSerializer.get());
-
         MutationBatch mbatch = keyspace.prepareMutationBatch();
 
-        String wiki = "You can use the cqlsh commands described in this section to create a keyspace. In creating an example keyspace for Twissandra, we will assume a desired replication factor of 3 and implementation of the NetworkTopologyStrategy replica placement strategy. For more information on these keyspace options, see About Replication in Cassandra.";
-        String wiki2 = "Installing Thrift - All CQL drivers require Thrift 0.6. If you run CQL commands on a Cassandra 0.8 node, the required Thrift jar files are already present in the environment. However, to run CQL commands from a remote machine, you must install Thrift 0.6 as described in the Cassandra Wiki.";
-        
         mbatch.withRow(mail, __KEY__)
             .putColumn("RECEIVER", uinput.get(0), null)
             .putColumn("SENDER", user, null)
@@ -165,9 +156,12 @@ public class Astyanax {
     // Inserts a dynamic range of colums specified bellow
     // @param Requires a keyspace context, the user's username and a list of input 
     //
+    /*************************************
+     * METHOD NOT YET FULLY IMPLEMENTED! *
+     *************************************/
     public static boolean insertEmailAsBytes(Keyspace keyspace, String user, List<String> uinput){
         
-        ColumnFamily<byte [], byte []> mail = new ColumnFamily<>( "MESSAGE", // CF Name
+        ColumnFamily<byte [], byte []> mail = new ColumnFamily<>( __COLUMNFAMILY__, // CF Name
             BytesArraySerializer.get(), BytesArraySerializer.get());
 
         MutationBatch mbatch = keyspace.prepareMutationBatch();
@@ -203,11 +197,10 @@ public class Astyanax {
     //
     public static boolean deleteEmail(Keyspace keyspace, String __KEY__){
         
-        try {
-            Astyanax.execCQL(keyspace, EmailCql.hardDeleteEmail(__KEY__));
-        } catch (Exception ex) {
-            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
+       if(Astyanax.execCQL(keyspace, EmailCql.hardDeleteEmail(__KEY__)) == null) {
+            return false;
         }
+        
         return true;
     }
     
@@ -255,35 +248,24 @@ public class Astyanax {
     public static Keyspace getKeyspaceContext(){
         
         //Normal KS
-        AstyanaxContext<Keyspace> context = new AstyanaxContext.Builder()
-        .forCluster(_CLUSTER_)
-        .forKeyspace(_KEYSPACE_)
-        .withAstyanaxConfiguration(new AstyanaxConfigurationImpl()      
-        .setDiscoveryType(NodeDiscoveryType.NONE)
+        com.netflix.astyanax.AstyanaxContext<Keyspace> context = 
+                new com.netflix.astyanax.AstyanaxContext.Builder()
+        .forCluster(__CLUSTER__)
+        .forKeyspace(__KEYSPACE__) //NetworkKS
+        .withAstyanaxConfiguration(
+         new com.netflix.astyanax.impl.AstyanaxConfigurationImpl()      
+        .setDefaultReadConsistencyLevel(ConsistencyLevel.CL_QUORUM) // Data should be consistent
+        .setDefaultWriteConsistencyLevel(ConsistencyLevel.CL_QUORUM)
+        .setDiscoveryType(com.netflix.astyanax.connectionpool.NodeDiscoveryType.NONE) // NONE FOR BASIK KS
         .setCqlVersion("3.0.0")) //using CQL3 (fails, its still CQL2)
-        .withConnectionPoolConfiguration(new ConnectionPoolConfigurationImpl("MyConnectionPool")
+        .withConnectionPoolConfiguration(
+         new com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl("MyConnectionPool")
         .setPort(9160)
         .setMaxConnsPerHost(10)
-        .setSeeds(_SEEDS_)
-        )
-        .withConnectionPoolMonitor(new Slf4jConnectionPoolMonitorImpl())
-        .buildKeyspace(ThriftFamilyFactory.getInstance());
-
-        //Newtwork ks
-//        AstyanaxContext<Keyspace> context = new AstyanaxContext.Builder()
-//        .forCluster(_CLUSTER_)
-//        .forKeyspace(_KEYSPACE_)
-//        .withAstyanaxConfiguration(new AstyanaxConfigurationImpl()      
-//        .setDiscoveryType(NodeDiscoveryType.RING_DESCRIBE)
-//        .setConnectionPoolType(ConnectionPoolType.TOKEN_AWARE))
-//        .withConnectionPoolConfiguration(new ConnectionPoolConfigurationImpl("MyConnectionPool")
-//        .setPort(9160)
-//        .setMaxConnsPerHost(10)
-//        .setInitConnsPerHost(1)
-//        .setSeeds(_SEEDS_)
-//        )
-//        .withConnectionPoolMonitor(new Slf4jConnectionPoolMonitorImpl())
-//        .buildKeyspace(ThriftFamilyFactory.getInstance());
+        .setSeeds(__SEEDS__))
+        .withConnectionPoolMonitor(
+         new com.netflix.astyanax.connectionpool.impl.Slf4jConnectionPoolMonitorImpl())
+        .buildKeyspace(com.netflix.astyanax.thrift.ThriftFamilyFactory.getInstance());
         
         context.start();
         
@@ -306,7 +288,7 @@ public class Astyanax {
     // @return ColumnFamily<String, String> 
     //
     public static ColumnFamily<String, String> getColumnFamilyStructure(){
-        return ColumnFamily.newColumnFamily("MESSAGE", //default should be message 
+        return ColumnFamily.newColumnFamily(__COLUMNFAMILY__, //default should be message 
                 StringSerializer.get(), StringSerializer.get());
     }
 }

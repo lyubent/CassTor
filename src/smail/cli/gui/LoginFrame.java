@@ -118,7 +118,7 @@ public class LoginFrame extends javax.swing.JFrame {
     //
     private void setupFrame(){
         setVisible(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Login ~ Secure Cassandra Mail");
     }
     
@@ -133,10 +133,8 @@ public class LoginFrame extends javax.swing.JFrame {
                 
                 jProgressBar_Login.setVisible(true);
                 animateProgressBar(0);
-                // create and display the new form.
-                JOptionPane.showMessageDialog(this, jTextField_UName.getText()
-                    , "Uname", JOptionPane.INFORMATION_MESSAGE);
                 
+                // create and display the new form.
                 mailForm = new MailHomeFrame(jTextField_UName.getText(), this);
                 this.setVisible(false);
                 
@@ -148,6 +146,7 @@ public class LoginFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "A problem occred while trying to login"
                     , "Error logging in.", JOptionPane.ERROR_MESSAGE);
         }
+        
         return false;
     }
     
