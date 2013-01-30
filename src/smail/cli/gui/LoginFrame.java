@@ -1,11 +1,13 @@
 package smail.cli.gui;
 
+import com.netflix.astyanax.Keyspace;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import smail.cli.astyanax.Astyanax;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -13,10 +15,11 @@ import javax.swing.JOptionPane;
 // Source at https://github.com/lyubent/CassTor/ 
 //
 public class LoginFrame extends javax.swing.JFrame {
-
-    private MailHomeFrame mailForm;
+    
+    private Keyspace keyspace;
     
     public LoginFrame() {
+        keyspace = Astyanax.getKeyspaceContext();
         initComponents();
         hideUnused();
         setupFrame();
@@ -28,7 +31,6 @@ public class LoginFrame extends javax.swing.JFrame {
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jTextField_UName = new javax.swing.JTextField();
         jPasswordField_Pw = new javax.swing.JPasswordField();
-        jProgressBar_Login = new javax.swing.JProgressBar();
         jButton_Login = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -56,8 +58,6 @@ public class LoginFrame extends javax.swing.JFrame {
         });
         jPasswordField_Pw.setBounds(125, 200, 230, 28);
         jLayeredPane1.add(jPasswordField_Pw, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jProgressBar_Login.setBounds(90, 230, 310, 10);
-        jLayeredPane1.add(jProgressBar_Login, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jButton_Login.setText("Sign In");
         jButton_Login.addActionListener(new java.awt.event.ActionListener() {
@@ -117,6 +117,7 @@ public class LoginFrame extends javax.swing.JFrame {
     // @void
     //
     private void setupFrame(){
+        setLocationByPlatform(true);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Login ~ Secure Cassandra Mail");
@@ -131,22 +132,15 @@ public class LoginFrame extends javax.swing.JFrame {
         try {
             if(authenticate(jTextField_UName.getText(), jPasswordField_Pw.getPassword())) {
                 
-                jProgressBar_Login.setVisible(true);
-                animateProgressBar(0);
-                
-                // create and display the new form.
-                //mailForm = 
-                new MailHomeFrame(jTextField_UName.getText(), this);
-                new MailHomeFrame(jTextField_UName.getText(), this);
-                this.setVisible(false);
-                
+                // Create and display the new form each time a user logs in.
+                // Cleaner to create new form than tidying and re-initializing old one.
+                MailHomeFrame mail = new MailHomeFrame(jTextField_UName.getText(), this, keyspace);
+                mail.setLocation(this.getLocation());
                 return true;
             }    
         } catch (Exception ex) {
             Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-            this.setVisible(true);
-            JOptionPane.showMessageDialog(this, "A problem occred while trying to login"
-                    , "Error logging in.", JOptionPane.ERROR_MESSAGE);
+            handleLogginFailiure();
         }
         
         return false;
@@ -165,38 +159,31 @@ public class LoginFrame extends javax.swing.JFrame {
     
     
     
+    // Called when an exception is caught while logging in
+    // @void - Displays a popup dialogue informing the user of the failiure.
+    //
+    private void handleLogginFailiure() {
+        this.setVisible(true);
+        JOptionPane.showMessageDialog(this, "A problem occred while trying to login",
+                "Error logging in.", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    
+    
     // Hides components of the application that are not used to speed up app.
     // @void
     //
     private void hideUnused(){
-        jProgressBar_Login.setVisible(false);
+     
     }
     
     
-    
-    // Updates progress bar representing login progression
-    // Currently doesnt really do anything - TODO
-    //
-    private void animateProgressBar(int progress){
-        try {
-            if(progress < 100){
-
-                progress += 1;
-                jProgressBar_Login.setValue(progress);
-
-                animateProgressBar(progress);
-            }
-        } catch(Exception ex) {
-                Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPasswordField jPasswordField_Pw;
-    private javax.swing.JProgressBar jProgressBar_Login;
     private javax.swing.JTextField jTextField_UName;
     // End of variables declaration//GEN-END:variables
 }

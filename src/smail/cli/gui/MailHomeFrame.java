@@ -1,6 +1,7 @@
 package smail.cli.gui;
 
 import com.netflix.astyanax.Keyspace;
+import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 import smail.cli.astyanax.Astyanax;
@@ -30,26 +30,27 @@ public class MailHomeFrame extends javax.swing.JFrame {
     private String _USERNAME_;
     private LoginFrame parentFrame;
     
-    public MailHomeFrame(String username, LoginFrame parentFrame) {
+    public MailHomeFrame(String username, LoginFrame parentFrame, Keyspace keyspace) {
         
-        //Singleton
+        //Singleton, only using one login frame.
         this.parentFrame = parentFrame;
         
         // Required for cql execution.
-        this.keyspace = Astyanax.getKeyspaceContext();
-        this._USERNAME_ = username;
+        this.keyspace = keyspace;
         this.location = "inbox";
-        
+        this._USERNAME_ = username;
         
         // initialize everything.
         initComponents();
-        
         initNativeLook();
         initInbox();
         setupFrame();
         hideUnused();
+        
         // display the form
         this.setVisible(true);
+        // hide the login frame
+        parentFrame.setVisible(false);
     }
 
     // Initialises JPanel components 
@@ -197,12 +198,9 @@ public class MailHomeFrame extends javax.swing.JFrame {
                 .add(jButton_Reply)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jButton_Delete, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(18, 18, 18))
-            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel_InboxLayout.createSequentialGroup()
-                .add(jPanel_InboxLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
-                    .add(jScrollPane4))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(19, 19, 19))
+            .add(jScrollPane4)
+            .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
         );
         jPanel_InboxLayout.setVerticalGroup(
             jPanel_InboxLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -210,16 +208,16 @@ public class MailHomeFrame extends javax.swing.JFrame {
                 .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 180, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(4, 4, 4)
                 .add(jPanel_InboxLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jButton_Reply)
                     .add(jPanel_InboxLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(jButton_New, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(jButton_Delete)))
+                        .add(jButton_Reply)
+                        .add(jButton_Delete))
+                    .add(jButton_New, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel_Inbox.setBounds(0, 0, 440, 460);
+        jPanel_Inbox.setBounds(4, 0, 446, 460);
         jLayeredPane_Background.add(jPanel_Inbox, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jPanel_NewMessage.setToolTipText("");
@@ -579,7 +577,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
         
         //this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setTitle("Cassandra SeceMail");
-        
+        this.setLocationByPlatform(true);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -597,10 +595,10 @@ public class MailHomeFrame extends javax.swing.JFrame {
     private void destroyFrame(){
         
         this.setVisible(false);
+        parentFrame.setLocation(this.getLocation());
         parentFrame.setVisible(true);
         this.dispose();
     }
-    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
