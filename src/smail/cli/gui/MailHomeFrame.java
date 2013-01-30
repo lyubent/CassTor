@@ -10,8 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 import smail.cli.astyanax.Astyanax;
@@ -43,11 +43,11 @@ public class MailHomeFrame extends javax.swing.JFrame {
         
         // initialize everything.
         initComponents();
+        
         initNativeLook();
         initInbox();
         setupFrame();
         hideUnused();
-        
         // display the form
         this.setVisible(true);
     }
@@ -525,7 +525,12 @@ public class MailHomeFrame extends javax.swing.JFrame {
     private void initNativeLook(){
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                // We want Mac first if we are on OSX or Microsoft first if on windows.
+                // Avoids using Nimbus on OSX or Metal on Win7/8.
+                if ("Mac OS X".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                } else if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -571,7 +576,8 @@ public class MailHomeFrame extends javax.swing.JFrame {
     // @void
     //
     private void setupFrame(){
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        //this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setTitle("Cassandra SeceMail");
         
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

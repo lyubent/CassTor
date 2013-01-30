@@ -135,7 +135,9 @@ public class LoginFrame extends javax.swing.JFrame {
                 animateProgressBar(0);
                 
                 // create and display the new form.
-                mailForm = new MailHomeFrame(jTextField_UName.getText(), this);
+                //mailForm = 
+                new MailHomeFrame(jTextField_UName.getText(), this);
+                new MailHomeFrame(jTextField_UName.getText(), this);
                 this.setVisible(false);
                 
                 return true;
