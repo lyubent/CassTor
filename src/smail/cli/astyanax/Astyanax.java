@@ -254,8 +254,8 @@ public class Astyanax {
         .forKeyspace(__KEYSPACE__) //NetworkKS
         .withAstyanaxConfiguration(
          new com.netflix.astyanax.impl.AstyanaxConfigurationImpl()      
-        .setDefaultReadConsistencyLevel(ConsistencyLevel.CL_QUORUM) // Data should be consistent
-        .setDefaultWriteConsistencyLevel(ConsistencyLevel.CL_QUORUM)
+        .setDefaultReadConsistencyLevel(ConsistencyLevel.CL_ALL) // Data should be consistent
+        .setDefaultWriteConsistencyLevel(ConsistencyLevel.CL_ALL)
         .setDiscoveryType(com.netflix.astyanax.connectionpool.NodeDiscoveryType.NONE) // NONE FOR BASIK KS
         .setCqlVersion("3.0.0")) //using CQL3 (fails, its still CQL2)
         .withConnectionPoolConfiguration(

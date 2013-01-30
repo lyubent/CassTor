@@ -23,14 +23,11 @@ public class Main {
             @Override
             public void run(){
                 try {
-                    
                     //Schema.buildSchema(Astyanax.getKeyspaceContext());
-                    
-                    
-                    //LoginFrame loginFrame = new LoginFrame();
+                    LoginFrame loginFrame = new LoginFrame();
                     
                     //run tests
-                    new smail.cli.test.TestSuite().runTests();
+                    //new smail.cli.test.TestSuite().runTests();
                     
                 } catch (Exception ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
