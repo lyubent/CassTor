@@ -16,7 +16,7 @@ CassTor is a secure replacement for email, using a Cassandra database instead of
 Version
 -
 
-1.0 beta (latest release: 29 Jan 2013)
+1.0 beta (latest release: 30 Jan 2013)
 
 Tech
 -
