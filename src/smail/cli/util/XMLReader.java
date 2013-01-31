@@ -54,9 +54,13 @@ public class XMLReader {
  
 		   }
 		}
-	  } catch (ParserConfigurationException | SAXException | IOException ex) {
-		Logger.getLogger(XMLReader.class.getName()).log(Level.SEVERE, null, ex);
-	  }
+	  } catch (ParserConfigurationException ex){
+              Logger.getLogger(XMLReader.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (SAXException ex){
+              Logger.getLogger(XMLReader.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (IOException ex){
+              Logger.getLogger(XMLReader.class.getName()).log(Level.SEVERE, null, ex);
+          }
     }
     
 }
