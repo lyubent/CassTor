@@ -116,7 +116,7 @@ public class LoginFrame extends javax.swing.JFrame {
     // Sets up frame related configs
     // @void
     //
-    private void setupFrame(){
+    private void setupFrame() {
         setLocationByPlatform(true);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,7 +127,7 @@ public class LoginFrame extends javax.swing.JFrame {
     // Carries out the login process hiding and displaying necessary forms
     // @return boolean representing sucess of updating viewport
     //
-    private boolean login(){
+    private boolean login() {
         
         try {
             if(authenticate(jTextField_UName.getText(), jPasswordField_Pw.getPassword())) {
