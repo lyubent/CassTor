@@ -26,7 +26,7 @@ public class Main {
                     //Display login frame
                     //LoginFrame loginFrame = new LoginFrame();
                     
-                    smail.cli.util.NetworkUtil.getNetworkData();
+                    smail.cli.util.NetworkUtil.displayInterfaces();//getNetworkData();
                     
                     //run tests
                     //new smail.cli.test.TestSuite().runTests();

@@ -3,8 +3,10 @@ package smail.cli.util;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,5 +63,24 @@ public class NetworkUtil {
         
         return "";
      }
+    
+    public static void displayInterfaces() throws SocketException {
+        try{
+            InetAddress localhost = InetAddress.getLocalHost();
+            System.out.println(" IP Addr: " + localhost.getHostAddress());
+            // Just in case this host has multiple IP addresses....
+            InetAddress[] allMyIps = InetAddress.getAllByName(localhost.getCanonicalHostName());
+            if (allMyIps != null && allMyIps.length > 1) {
+                System.out.println(" Full list of IP addresses:");
+                for (int i = 0; i < allMyIps.length; i++) {
+                    System.out.println("    " + allMyIps[i]);
+                }
+            }
+          } catch (Exception e) {
+              System.out.println(" (error retrieving server host name)");
+          }
+
+        }
+    
     
 }
