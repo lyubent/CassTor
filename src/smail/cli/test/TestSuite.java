@@ -65,7 +65,7 @@ public class TestSuite {
     private Keyspace getTestAstyanaxContext(){
         
         com.netflix.astyanax.AstyanaxContext<Keyspace> context = 
-                new com.netflix.astyanax.AstyanaxContext.Builder()
+         new com.netflix.astyanax.AstyanaxContext.Builder()
         .forCluster(__CLUSTER__)
         .forKeyspace(__KEYSPACE__) //NetworkKS
         .withAstyanaxConfiguration(
