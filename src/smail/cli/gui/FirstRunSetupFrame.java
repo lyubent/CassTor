@@ -1,40 +1,27 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package smail.cli.gui;
 
 import java.awt.FileDialog;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-/**
- *
- * @author lyubentodorov
- */
-public class Filer extends javax.swing.JFrame {
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
+public class FirstRunSetupFrame extends javax.swing.JFrame {
 
     /**
      * 
      * Creates new form Filer
      */
-    public Filer() {
+    public FirstRunSetupFrame() {
         setupLookAndFeel();
         initComponents();
+        findCassandraConfigPath();
         
-//         FileDialog pathFindingFileDialog = new  FileDialog(this);
-//         pathFindingFileDialog.setTitle("Find cassandra.YAML");
-//         pathFindingFileDialog.setVisible(true);
-//         
-//         pathFindingFileDialog.getFiles()[0].getAbsolutePath();
-         
-         
-         
-        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
 
-        fileChooser.showDialog(null, "Select file");
-        fileChooser.setDialogTitle("Find cassandra.YAML");
-        
-        System.out.println(fileChooser.getSelectedFile().getAbsolutePath());
     }
     
     
@@ -48,13 +35,13 @@ public class Filer extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Filer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Filer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Filer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Filer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }
     
@@ -95,6 +82,22 @@ public class Filer extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private String findCassandraConfigPath() {
+        try {
+            FileDialog pathFindingFileDialog = new  FileDialog(this);
+            
+            // Set the FileChooser dialogue title and display the dialogue.
+            pathFindingFileDialog.setTitle("Find cassandra.YAML");
+            pathFindingFileDialog.setVisible(true);
+
+            return pathFindingFileDialog.getFiles()[0].getAbsolutePath();
+        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+            Logger.getLogger(FirstRunSetupFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return "";
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
