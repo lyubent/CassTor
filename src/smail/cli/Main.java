@@ -2,6 +2,7 @@ package smail.cli;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import smail.cli.gui.Filer;
 import smail.cli.gui.LoginFrame;
 
 // @author lyubentodorov
@@ -25,8 +26,11 @@ public class Main {
                     
                     //Display login frame
                     //LoginFrame loginFrame = new LoginFrame();
+                    new Filer().setVisible(true);
                     
-                    smail.cli.util.NetworkUtil.displayInterfaces();//getNetworkData();
+                    
+                    //System.out.println(System.getenv().toString());
+                    System.out.println(smail.cli.util.NetworkUtil.getInterfaceIP());
                     
                     //run tests
                     //new smail.cli.test.TestSuite().runTests();
