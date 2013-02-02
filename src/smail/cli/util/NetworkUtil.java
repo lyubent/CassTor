@@ -27,7 +27,8 @@ public class NetworkUtil {
         try {
             return InetAddress.getLocalHost().getHostAddress();
         } catch (Exception ex) {
-            Logger.getLogger(NetworkUtil.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NetworkUtil.class.getName()).log(Level.SEVERE, 
+                    "Error getting the localhost interface (IP) of the machine.", ex);
         }
         
         return "";
@@ -52,7 +53,8 @@ public class NetworkUtil {
                 }
             }
         } catch (Exception ex) {
-              Logger.getLogger(NetworkUtil.class.getName()).log(Level.SEVERE, null, ex);
+              Logger.getLogger(NetworkUtil.class.getName()).log(Level.SEVERE, 
+                      "Error displaying the network interfaces (IPs) of the machine.", ex);
         }
     }
     

@@ -1,5 +1,6 @@
 package smail.cli.util;
 
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -91,7 +92,8 @@ public class EmailFormatter {
             }
             
         } catch(IllegalStateException ex) {
-            java.util.logging.Logger.getLogger(EmailFormatter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(EmailFormatter.class.getName()).log(java.util.logging.Level.SEVERE, 
+                    "Failed to execute regex.", ex);
             return "failed";
         }
         

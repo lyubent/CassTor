@@ -27,8 +27,10 @@ public class Main {
                 try {
                     
                     //Display login frame
-                    LoginFrame loginFrame = new LoginFrame();
-                    //new FirstRunSetupFrame().setVisible(true);
+                    //LoginFrame loginFrame = new LoginFrame();
+                    
+                    //For the first run
+                    new FirstRunSetupFrame().setVisible(true);
                     
 
                     

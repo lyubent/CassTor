@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -30,6 +31,52 @@ public class FileUtil {
     
     public FileUtil() {
     }
+    
+    
+    
+    // Reads text from a file and returns it as a string
+    //
+    //
+    public static String getTextFromFile(String fileURL) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileURL));
+            String currentLine = "";
+            String fileData = "";
+            while ((currentLine = br.readLine()) != null) {
+               fileData += "\n" + currentLine;
+            }
+            br.close();
+            
+            return fileData;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
+                    "Failed to get data from file, the file was not found.", ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
+                    "IOException occured while trying to get data from the file.", ex);
+        }
+        
+        return "";
+    }
+    
+    
+    
+    //
+    //
+    //
+    public static String getTextFromFile(String fileURL, boolean onlyFirstLine) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileURL));
+            return br.readLine();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, "Problem opening log file", ex);
+        }
+        
+        return "";
+    }
+    
+    
     
     // Opens the cassandra.yaml configuration file and updates the listen and
     // rpc address to the local address of the current machine allowing it to bootstrap
@@ -61,12 +108,39 @@ public class FileUtil {
             fileOut.close();
             
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
+                    "Error configuring cassandra.YAML, couldn't find the file.", ex);
         } catch (IOException ex) {
-            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
+                    "Error configuring cassandra.YAML, IOException occured.", ex);
         }
 
     }
+    
+    
+    
+    // Writes log lines to the log file
+    // log file found in root directory of this prog 
+    //
+    public static void writeToLog(String logDetail){
+        try {
+            PrintWriter out = new PrintWriter(
+                    new BufferedWriter(new FileWriter("log", true)));
+            
+            out.println(logDetail + "\tLogged at:" + new java.util.Date().toString());
+            out.flush();
+            out.close();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
+                    "Error writing to the logfile, failed to find the file.", ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
+                    "Error writing to the logfile, IOException occured.", ex);
+        }
+    }
+
+    
     
     // Used to find all the tags inside and XML file
     // Currently not used. Was part of getXMLData() function.
@@ -111,11 +185,14 @@ public class FileUtil {
 		   }
 		}
 	  } catch (ParserConfigurationException ex){
-              Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, ex);
+              Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
+                      "ParserConfigurationException when trying to read in XML data", ex);
           } catch (SAXException ex){
-              Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, ex);
+              Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
+                      "SAXException when trying to read in XML data", ex);
           } catch (IOException ex){
-              Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, ex);
+              Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
+                      "IOException when trying to read in XML data", ex);
           }
     }
     

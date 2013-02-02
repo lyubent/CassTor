@@ -6,7 +6,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
-import org.apache.cassandra.io.util.FileUtils;
 
 
 // @author lyubentodorov
@@ -37,8 +36,11 @@ public class ArchiveUtil {
             ZipFile zipFile = new ZipFile(source);
             zipFile.extractAll(destination);
             //FileUtils.deleteRecursive(new File(__DESKTOPLOCATION__ + "__MACOSX"));
+            FileUtil.writeToLog("[SUCCESS]\tExtracted cassandra without problems.");
         } catch (ZipException ex) {
-            Logger.getLogger(ArchiveUtil.class.getName()).log(Level.SEVERE, null, ex);
+            FileUtil.writeToLog("[ERROR]\tFailed to extract cassandra.");
+            Logger.getLogger(ArchiveUtil.class.getName()).log(Level.SEVERE, 
+                    "Error unziping cassandra.", ex);
         }
     }
     
