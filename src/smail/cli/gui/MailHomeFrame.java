@@ -588,7 +588,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent ev) {
-                destroyFrame();   
+                destroyFrame();
             }
         });
     }
