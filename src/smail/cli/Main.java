@@ -41,7 +41,7 @@ public class Main {
                     //ArchiveUtil.setExecPermissions();
                     
                     //Setup the YAML file to store the local ip
-                    FileUtil.configureCassandraYAML();
+                    //FileUtil.configureCassandraYAML();
                     
                     //run tests
                     //new smail.cli.test.TestSuite().runTests();
