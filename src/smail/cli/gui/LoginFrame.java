@@ -117,7 +117,7 @@ public class LoginFrame extends javax.swing.JFrame {
     // @void
     //
     private void setupFrame() {
-        setLocationByPlatform(true);
+        FramePositionHandler.centerFrame(this);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Login ~ Secure Cassandra Mail");
@@ -134,8 +134,8 @@ public class LoginFrame extends javax.swing.JFrame {
                 
                 // Create and display the new form each time a user logs in.
                 // Cleaner to create new form than tidying and re-initializing old one.
+                this.setVisible(false);
                 MailHomeFrame mail = new MailHomeFrame(jTextField_UName.getText(), this, keyspace);
-                mail.setLocation(this.getLocation());
                 return true;
             }    
         } catch (Exception ex) {

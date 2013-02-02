@@ -16,7 +16,7 @@ public class Main {
     
     public static void main(String[] args) {
         
-        //Build schema, run only once.
+        //Build schema, run only once on seed node.
         //smail.cli.astyanax.Schema.buildSchema(smail.cli.astyanax.Astyanax.getKeyspaceContext());
         
         // SWING threading.
@@ -27,12 +27,8 @@ public class Main {
                 try {
                     
                     //Display login frame
-                    //LoginFrame loginFrame = new LoginFrame();
+                    LoginFrame loginFrame = new LoginFrame();
                     //new FirstRunSetupFrame().setVisible(true);
-                    
-                    //System.out.println(System.getProperty("user.home") + "/Desktop/cassandra");
-                    //System.out.println(System.getenv().toString());
-                    //System.out.println(smail.cli.util.NetworkUtil.getInterfaceIP());
                     
 
                     
@@ -42,6 +38,8 @@ public class Main {
                     
                     //Setup the YAML file to store the local ip
                     //FileUtil.configureCassandraYAML();
+                    
+                    
                     
                     //run tests
                     //new smail.cli.test.TestSuite().runTests();

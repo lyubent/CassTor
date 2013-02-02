@@ -45,11 +45,6 @@ public class MailHomeFrame extends javax.swing.JFrame {
         initInbox();
         setupFrame();
         hideUnused();
-        
-        // display the form
-        this.setVisible(true);
-        // hide the login frame
-        parentFrame.setVisible(false);
     }
 
     // Initialises JPanel components 
@@ -583,7 +578,8 @@ public class MailHomeFrame extends javax.swing.JFrame {
         
         //this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setTitle("Cassandra SeceMail");
-        this.setLocationByPlatform(true);
+        this.setLocation(parentFrame.getLocation());
+        this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             @Override

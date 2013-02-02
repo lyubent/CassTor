@@ -11,17 +11,12 @@ import java.util.logging.Logger;
 // Source at https://github.com/lyubent/CassTor/ 
 //
 public class FirstRunSetupFrame extends javax.swing.JFrame {
-
-    /**
-     * 
-     * Creates new form Filer
-     */
+    
     public FirstRunSetupFrame() {
         setupLookAndFeel();
         initComponents();
-        findCassandraConfigPath();
         
-
+        FramePositionHandler.centerFrame(this);
     }
     
     
@@ -48,41 +43,28 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(146, 146, 146)
-                .add(jButton1)
-                .addContainerGap(146, Short.MAX_VALUE))
+            .add(0, 389, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(311, Short.MAX_VALUE)
-                .add(jButton1)
-                .add(60, 60, 60))
+            .add(0, 400, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
     
+    
+    
+    // Displayes a dialogue for user to browse to cassandra.yaml and select it
+    // inorder to find the path to the file
+    // Replaced with automatic extraction to the desktop.
+    @Deprecated
     private String findCassandraConfigPath() {
         try {
             FileDialog pathFindingFileDialog = new  FileDialog(this);
@@ -100,6 +82,5 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
