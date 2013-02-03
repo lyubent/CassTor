@@ -41,7 +41,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
         
         // initialize everything.
         initComponents();
-        initNativeLook();
+        setupLookAndFeel();
         initInbox();
         setupFrame();
         hideUnused();
@@ -514,7 +514,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
     // Multilevel try-catch to try to get native looking buttons / components
     // Makes the java application look nicer.
     //
-    private void initNativeLook(){
+    private void setupLookAndFeel(){
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 // We want Mac first if we are on OSX or Microsoft first if on windows.
@@ -528,13 +528,17 @@ public class MailHomeFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MailHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE, 
+                    "Failed to setup look and feel, Look&Feel classes not found", ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MailHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    "Failed to instantiate the look and feel classes.", ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MailHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    "Don't have permissions to access look and feel classes.", ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MailHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    "Look and feel look is not supported.", ex);
         }
         
     }

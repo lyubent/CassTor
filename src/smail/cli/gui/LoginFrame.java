@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import smail.cli.astyanax.Astyanax;
+import smail.cli.util.FileUtil;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -20,11 +21,61 @@ public class LoginFrame extends javax.swing.JFrame {
     
     public LoginFrame() {
         keyspace = Astyanax.getKeyspaceContext();
+        setupLookAndFeel();
         initComponents();
         hideUnused();
         setupFrame();
+        
+        //Check if program is running for the 1st time.
+        isFirstRun();
     }
-
+    
+    
+    
+    // Checks if program is runnig for the first time
+    // Runs cassandra unzip routine if it is the first run.
+    //
+    private boolean isFirstRun() {
+        if(FileUtil.getTextFromFile("log", true) == null) {
+            // First run - displaying licence.
+            new FirstRunSetupFrame(this).setVisible(true);
+            
+            return true;
+        } 
+        
+        this.setVisible(true);
+        return false;
+    }
+    
+    
+    private void setupLookAndFeel() {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Mac OS X".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                } else if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE, 
+                    "Failed to setup look and feel, Look&Feel classes not found", ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    "Failed to instantiate the look and feel classes.", ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    "Don't have permissions to access look and feel classes.", ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE,
+                    "Look and feel look is not supported.", ex);
+        }
+    }
+    
+    
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -86,6 +137,8 @@ public class LoginFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void jPasswordField_PwKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField_PwKeyPressed
         
         if(evt.getKeyChar() == KeyEvent.VK_ENTER){
@@ -93,10 +146,14 @@ public class LoginFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jPasswordField_PwKeyPressed
 
+    
+    
     private void jButton_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LoginActionPerformed
         login();
     }//GEN-LAST:event_jButton_LoginActionPerformed
 
+    
+    
     private void jTextField_UNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_UNameFocusGained
         if(jTextField_UName.getText().trim().equals("Username")){
             jTextField_UName.setText("");
@@ -104,6 +161,8 @@ public class LoginFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField_UNameFocusGained
 
+    
+    
     private void jTextField_UNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_UNameFocusLost
         if(jTextField_UName.getText().trim().equals("")){
             jTextField_UName.setText("Username");
@@ -118,7 +177,6 @@ public class LoginFrame extends javax.swing.JFrame {
     //
     private void setupFrame() {
         FramePositionHandler.centerFrame(this);
-        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Login ~ Secure Cassandra Mail");
     }

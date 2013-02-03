@@ -2,10 +2,7 @@ package smail.cli;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import smail.cli.gui.FirstRunSetupFrame;
 import smail.cli.gui.LoginFrame;
-import smail.cli.util.ArchiveUtil;
-import smail.cli.util.FileUtil;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -25,22 +22,8 @@ public class Main {
             @Override
             public void run(){
                 try {
-                    
                     //Display login frame
-                    //LoginFrame loginFrame = new LoginFrame();
-                    
-                    //For the first run
-                    new FirstRunSetupFrame().setVisible(true);
-                    
-
-                    
-                    //Extract cassandra to the desktop
-                    //ArchiveUtil.unzip();
-                    //ArchiveUtil.setExecPermissions();
-                    
-                    //Setup the YAML file to store the local ip
-                    //FileUtil.configureCassandraYAML();
-                    
+                    LoginFrame loginFrame = new LoginFrame();
                     
                     
                     //run tests
