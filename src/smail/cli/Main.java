@@ -22,9 +22,13 @@ public class Main {
             @Override
             public void run(){
                 try {
-                    //Display login frame
-                    LoginFrame loginFrame = new LoginFrame();
                     
+                    new smail.cli.netlib.Anonymizer().tryConn();
+                    
+                    
+                    
+                    //Display login frame
+                    //LoginFrame loginFrame = new LoginFrame();
                     
                     //run tests
                     //new smail.cli.test.TestSuite().runTests();
@@ -34,5 +38,5 @@ public class Main {
                 }
             }
         });
-    }
+    };
 }
