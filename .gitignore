@@ -14,5 +14,8 @@ README.TXT
 *.zip
 
 # Build Directories
+
 dist
+/nbproject/
 /build/
+nbproject
