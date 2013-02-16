@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package smail.cli.netlib;
 
 import java.io.ByteArrayInputStream;
@@ -21,17 +17,26 @@ import org.silvertunnel.netlib.api.util.TcpipNetAddress;
 import org.silvertunnel.netlib.util.ByteArrayUtil;
 import org.silvertunnel.netlib.util.HttpUtilResponseReceiverThread;
 
-/**
- *
- * @author lyubentodorov
- */
+//----------------------------------------------------------------//
+//                                                                //
+//  Many problems with this API come from hardcoding and          //
+//  not making the code extendable. Several components have       //
+//  been extended. To find the search for NOTE where a brief      //
+//  explenation of the edit is logged.                            //
+//----------------------------------------------------------------//
+
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public class HttpUtilTwo {
     
     private static final Logger log = Logger.getLogger(HttpUtilTwo.class.getName());
 
     private static final String UTF8 = "UTF-8";
 
-    public static final String HTTPTEST_SERVER_NAME = "httptest.silvertunnel.org";
+    public static final String HTTPTEST_SERVER_NAME = "";
     public static final int HTTPTEST_SERVER_PORT = 80;
     public static final TcpipNetAddress HTTPTEST_SERVER_NETADDRESS =
     new TcpipNetAddress(HTTPTEST_SERVER_NAME, HTTPTEST_SERVER_PORT);
@@ -52,17 +57,17 @@ public class HttpUtilTwo {
             byte[] httpResponse = get(
                     lowerLayerNetSocket,
                     HttpUtilTwo.HTTPTEST_SERVER_NETADDRESS,
-                    "/httptest/smalltest.jsp?id="+id,
+                    "",//"/httptest/smalltest.jsp?id="+id,
                     timeoutInMs);
             
             // check response
-            log.info("http response body: "+ByteArrayUtil.showAsString(httpResponse));
+            log.info("http response body: " + ByteArrayUtil.showAsString(httpResponse));
             byte[] expectedResponse = ("<response><id>"+id+"</id></response>\n").getBytes("UTF-8");
             boolean testOK = Arrays.equals(expectedResponse, httpResponse); 
             if (testOK) {
-                log.info("http response body = expected response body");
+                System.out.println("http response body = expected response body");
             } else {
-                log.info("expected http response body is different: "+ByteArrayUtil.showAsString(expectedResponse));
+                System.out.println("expected http response body is different: "+ByteArrayUtil.showAsString(expectedResponse));
             }
             
             lowerLayerNetSocket.close();
@@ -97,7 +102,7 @@ public class HttpUtilTwo {
                 long timeoutInMs) throws IOException {
             try {
                 String request =
-                    "GET "+pathOnHttpServer+" HTTP/1.1\n"+
+                    "GET " + pathOnHttpServer + "/HTTP/1.1\n" + /*NOTE added a / infront of HTTP didnt work be4.*/
                     "Host: "+httpServerNetAddress.getHostnameOrIpaddress()+"\n"+
                     // disable keep-alive
                     "Connection: close\n"+
@@ -173,7 +178,7 @@ public class HttpUtilTwo {
             // send HTTP request
             OutputStream os = s.getOutputStream();
             try {
-                log.info("send HTTP request now: "+ByteArrayUtil.showAsString(requestBytes));
+                System.out.println("send HTTP request now: "+ByteArrayUtil.showAsString(requestBytes));
                 os.write(requestBytes);
             } catch (UnsupportedEncodingException e) {
                 log.log(Level.SEVERE, "this exception may never occur", e);
@@ -239,12 +244,15 @@ public class HttpUtilTwo {
                 responseBody = decodeChunkedHttpResponse(responseBody);
             }
             
-            // short log of results
-            log.info("received HTTP response header: "+responseHeadersAsString);
-            log.info("received HTTP response body of "+responseBody.length+" bytes");
+            // short log of results // Useless...
+            //log.info("received HTTP response header: "+responseHeadersAsString);
+            //log.info("received HTTP response body of "+responseBody.length+" bytes");
+            
+            log.log(Level.INFO, "Received HTTP response of " + response.length + " bytes.");
             
             // result
-            return responseBody;
+//            return responseBody;
+            return response; /* NOTE changed to return full responce, the code splits header and body incorrectly. */
         }
 
         protected byte[] decodeChunkedHttpResponse(byte[] chunkedResponse) {

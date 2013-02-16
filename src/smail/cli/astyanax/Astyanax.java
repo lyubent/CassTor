@@ -31,7 +31,8 @@ public class Astyanax {
     private static final String __KEYSPACE__ = "MAIL_KS";//"KeyspaceName";
     private static final String __COLUMNFAMILY__ = "MESSAGE_CF";//"KeyspaceName";
     private static final String __CLUSTER__ = "Test Cluster";
-    private static final String __SEEDS__ = "134.36.36.188"; //"94.168.172.237:9160, 127.0.0.1:9160";
+    private static final String __SEEDS__ = "134.36.36.188";
+    //private static final String __SEEDS__ = "127.0.0.1:9160";
     
     // Executes a CQL3 statement creatin a table with composite key
     // FAILS - Astyanax can not execute cql3 
@@ -143,7 +144,7 @@ public class Astyanax {
             OperationResult<Void> result = mbatch.execute();
             result.toString();
         }
-        catch (ConnectionException ex) { 
+        catch (Exception ex) { 
             Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
             return "";
         }

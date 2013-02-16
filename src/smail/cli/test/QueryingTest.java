@@ -25,7 +25,7 @@ public class QueryingTest {
     //
     public String insertEmail() throws Exception{
         
-        String key = "";
+        String key = "key" + String.valueOf(System.currentTimeMillis()).substring(0, 2);
         System.out.print("\tTest:\tInserting email\t");
         
         

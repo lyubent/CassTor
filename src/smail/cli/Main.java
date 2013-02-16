@@ -23,7 +23,8 @@ public class Main {
             public void run(){
                 try {
                     
-                    new smail.cli.netlib.Anonymizer().tryConn();
+                    //new smail.cli.netlib.Anonymizer().tryConn();
+//                    new smail.cli.netlib.Anonymizer().tryConnOLD();
                     
                     
                     
@@ -31,7 +32,7 @@ public class Main {
                     //LoginFrame loginFrame = new LoginFrame();
                     
                     //run tests
-                    //new smail.cli.test.TestSuite().runTests();
+                    new smail.cli.test.TestSuite().runTests();
 
                 } catch (Exception ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

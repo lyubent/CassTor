@@ -1,8 +1,6 @@
 package smail.cli.test;
 
 import com.netflix.astyanax.Keyspace;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 // @author lyubentodorov
 // @licence - MIT
