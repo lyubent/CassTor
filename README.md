@@ -16,13 +16,14 @@ CassTor is a secure replacement for email, using a Cassandra database instead of
 Version
 -
 
-1.1 alpha (latest release: 8 Feb 2013)
+1.1 alpha (latest release: 17 Feb 2013)
 
 Tech
 -
 
 CassTor uses a combination of open-source projects:
 
+* [TorThrift] - TOR implementation of the Thrift protocol for Cassandra.
 * [Java] - A fantastic OO programming language
 * [Cassandra] - A highly scalable NoSql database
 * [Astyanax] - API
@@ -47,5 +48,6 @@ License
   [SWING]: http://en.wikipedia.org/wiki/Swing_(Java)
   [Cassandra]: http://en.wikipedia.org/wiki/Apache_Cassandra
   [MIT]: http://opensource.org/licenses/MIT
+  [TorThrift]: https://github.com/lyubent/TorThrift
   
     

@@ -3,6 +3,8 @@ package smail.cli;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import smail.cli.gui.LoginFrame;
+import smail.cli.netlib.TorLib;
+import smail.cli.netlib.TorSocket;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -23,8 +25,22 @@ public class Main {
             public void run(){
                 try {
                     
+                    /*************************
+                     ***********TESTS*********
+                     *************************/
                     //new smail.cli.netlib.Anonymizer().tryConn();
-//                    new smail.cli.netlib.Anonymizer().tryConnOLD();
+                    //new smail.cli.netlib.Anonymizer().tryPureConn();
+                    new smail.cli.netlib.Anonymizer().buildTORSocket();
+                    
+                    //String [] jj = new String [10];
+                    //TorLib.main(jj);
+                    
+                    //TorSocket.main(new String(""));
+                    //TorSocket.main(new String(""), true);
+                    
+                    /*************************
+                     *********TESTS - END*****
+                     *************************/
                     
                     
                     
@@ -32,7 +48,7 @@ public class Main {
                     //LoginFrame loginFrame = new LoginFrame();
                     
                     //run tests
-                    new smail.cli.test.TestSuite().runTests();
+                    //new smail.cli.test.TestSuite().runTests();
 
                 } catch (Exception ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

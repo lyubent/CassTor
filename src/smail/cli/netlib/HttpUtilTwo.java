@@ -75,16 +75,16 @@ public class HttpUtilTwo {
             return testOK;
         }
 
-        public byte[] get(
-                NetLayer lowerNetLayer,
-                TcpipNetAddress httpServerNetAddress,
-                String pathOnHttpServer,
-               long timeoutInMs) throws IOException {
-            // open network connection
-            NetSocket s = lowerNetLayer.createNetSocket(null, null, httpServerNetAddress);
-            
-            return get(s, httpServerNetAddress, pathOnHttpServer, timeoutInMs);
-        }
+//        public byte[] get(
+//                NetLayer lowerNetLayer,
+//                TcpipNetAddress httpServerNetAddress,
+//                String pathOnHttpServer,
+//               long timeoutInMs) throws IOException {
+//            // open network connection
+//            NetSocket s = lowerNetLayer.createNetSocket(null, null, httpServerNetAddress);
+//            
+//            return get(s, httpServerNetAddress, pathOnHttpServer, timeoutInMs);
+//        }
       public InputStream getReponseBodyInputStream(
                 NetSocket lowerLayerNetSocket,
                 TcpipNetAddress httpServerNetAddress,
