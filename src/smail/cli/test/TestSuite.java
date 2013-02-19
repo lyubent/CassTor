@@ -12,8 +12,9 @@ import org.junit.Test;
 //
 public class TestSuite {
     
+    private static final String __SEEDS__ = "94.168.172.237";
     //private static final String __SEEDS__ = "134.36.36.188";
-    private static final String __SEEDS__ = "127.0.0.1";
+    //private static final String __SEEDS__ = "127.0.0.1";
     private static final String __CLUSTER__ = "Test Cluster";
     private static final String __KEYSPACE__ = "TestKS";
     public static final String ANSI_PURPLE = "\u001B[35m";
@@ -34,15 +35,20 @@ public class TestSuite {
             org.junit.Assert.assertTrue(schemaTester.createCF());
             
             
-            //insert and email into cassandra
-            String key = queryTester.insertEmail();
-            org.junit.Assert.assertNotNull(key);
-            
-            
-            //delete an email from cassandra
-            //String key = "TestUsr@1359483724";
-            org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
-            
+            //Insert and then remove 10 emails.
+//            for (int i = 0; i < 10; i++) {
+//                
+//                //Sleep long enough to allow keys to be 100% unique.
+//                Thread.sleep(100);
+//                
+//                //insert and email into cassandra
+//                String key = queryTester.insertEmail();
+//                org.junit.Assert.assertNotNull(key);
+//                
+//                //delete an email from cassandra
+//                //String key = "TestUsr@1359483724";
+//                org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
+//            }
             
             //drop the previously created column family
             org.junit.Assert.assertTrue(schemaTester.dropCF());
@@ -75,6 +81,7 @@ public class TestSuite {
         .withConnectionPoolConfiguration(
          new com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl("MyConnectionPool")
         .setPort(9160)
+        .setConnectTimeout(2147483647)
         .setMaxConnsPerHost(10)
         .setSeeds(__SEEDS__))
         .withConnectionPoolMonitor(
