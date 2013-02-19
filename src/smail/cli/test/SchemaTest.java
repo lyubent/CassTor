@@ -1,7 +1,5 @@
 package smail.cli.test;
 
-import com.netflix.astyanax.Keyspace;
-
 // @author lyubentodorov
 // @licence - MIT
 // Available at http://lyuben.herokuapp.com/casstor/ 
@@ -9,9 +7,9 @@ import com.netflix.astyanax.Keyspace;
 //
 public class SchemaTest {
     
-    private Keyspace keyspace;
+    private com.netflix.astyanax.Keyspace keyspace;
         
-    public SchemaTest(Keyspace keyspace){
+    public SchemaTest(com.netflix.astyanax.Keyspace keyspace){
         this.keyspace = keyspace;
     }
     

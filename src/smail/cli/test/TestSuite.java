@@ -36,19 +36,19 @@ public class TestSuite {
             
             
             //Insert and then remove 10 emails.
-//            for (int i = 0; i < 10; i++) {
-//                
-//                //Sleep long enough to allow keys to be 100% unique.
-//                Thread.sleep(100);
-//                
-//                //insert and email into cassandra
-//                String key = queryTester.insertEmail();
-//                org.junit.Assert.assertNotNull(key);
-//                
-//                //delete an email from cassandra
-//                //String key = "TestUsr@1359483724";
-//                org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
-//            }
+            for (int i = 0; i < 5; i++) {
+                
+                //Sleep long enough to allow keys to be 100% unique.
+                Thread.sleep(100);
+                
+                //insert and email into cassandra
+                String key = queryTester.insertEmail();
+                org.junit.Assert.assertNotNull(key);
+                
+                //delete an email from cassandra
+                //String key = "TestUsr@1359483724";
+                org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
+            }
             
             //drop the previously created column family
             org.junit.Assert.assertTrue(schemaTester.dropCF());
@@ -61,7 +61,8 @@ public class TestSuite {
             
         } catch(Exception ex){
             System.out.println(ANSI_PURPLE + "\t============\tTest:\tUnit tests FAILED\t============\n\n");
-            Logger.getLogger(TestSuite.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestSuite.class.getName()).log(Level.SEVERE, 
+                    "Unit tests did not pass.", ex);
         }
     }
     
@@ -81,6 +82,7 @@ public class TestSuite {
         .withConnectionPoolConfiguration(
          new com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl("MyConnectionPool")
         .setPort(9160)
+                //TODO timeout is currently 17 years. Needs updated.
         .setConnectTimeout(2147483647)
         .setMaxConnsPerHost(10)
         .setSeeds(__SEEDS__))

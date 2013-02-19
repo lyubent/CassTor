@@ -32,7 +32,8 @@ public class Schema {
             Schema.createKeyspace(keyspace);
             Schema.createIndexedColumnFamilyStrings(keyspace);
         } catch (Exception ex) {
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+                    "Failed to build Schema.", ex);
             return false;
         }
         
@@ -52,7 +53,8 @@ public class Schema {
             //drop KS
             Schema.dropKeyspace(keyspace);
         } catch (Exception ex) {
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+                    "Failed to destroy the Schema.", ex);
             return false;
         }
         
@@ -100,7 +102,8 @@ public class Schema {
              .build()); // build CF
             
         } catch (ConnectionException ex) { 
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+                    "Failed to create Indexed Column Family of strings.", ex);
             return false; //err
         }
         
@@ -148,8 +151,9 @@ public class Schema {
              .build()); // build CF
             
         } catch (ConnectionException ex) { 
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
-            return false; //err
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+                    "Failed to create Indexed Column Family of bytes", ex);
+            return false; //err 
         }
         
         return true; // Sucess
@@ -172,7 +176,8 @@ public class Schema {
             
         } catch (ConnectionException ex) { 
             System.out.println("AAzzzz");
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+                    "Failed to create Keyspace", ex);
         }
         
         return false;
@@ -211,7 +216,8 @@ public class Schema {
         try {
             keyspace.dropColumnFamily(CF_COMPOSITE);
         } catch (ConnectionException ex) {
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+                    "Failed to drop Column Family", ex);
             return false;
         }
         
@@ -228,7 +234,8 @@ public class Schema {
         try {
             keyspace.dropKeyspace();
         } catch (Exception ex) {
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+                    "Failed to drop keyspace", ex);
             return false;
         }
         

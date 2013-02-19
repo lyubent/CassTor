@@ -6,7 +6,7 @@ import org.silvertunnel.netlib.adapter.java.JvmGlobalUtil;
 import org.silvertunnel.netlib.api.NetFactory;
 import org.silvertunnel.netlib.api.NetLayer;
 import org.silvertunnel.netlib.api.NetLayerIDs;
-import smail.cli.netlib.Anonymizer;
+import smail.cli.tor.Anonymizer;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -24,9 +24,12 @@ public class Main {
         @Override
         public void run(){
                 try {
-                    //Anonymizer.useTor();
-                    Thread.sleep(10000);
-                    System.out.println("COMPLETED TOR INIT!!!\n\n\n\n\n\n");
+                    Anonymizer.useTor();
+                    for(int i=0;i<100;i++)
+                    System.out.println("COMPLETED TOR INIT!!!");
+                    //Sleep long enough to allow tor init to be complete
+                    Thread.sleep(15000);
+                    
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -42,34 +45,11 @@ public class Main {
                 
                 
                 try {
-                    
-                    /*************************
-                     ***********TESTS*********
-                     *************************/
-                    //new smail.cli.netlib.Anonymizer().tryConn();
-                    //new smail.cli.netlib.Anonymizer().tryPureConn();
-                    //new smail.cli.netlib.Anonymizer().buildTORSocket();
-                    
-                    //String [] jj = new String [10];
-                    //TorLib.main(jj);
-                    
-                    //TorSocket.main(new String(""));
-                    //TorSocket.main(new String(""), true);
-                    
-                    /*************************
-                     *********TESTS - END*****
-                     *************************/
-                    
-                    
-                    
                     //Display login frame
                     //LoginFrame loginFrame = new LoginFrame();
                     
                     //run tests
-                    //smail.cli.netlib.Anonymizer.useTor();
-                    //perpareAnonymousCommunication();
                     new smail.cli.test.TestSuite().runTests();
-                    //new smail.cli.test.TestSuite().runTests();
 
                 } catch (Exception ex) {
                     Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,21 +57,4 @@ public class Main {
             }
         });
     };
-    
-    
-//    public static void perpareAnonymousCommunication() {
-//        // do not log here to avoid to disturb the next command
-//        
-//        // prepare redirection of lower services
-//        JvmGlobalUtil.init();
-//        //System.out.println("perpareAnonymousCommunication() initialization done");
-//
-//        // classic communication:   NetFactory.getInstance().getNetLayerById(NetLayerIDs.TCPIP) (--> HTTP over plain TCP/IP)
-//        // anonymous communication: NetFactory.getInstance().getNetLayerById(NetLayerIDs.TOR)   (--> HTTP over TCP/IP over Tor network)
-//        NetLayer nextNetLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TCPIP); 
-//        
-//        JvmGlobalUtil.setNetLayerAndNetAddressNameService(nextNetLayer, true);
-//
-//        //System.out.println("perpareAnonymousCommunication() end");
-//    }
 }
