@@ -26,7 +26,8 @@ public class Main {
                 try {
                     Anonymizer.useTor();
                     for(int i=0;i<100;i++)
-                    System.out.println("COMPLETED TOR INIT!!!");
+                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
+                            + "COMPLETED TOR INIT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                     //Sleep long enough to allow tor init to be complete
                     Thread.sleep(15000);
                     

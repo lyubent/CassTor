@@ -34,11 +34,15 @@ public class Anonymizer {
             Thread.sleep(10000);
             
             return true;
-        } catch (Exception ex) {
+        } catch (IllegalStateException ex) {
             Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
                     "Failed to connect to TOR network.", ex);
-            return false;
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
+                    "Failed to connect to TOR network.", ex);
         }
+        
+        return false;
     }
     
     
