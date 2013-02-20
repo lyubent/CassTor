@@ -82,8 +82,8 @@ public class TestSuite {
         .withConnectionPoolConfiguration(
          new com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl("MyConnectionPool")
         .setPort(9160)
-                //TODO timeout is currently 17 years. Needs updated.
-        .setConnectTimeout(2147483647)
+        //If queries take longer than a minute, timeout.
+        .setConnectTimeout(60000)
         .setMaxConnsPerHost(10)
         .setSeeds(__SEEDS__))
         .withConnectionPoolMonitor(

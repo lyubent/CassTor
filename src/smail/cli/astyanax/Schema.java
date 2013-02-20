@@ -166,16 +166,13 @@ public class Schema {
     //
     public static boolean createKeyspace(Keyspace keyspace){
         try {
-            System.out.println("AA");
             keyspace.createKeyspace(ImmutableMap.<String, Object>builder()
                 .put("strategy_options", ImmutableMap.<String, Object>builder()
                 .put("replication_factor", "2").build())
                 .put("strategy_class","SimpleStrategy").build());
-            System.out.println("AA2");
             return true; // Success
             
-        } catch (ConnectionException ex) { 
-            System.out.println("AAzzzz");
+        } catch (ConnectionException ex) {
             Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
                     "Failed to create Keyspace", ex);
         }

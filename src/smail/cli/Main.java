@@ -2,10 +2,6 @@ package smail.cli;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.silvertunnel.netlib.adapter.java.JvmGlobalUtil;
-import org.silvertunnel.netlib.api.NetFactory;
-import org.silvertunnel.netlib.api.NetLayer;
-import org.silvertunnel.netlib.api.NetLayerIDs;
 import smail.cli.tor.Anonymizer;
 
 // @author lyubentodorov
@@ -21,8 +17,8 @@ public class Main {
         //smail.cli.astyanax.Schema.buildSchema(smail.cli.astyanax.Astyanax.getKeyspaceContext());
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
-        @Override
-        public void run(){
+            @Override
+            public void run(){
                 try {
                     Anonymizer.useTor();
                     for(int i=0;i<100;i++)

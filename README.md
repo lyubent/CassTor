@@ -1,11 +1,11 @@
-CassTor 
+CassTor - sending mail like magic! 
 =======
 `By Lyuben Todorov`
 [Project homepage]
 
   - Secure Email
   - No one can see whats going on (Not even ISPs)
-  - Completely free and open-source
+  - Open-source
 
 
 What is it?
@@ -16,7 +16,7 @@ CassTor is a secure replacement for email, using a Cassandra database instead of
 Version
 -
 
-1.1 alpha (latest release: 17 Feb 2013)
+1.1 beta (latest release: 20 Feb 2013)
 
 Tech
 -
@@ -39,7 +39,7 @@ License
 
 [MIT]
 
-  [Project homepage]: https://lyuben.herokuapp.com/casstor/
+  [Project homepage]: http://lyubent.github.com/
   [Silvertunnel Netlib]: https://silvertunnel.org/
   [Netbeans]: http://netbeans.org/
   [Astyanax]: https://github.com/Netflix/astyanax
