@@ -7,6 +7,7 @@ import org.silvertunnel.netlib.adapter.socket.SocketGlobalUtil;
 import org.silvertunnel.netlib.api.NetFactory;
 import org.silvertunnel.netlib.api.NetLayer;
 import org.silvertunnel.netlib.api.NetLayerIDs;
+import smail.cli.Main;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -15,34 +16,73 @@ import org.silvertunnel.netlib.api.NetLayerIDs;
 //
 public class Anonymizer {
     
+    // Redirect all of the program's traffic using this netlayer obj.
+    private NetLayer netLayer;
+    private Thread updateProgress;
+    private Thread initTor;
+    
+    
+    public Anonymizer() {
         
-    // Overloads the Application to use the TOR anonymity network.
-    // Tunnels connection directly
+    }
+    
+    
+    // Runs the initialisation and status updates of the TOR connection.
     //
-    public static boolean useTor(){
-        
-        try{
-            // enable redirection for the application
+    public boolean runTor() {
+        try {
             JvmGlobalUtil.init();
             // Set the netlayer to use the TOR network
             NetLayer netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TOR);
-            // Waiting until ready causes a deadlock, thread stalls and does nothing.
-            //netLayer.waitUntilReady();
             // Override the deafault net implementation with the TOR netlayer.
             JvmGlobalUtil.setNetLayerAndNetAddressNameService(netLayer, true);
-            // Sleep for 10sec giving the netlayer time to complete initalization.
-            Thread.sleep(10000);
-            
+
+            //Sleep long enough to allow tor init to be complete
+            Thread.sleep(15000);
             return true;
-        } catch (IllegalStateException ex) {
-            Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
-                    "Failed to connect to TOR network.", ex);
         } catch (InterruptedException ex) {
             Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
-                    "Failed to connect to TOR network.", ex);
+                    "Failed to connect to the TOR anonymity network.", ex);
+        }
+        return false;
+    }
+    
+    
+    
+    // Falls back to TCP/IP incase TOR connection fails
+    //
+    //
+    public boolean fallbackToTPC() {
+        
+        try {
+            JvmGlobalUtil.init();
+            // Set the netlayer to use the TOR network
+            NetLayer netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TCPIP);
+            // Override the deafault net implementation with the TOR netlayer.
+            JvmGlobalUtil.setNetLayerAndNetAddressNameService(netLayer, true);
+            System.out.println("Falling back to TCP/IP");
+        } catch (Exception ex) {
+            Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
+                    "Failed to connect to the TCP/IP network.", ex);
         }
         
         return false;
+    }
+    
+    
+    // Accessor to the progress of the NetLayer object initialization
+    // @return int representing percentage completion
+    //
+    public int getNetLayerStatus() {
+        return (int)(netLayer.getStatus().getReadyIndicator() * 100);
+    }
+    
+    
+    
+    // NetLayer accessor
+    // @return NetLayer object
+    public NetLayer getNetLayer() {
+        return netLayer;
     }
     
     

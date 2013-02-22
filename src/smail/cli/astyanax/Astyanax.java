@@ -40,7 +40,7 @@ public class Astyanax {
     @Deprecated
     public static boolean createCQL3Table(Keyspace keyspace, String cqlStatement){
         try {
-            ColumnFamily<Integer, String> mail = new ColumnFamily<>(
+            ColumnFamily<Integer, String> mail = new ColumnFamily<Integer, String>(
             "Mail", // CF Name
             IntegerSerializer.get(),   // Key Serializer
             StringSerializer.get());  // Column Serializer
@@ -66,7 +66,7 @@ public class Astyanax {
     public static OperationResult<CqlResult<String, String>> execCQL(Keyspace keyspace, String cqlStatement){
         try {
             
-            ColumnFamily<String, String> mail = new ColumnFamily<>(
+            ColumnFamily<String, String> mail = new ColumnFamily<String, String>(
             __COLUMNFAMILY__, // CF Name
             StringSerializer.get(),   // Key Serializer
             StringSerializer.get());  // Column Serializer
@@ -127,7 +127,8 @@ public class Astyanax {
     public static String insertEmail(Keyspace keyspace, String user, List<String> uinput){
         
         String __KEY__ = String.valueOf(user + "@" + DateUtil.getUnixTimestamp());
-        ColumnFamily<String, String> mail = new ColumnFamily<>( __COLUMNFAMILY__, // CF Name
+        ColumnFamily<String, String> mail = 
+                new ColumnFamily<String, String>( __COLUMNFAMILY__, // CF Name
             StringSerializer.get(), StringSerializer.get());
         MutationBatch mbatch = keyspace.prepareMutationBatch();
 
@@ -162,7 +163,8 @@ public class Astyanax {
      *************************************/
     public static boolean insertEmailAsBytes(Keyspace keyspace, String user, List<String> uinput){
         
-        ColumnFamily<byte [], byte []> mail = new ColumnFamily<>( __COLUMNFAMILY__, // CF Name
+        ColumnFamily<byte [], byte []> mail = 
+                new ColumnFamily<byte [], byte []>( __COLUMNFAMILY__, // CF Name
             BytesArraySerializer.get(), BytesArraySerializer.get());
 
         MutationBatch mbatch = keyspace.prepareMutationBatch();
@@ -213,7 +215,7 @@ public class Astyanax {
     @Deprecated
     public static boolean readEmail(Keyspace keyspace){
             
-        ColumnFamily<String, String> mail = new ColumnFamily<>(
+        ColumnFamily<String, String> mail = new ColumnFamily<String, String>(
                  "Mail", // CF Name
                  StringSerializer.get(),   // Key Serializer
                  StringSerializer.get());  // Column Serializer 
@@ -262,6 +264,8 @@ public class Astyanax {
         .withConnectionPoolConfiguration(
          new com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl("MyConnectionPool")
         .setPort(9160)
+        //If queries take longer than a 10 seconds, timeout.
+        .setConnectTimeout(10000)
         .setMaxConnsPerHost(10)
         .setSeeds(__SEEDS__))
         .withConnectionPoolMonitor(

@@ -187,7 +187,7 @@ public class Schema {
     //
     @Deprecated
     public static boolean createBasicColumnFamily(Keyspace keyspace, String CF_NAME){
-        ColumnFamily<String, String> mail = new ColumnFamily<>(
+        ColumnFamily<String, String> mail = new ColumnFamily<String, String>(
             CF_NAME, // CF Name
             StringSerializer.get(),   // Key Serializer
             StringSerializer.get());  // Column Serializer

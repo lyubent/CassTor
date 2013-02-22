@@ -2,6 +2,8 @@ package smail.cli;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import smail.cli.gui.LoginFrame;
+import smail.cli.gui.StartupLoadFrame;
 import smail.cli.tor.Anonymizer;
 
 // @author lyubentodorov
@@ -9,49 +11,43 @@ import smail.cli.tor.Anonymizer;
 // Available at http://lyuben.herokuapp.com/casstor/ 
 // Source at https://github.com/lyubent/CassTor/ 
 //
-public class Main {    
+public class Main {
     
     public static void main(String[] args) {
         
         //Build schema, run only once on seed node.
         //smail.cli.astyanax.Schema.buildSchema(smail.cli.astyanax.Astyanax.getKeyspaceContext());
-
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run(){
-                try {
-                    Anonymizer.useTor();
-                    for(int i=0;i<100;i++)
-                    System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
-                            + "COMPLETED TOR INIT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                    //Sleep long enough to allow tor init to be complete
-                    Thread.sleep(15000);
-                    
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
         
-        
-        // SWING threading.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            
-            @Override
-            public void run(){
-                
-                
-                try {
-                    //Display login frame
-                    //LoginFrame loginFrame = new LoginFrame();
-                    
-                    //run tests
-                    new smail.cli.test.TestSuite().runTests();
+        //run tests
+        //new smail.cli.test.TestSuite().runTests();
 
-                } catch (Exception ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        // TOR initialization threading.
+        new Thread () {
+            @Override
+            public void run () {
+                StartupLoadFrame loader = new StartupLoadFrame();
+                loader.setVisible(true);
+
+                Anonymizer anon = new Anonymizer();
+                anon.runTor();
+
+                // Once TOR Layer connection is completed, hide the loader frame.
+                loader.dispose();
+                
+                // SWING threading.
+                javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run(){
+                        try {
+                            //Prepare the login frame
+                            LoginFrame loginFrame = new LoginFrame();
+                        } catch (Exception ex) {
+                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, 
+                                    "Error with SWING Components", ex);
+                        }
+                    }
+                });
             }
-        });
-    };
+        }.start();
+    }
 }

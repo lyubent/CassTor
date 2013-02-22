@@ -445,7 +445,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
         location = "trash";
         
         // Join all the emails I own that I've deleted.
-        List<String> fullDeletedEmailList = new ArrayList<>();
+        List<String> fullDeletedEmailList = new ArrayList<String>();
         //list for emails deleted by the sender where I am the sender
         fullDeletedEmailList.addAll(Astyanax.processResults(Astyanax.execCQL(
                         this.keyspace, EmailCql.deletedSenderEmail(_USERNAME_))));
@@ -461,7 +461,6 @@ public class MailHomeFrame extends javax.swing.JFrame {
     private void jButton_OutboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OutboxActionPerformed
 
         location = "sent";
-        
         jButton_Delete.setEnabled(true);
         
         populateInbox(Astyanax.processResults(Astyanax.execCQL(

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import smail.cli.astyanax.Astyanax;
+import smail.cli.tor.Anonymizer;
 import smail.cli.util.FileUtil;
 
 // @author lyubentodorov
@@ -224,6 +225,7 @@ public class LoginFrame extends javax.swing.JFrame {
         this.setVisible(true);
         JOptionPane.showMessageDialog(this, "A problem occred while trying to login",
                 "Error logging in.", JOptionPane.ERROR_MESSAGE);
+        new Anonymizer().fallbackToTPC();
     }
     
     
