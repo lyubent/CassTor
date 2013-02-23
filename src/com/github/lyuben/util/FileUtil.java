@@ -1,4 +1,4 @@
-package smail.cli.util;
+package com.github.lyuben.util;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

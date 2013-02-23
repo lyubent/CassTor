@@ -1,4 +1,4 @@
-package smail.cli.bridge;
+package com.github.lyuben.bridge;
 
 import com.google.common.collect.ImmutableMap;
 import com.netflix.astyanax.Keyspace;

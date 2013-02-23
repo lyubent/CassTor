@@ -1,4 +1,4 @@
-package smail.cli.test;
+package com.github.lyuben.test;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -22,7 +22,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tAltering repliction factor\t");
         
-        if(smail.cli.bridge.Astyanax.alterReplicationFactor(keyspace)) {
+        if(com.github.lyuben.bridge.Astyanax.alterReplicationFactor(keyspace)) {
             System.out.println("...\talteded RF successfully!");
             return true;
         } else {
@@ -40,7 +40,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tAltering repliction factor\t");
         
-        if(smail.cli.bridge.JDBC.incrementReplicationFactor(keyspace.getKeyspaceName())) {
+        if(com.github.lyuben.bridge.JDBC.incrementReplicationFactor(keyspace.getKeyspaceName())) {
             System.out.println("...\talteded RF successfully!");
             return true;
         } else {
@@ -58,7 +58,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tRetreiving current repliction factor\t");
         
-        if(smail.cli.bridge.JDBC.getCurrentReplicationFactor(keyspace.getKeyspaceName()) > 0) {
+        if(com.github.lyuben.bridge.JDBC.getCurrentReplicationFactor(keyspace.getKeyspaceName()) > 0) {
             System.out.println("...\tretreived RF successfully!");
             return true;
         } else {
@@ -76,7 +76,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tCreating KS\t");
         
-        if(smail.cli.bridge.Schema.createKeyspace(keyspace)) {
+        if(com.github.lyuben.bridge.Schema.createKeyspace(keyspace)) {
             System.out.println("...\tcreated KS successfully!");
             return true;
         } else {
@@ -94,7 +94,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tCreating CF\t");
         
-        if(smail.cli.bridge.Schema.createIndexedColumnFamilyStrings(keyspace)) {
+        if(com.github.lyuben.bridge.Schema.createIndexedColumnFamilyStrings(keyspace)) {
             System.out.println("...\tcreated CF successfully!");
             return true;
         } else {
@@ -113,8 +113,8 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tDroping CF\t");
         
-        if(smail.cli.bridge.Schema.dropColumnFamily(keyspace, 
-                smail.cli.bridge.Astyanax.getColumnFamilyStructure())) {
+        if(com.github.lyuben.bridge.Schema.dropColumnFamily(keyspace, 
+                com.github.lyuben.bridge.Astyanax.getColumnFamilyStructure())) {
             System.out.println("...\tdroped CF successfully!");
             return true;
         } else {
@@ -132,7 +132,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tDroping KS\t");
         
-        if(smail.cli.bridge.Schema.dropKeyspace(keyspace)) {
+        if(com.github.lyuben.bridge.Schema.dropKeyspace(keyspace)) {
             System.out.println("...\tdroped KS successfully!");
             return true;
         } else {

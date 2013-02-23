@@ -1,4 +1,4 @@
-package smail.cli.test;
+package com.github.lyuben.test;
 
 import com.netflix.astyanax.Keyspace;
 import java.util.logging.Level;
@@ -29,7 +29,7 @@ public class QueryingTest {
         System.out.print("\tTest:\tInserting email\t");
         
         
-        key = smail.cli.bridge.Astyanax.insertEmail(keyspace, __USER__, 
+        key = com.github.lyuben.bridge.Astyanax.insertEmail(keyspace, __USER__, 
             java.util.Arrays.asList("Receiver", "Subject", "Body"));
             
         if(!key.equals("")) {
@@ -53,7 +53,7 @@ public class QueryingTest {
         //Yes cassandra is infact so fast we need to slow stuff down a bit.
         Thread.sleep(1000);
         
-        if(smail.cli.bridge.Astyanax.deleteEmail(keyspace, __KEY__)) {
+        if(com.github.lyuben.bridge.Astyanax.deleteEmail(keyspace, __KEY__)) {
             System.out.println("...\tdeleted successfully!");
             return true;
         } else {

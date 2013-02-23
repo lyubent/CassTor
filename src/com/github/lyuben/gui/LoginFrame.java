@@ -1,6 +1,6 @@
-package smail.cli.gui;
+package com.github.lyuben.gui;
 
-import smail.cli.util.FramePositionHandler;
+import com.github.lyuben.util.FramePositionHandler;
 import com.netflix.astyanax.Keyspace;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -8,9 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import smail.cli.bridge.Astyanax;
-import smail.cli.tor.Anonymizer;
-import smail.cli.util.FileUtil;
+import com.github.lyuben.bridge.Astyanax;
+import com.github.lyuben.tor.Anonymizer;
+import com.github.lyuben.util.FileUtil;
 
 // @author lyubentodorov
 // @licence - MIT

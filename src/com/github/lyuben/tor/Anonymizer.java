@@ -1,4 +1,4 @@
-package smail.cli.tor;
+package com.github.lyuben.tor;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,7 +7,7 @@ import org.silvertunnel.netlib.adapter.socket.SocketGlobalUtil;
 import org.silvertunnel.netlib.api.NetFactory;
 import org.silvertunnel.netlib.api.NetLayer;
 import org.silvertunnel.netlib.api.NetLayerIDs;
-import smail.cli.Main;
+import com.github.lyuben.Main;
 
 // @author lyubentodorov
 // @licence - MIT

@@ -1,4 +1,4 @@
-package smail.cli.cql;
+package com.github.lyuben.cql;
 
 // @author lyubentodorov
 // @licence - MIT

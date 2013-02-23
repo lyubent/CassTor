@@ -1,10 +1,10 @@
-package smail.cli;
+package com.github.lyuben;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import smail.cli.gui.LoginFrame;
-import smail.cli.gui.StartupLoadFrame;
-import smail.cli.tor.Anonymizer;
+import com.github.lyuben.gui.LoginFrame;
+import com.github.lyuben.gui.StartupLoadFrame;
+import com.github.lyuben.tor.Anonymizer;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -19,7 +19,7 @@ public class Main {
         //smail.cli.astyanax.Schema.buildSchema(smail.cli.astyanax.Astyanax.getKeyspaceContext());
         
         //run tests
-        new smail.cli.test.TestSuite().runTests();
+        new com.github.lyuben.test.TestSuite().runTests();
         
         // TOR initialization threading.
         new Thread () {

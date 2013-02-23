@@ -1,4 +1,4 @@
-package smail.cli.bridge;
+package com.github.lyuben.bridge;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;  
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import smail.cli.cql.SchemaCql;
+import com.github.lyuben.cql.SchemaCql;
 
 // @author lyubentodorov
 // @licence - MIT

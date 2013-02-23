@@ -1,4 +1,4 @@
-package smail.cli.test;
+package com.github.lyuben.test;
 
 import com.netflix.astyanax.Keyspace;
 import java.util.logging.Level;

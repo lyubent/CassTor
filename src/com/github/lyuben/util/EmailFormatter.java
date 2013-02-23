@@ -1,4 +1,4 @@
-package smail.cli.util;
+package com.github.lyuben.util;
 
 import java.util.logging.Logger;
 import java.util.regex.Matcher;

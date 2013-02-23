@@ -1,4 +1,4 @@
-package smail.cli.gui;
+package com.github.lyuben.gui;
 
 import com.netflix.astyanax.Keyspace;
 import java.awt.event.WindowAdapter;
@@ -13,9 +13,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
-import smail.cli.bridge.Astyanax;
-import smail.cli.cql.EmailCql;
-import smail.cli.util.EmailFormatter;
+import com.github.lyuben.bridge.Astyanax;
+import com.github.lyuben.cql.EmailCql;
+import com.github.lyuben.util.EmailFormatter;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -211,7 +211,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel_Inbox.setBounds(4, 0, 446, 460);
+        jPanel_Inbox.setBounds(4, 0, 0, 460);
         jLayeredPane_Background.add(jPanel_Inbox, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jPanel_NewMessage.setToolTipText("");

@@ -1,8 +1,8 @@
-package smail.cli.cql;
+package com.github.lyuben.cql;
 
 // @author lyubentodorov
 
-import smail.cli.util.Base64Crypto;
+import com.github.lyuben.util.Base64Crypto;
 
 // @licence - MIT
 // Available at http://lyuben.herokuapp.com/casstor/ 

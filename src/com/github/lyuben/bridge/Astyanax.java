@@ -1,4 +1,4 @@
-package smail.cli.bridge;
+package com.github.lyuben.bridge;
 
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.MutationBatch;
@@ -18,11 +18,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.StringEscapeUtils;
-import smail.cli.cql.EmailCql;
-import smail.cli.cql.SchemaCql;
-import smail.cli.util.Base64Crypto;
-import smail.cli.util.DateUtil;
-import smail.cli.util.EmailFormatter;
+import com.github.lyuben.cql.EmailCql;
+import com.github.lyuben.cql.SchemaCql;
+import com.github.lyuben.util.Base64Crypto;
+import com.github.lyuben.util.DateUtil;
+import com.github.lyuben.util.EmailFormatter;
 
 // @author lyubentodorov
 // @licence - MIT
