@@ -12,7 +12,7 @@ import javax.crypto.Cipher;
 // Available at http://lyuben.herokuapp.com/casstor/ 
 // Source at https://github.com/lyubent/CassTor/ 
 //
-public class Crypto {
+public class RSACrypto {
   private static byte[] encrypt(byte[] inpBytes, PublicKey key,
       String xform) throws Exception {
     Cipher cipher = Cipher.getInstance(xform);

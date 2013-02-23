@@ -1,4 +1,4 @@
-package smail.cli.astyanax;
+package smail.cli.bridge;
 
 import com.google.common.collect.ImmutableMap;
 import com.netflix.astyanax.Keyspace;

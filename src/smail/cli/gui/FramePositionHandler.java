@@ -15,8 +15,8 @@ public class FramePositionHandler {
         // Determine the new location of the window
         int w = frameToCenter.getSize().width;
         int h = frameToCenter.getSize().height;
-        int x = (dim.width-w)/2;
-        int y = (dim.height-h)/2;
+        int x = (dim.width-w)/2; // centered on screen
+        int y = ((dim.height-h)/10) * 3; // and 30% top border
 
         // Move the window
         frameToCenter.setLocation(x, y);

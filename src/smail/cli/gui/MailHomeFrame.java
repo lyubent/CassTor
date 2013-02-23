@@ -13,8 +13,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
-import smail.cli.astyanax.Astyanax;
-import smail.cli.util.EmailCql;
+import smail.cli.bridge.Astyanax;
+import smail.cli.cql.EmailCql;
 import smail.cli.util.EmailFormatter;
 
 // @author lyubentodorov

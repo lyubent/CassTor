@@ -1,4 +1,4 @@
-package smail.cli.astyanax;
+package smail.cli.bridge;
 
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.MutationBatch;
@@ -17,8 +17,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang.StringEscapeUtils;
+import smail.cli.cql.EmailCql;
+import smail.cli.cql.SchemaCql;
+import smail.cli.util.Base64Crypto;
 import smail.cli.util.DateUtil;
-import smail.cli.util.EmailCql;
 import smail.cli.util.EmailFormatter;
 
 // @author lyubentodorov
@@ -67,7 +70,7 @@ public class Astyanax {
         try {
             
             ColumnFamily<String, String> mail = new ColumnFamily<String, String>(
-            __COLUMNFAMILY__, // CF Name
+            keyspace.getKeyspaceName(), // CF Name
             StringSerializer.get(),   // Key Serializer
             StringSerializer.get());  // Column Serializer
             
@@ -133,13 +136,13 @@ public class Astyanax {
         MutationBatch mbatch = keyspace.prepareMutationBatch();
 
         mbatch.withRow(mail, __KEY__)
-            .putColumn("RECEIVER", uinput.get(0), null)
-            .putColumn("SENDER", user, null)
-            .putColumn("SUBJECT", uinput.get(1), null)
-            .putColumn("BODY", uinput.get(2), null)
-            .putColumn("DELETED_SENDER", "No", null)
-            .putColumn("DELETED_RECEIVER", "No", null)
-            .putColumn("DATE", DateUtil.getCurrentDate(), null);
+            .putColumn("RECEIVER", Base64Crypto.encode(uinput.get(0)), null)
+            .putColumn("SENDER", Base64Crypto.encode(user), null)
+            .putColumn("SUBJECT", StringEscapeUtils.escapeJava(Base64Crypto.encode(uinput.get(1))), null)
+            .putColumn("BODY", StringEscapeUtils.escapeJava(Base64Crypto.encode(uinput.get(2))), null)
+            .putColumn("DELETED_SENDER", Base64Crypto.encode("No"), null)
+            .putColumn("DELETED_RECEIVER", Base64Crypto.encode("No"), null)
+            .putColumn("DATE", Base64Crypto.encode(DateUtil.getCurrentDate()), null);
         
         try { 
             OperationResult<Void> result = mbatch.execute();
@@ -295,5 +298,47 @@ public class Astyanax {
     public static ColumnFamily<String, String> getColumnFamilyStructure(){
         return ColumnFamily.newColumnFamily(__COLUMNFAMILY__, //default should be message 
                 StringSerializer.get(), StringSerializer.get());
+    }
+    
+    
+    
+    // Builds the CF structure for the MESSAGE column family
+    // @return ColumnFamily<String, String> 
+    // Superseeded by smail.cli.bridge;JDBC.alterReplicationFactor(...)
+    // Problem is that a new Astyanax context is required to use the system keyspace.
+    // This causes problems with TOR, namely deadlock in the TOR thread.
+    @Deprecated 
+    public static boolean alterReplicationFactor(Keyspace keyspace){
+        if(Astyanax.execCQL(keyspace, SchemaCql.
+            updateReplicationFactor(0,keyspace.getKeyspaceName())) == null) {
+            
+            return false;
+        }
+        
+        return true;
+    }
+    
+    
+    
+    // Builds the CF structure for the MESSAGE column family
+    // @return ColumnFamily<String, String> 
+    // Superseded by smail.cli.bridge.JDBC.getCurrentReplicationFactor()
+    // Problem is that a new Astyanax context is required to use the system keyspace.
+    // This causes problems with TOR, namely deadlock in the TOR thread.
+    @Deprecated
+    public static boolean getCurrentReplicationFactor(Keyspace keyspace){
+        OperationResult<CqlResult<String, String>> result = 
+            Astyanax.execCQL(keyspace, SchemaCql.getCurrentReplicationFactor(keyspace.getKeyspaceName()));
+        
+        if(result != null) {
+            
+            for (Row <String, String> row : result.getResult().getRows()) {
+                for (Column<String> column : row.getColumns()){
+                    System.out.println(column.getValue(new StringSerializer()));
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

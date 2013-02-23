@@ -4,7 +4,6 @@ import com.netflix.astyanax.Keyspace;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
-
 // @author lyubentodorov
 // @licence - MIT
 // Available at http://lyuben.herokuapp.com/casstor/ 
@@ -12,11 +11,11 @@ import org.junit.Test;
 //
 public class TestSuite {
     
-    private static final String __SEEDS__ = "127.0.0.1";
+    //private static final String __SEEDS__ = "127.0.0.1";
     //private static final String __SEEDS__ = "94.168.172.237";
-    //private static final String __SEEDS__ = "134.36.36.188";
+    private static final String __SEEDS__ = "134.36.36.188";
     private static final String __CLUSTER__ = "Test Cluster";
-    private static final String __KEYSPACE__ = "cassandrademocql";
+    private static final String __KEYSPACE__ = "TEST_KS";
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_GREEN = "\u001B[32m";
     
@@ -28,14 +27,21 @@ public class TestSuite {
         try {
             
             // Create the keyspace  WORKS
-            org.junit.Assert.assertTrue(schemaTester.createKS());
+            //org.junit.Assert.assertTrue(schemaTester.createKS());
             
             
             //Create the column family WORKS
-            org.junit.Assert.assertTrue(schemaTester.createCF());
+//            org.junit.Assert.assertTrue(schemaTester.createCF());
             
             
-//            //Insert and then remove 10 emails.
+            // Retreive keyspace replication factor
+            org.junit.Assert.assertTrue(schemaTester.getCurrentReplicationFactorJDBC());
+            
+            //Alter the keyspace replication factor
+            // Deprecated //org.junit.Assert.assertTrue(schemaTester.alterReplicationFactor());
+            org.junit.Assert.assertTrue(schemaTester.incrementReplicationFactorJDBC());
+            
+            //Insert and then remove 10 emails.
 //            for (int i = 0; i < 5; i++) {
 //                
 //                //Sleep long enough to allow keys to be 100% unique.
@@ -49,12 +55,12 @@ public class TestSuite {
 //                //String key = "TestUsr@1359483724";
 //                org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
 //            }
-//            
-//            //drop the previously created column family
+            
+            //drop the previously created column family
 //            org.junit.Assert.assertTrue(schemaTester.dropCF());
-//            
-//            
-//            //drop the previously created keyspace
+            
+            
+            //drop the previously created keyspace
 //            org.junit.Assert.assertTrue(schemaTester.dropKS());
                         
             System.out.println(ANSI_GREEN + "\t============\tTest:\tUnit tests PASSED\t==========\n\n");
@@ -79,6 +85,7 @@ public class TestSuite {
          new com.netflix.astyanax.impl.AstyanaxConfigurationImpl()      
         .setDiscoveryType(com.netflix.astyanax.connectionpool.NodeDiscoveryType.NONE) // NONE FOR BASIK KS
         .setCqlVersion("3.0.0")) //using CQL3 (fails, its still CQL2)
+                
         .withConnectionPoolConfiguration(
          new com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl("MyConnectionPool")
         .setPort(9160)

@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import smail.cli.astyanax.Astyanax;
+import smail.cli.bridge.Astyanax;
 import smail.cli.tor.Anonymizer;
 import smail.cli.util.FileUtil;
 
