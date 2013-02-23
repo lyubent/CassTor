@@ -27,11 +27,11 @@ public class TestSuite {
         try {
             
             // Create the keyspace  WORKS
-            //org.junit.Assert.assertTrue(schemaTester.createKS());
+            org.junit.Assert.assertTrue(schemaTester.createKS());
             
             
             //Create the column family WORKS
-//            org.junit.Assert.assertTrue(schemaTester.createCF());
+            org.junit.Assert.assertTrue(schemaTester.createCF());
             
             
             // Retreive keyspace replication factor
@@ -42,26 +42,26 @@ public class TestSuite {
             org.junit.Assert.assertTrue(schemaTester.incrementReplicationFactorJDBC());
             
             //Insert and then remove 10 emails.
-//            for (int i = 0; i < 5; i++) {
-//                
-//                //Sleep long enough to allow keys to be 100% unique.
-//                Thread.sleep(100);
-//                
-//                //insert and email into cassandra
-//                String key = queryTester.insertEmail();
-//                org.junit.Assert.assertNotNull(key);
-//                
-//                //delete an email from cassandra
-//                //String key = "TestUsr@1359483724";
-//                org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
-//            }
+            for (int i = 0; i < 5; i++) {
+                
+                //Sleep long enough to allow keys to be 100% unique.
+                Thread.sleep(100);
+                
+                //insert and email into cassandra
+                String key = queryTester.insertEmail();
+                org.junit.Assert.assertNotNull(key);
+                
+                //delete an email from cassandra
+                //String key = "TestUsr@1359483724";
+                org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
+            }
             
             //drop the previously created column family
-//            org.junit.Assert.assertTrue(schemaTester.dropCF());
+            org.junit.Assert.assertTrue(schemaTester.dropCF());
             
             
             //drop the previously created keyspace
-//            org.junit.Assert.assertTrue(schemaTester.dropKS());
+            org.junit.Assert.assertTrue(schemaTester.dropKS());
                         
             System.out.println(ANSI_GREEN + "\t============\tTest:\tUnit tests PASSED\t==========\n\n");
             

@@ -1,5 +1,6 @@
 package smail.cli.gui;
 
+import smail.cli.util.FramePositionHandler;
 import java.awt.FileDialog;
 import java.util.logging.Level;
 import java.util.logging.Logger;

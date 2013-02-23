@@ -1,4 +1,4 @@
-package smail.cli.gui;
+package smail.cli.util;
 
 import javax.swing.JFrame;
 

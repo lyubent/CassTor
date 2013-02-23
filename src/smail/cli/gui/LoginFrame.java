@@ -1,5 +1,6 @@
 package smail.cli.gui;
 
+import smail.cli.util.FramePositionHandler;
 import com.netflix.astyanax.Keyspace;
 import java.awt.Color;
 import java.awt.event.KeyEvent;

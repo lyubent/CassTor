@@ -1,6 +1,10 @@
 package smail.cli;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import smail.cli.gui.LoginFrame;
+import smail.cli.gui.StartupLoadFrame;
+import smail.cli.tor.Anonymizer;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -21,28 +25,28 @@ public class Main {
         new Thread () {
             @Override
             public void run () {
-//                StartupLoadFrame loader = new StartupLoadFrame();
-//                loader.setVisible(true);
-//
-//                Anonymizer anon = new Anonymizer();
-//                anon.runTor();
-//
-//                // Once TOR Layer connection is completed, hide the loader frame.
-//                loader.dispose();
-//                
-//                // SWING threading.
-//                javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//                    @Override
-//                    public void run(){
-//                        try {
-//                            //Prepare the login frame
+                StartupLoadFrame loader = new StartupLoadFrame();
+                loader.setVisible(true);
+
+                Anonymizer anon = new Anonymizer();
+                anon.runTor();
+
+                // Once TOR Layer connection is completed, hide the loader frame.
+                loader.dispose();
+                
+                // SWING threading.
+                javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run(){
+                        try {
+                            //Prepare the login frame
                             LoginFrame loginFrame = new LoginFrame();
-//                        } catch (Exception ex) {
-//                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, 
-//                                    "Error with SWING Components", ex);
-//                        }
-//                    }
-//                });
+                        } catch (Exception ex) {
+                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, 
+                                    "Error with SWING Components", ex);
+                        }
+                    }
+                });
 
             }
         }.start();

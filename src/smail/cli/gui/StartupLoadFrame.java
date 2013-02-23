@@ -1,6 +1,9 @@
 package smail.cli.gui;
 
 // @author lyubentodorov
+
+import smail.cli.util.FramePositionHandler;
+
 // @licence - MIT
 // Available at http://lyuben.herokuapp.com/casstor/ 
 // Source at https://github.com/lyubent/CassTor/ 
