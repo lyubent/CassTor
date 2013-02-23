@@ -3,7 +3,6 @@ package smail.cli.util;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang.StringEscapeUtils;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -37,7 +36,7 @@ public class EmailFormatter {
                "`~" + Base64Crypto.decode(date) + "`~ >" +
                "</span>";
         
-        String dataa = "<html>" + 
+        String data = "<html>" + 
                "<div id=\"" + 
                     "%" + key + "%\" " + 
                     
@@ -54,8 +53,7 @@ public class EmailFormatter {
                 
                "</html>";
         
-        return dataa;
-        //org.apache.commons.lang.StringEscapeUtils.escapeJava("");
+        return data;
     }
     
     
@@ -110,13 +108,13 @@ public class EmailFormatter {
                 return m.group(1);
             }
             else{
-                return "nope";
+                return "";
             }
             
         } catch(IllegalStateException ex) {
             Logger.getLogger(EmailFormatter.class.getName()).log(java.util.logging.Level.SEVERE, 
                     "Failed to execute regex.", ex);
-            return "failed";
+            return "";
         }
         
     }

@@ -1,6 +1,6 @@
 package smail.cli;
 
-import smail.cli.bridge.JDBC;
+import smail.cli.gui.LoginFrame;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -36,7 +36,7 @@ public class Main {
 //                    public void run(){
 //                        try {
 //                            //Prepare the login frame
-//                            LoginFrame loginFrame = new LoginFrame();
+                            LoginFrame loginFrame = new LoginFrame();
 //                        } catch (Exception ex) {
 //                            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, 
 //                                    "Error with SWING Components", ex);
