@@ -1,5 +1,11 @@
 package com.github.lyuben.bridge;
 
+import com.github.lyuben.cql.EmailCql;
+import com.github.lyuben.cql.SchemaCql;
+import com.github.lyuben.tor.Anonymizer;
+import com.github.lyuben.util.Base64Crypto;
+import com.github.lyuben.util.DateUtil;
+import com.github.lyuben.util.EmailFormatter;
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.MutationBatch;
 import com.netflix.astyanax.connectionpool.OperationResult;
@@ -18,11 +24,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang.StringEscapeUtils;
-import com.github.lyuben.cql.EmailCql;
-import com.github.lyuben.cql.SchemaCql;
-import com.github.lyuben.util.Base64Crypto;
-import com.github.lyuben.util.DateUtil;
-import com.github.lyuben.util.EmailFormatter;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -80,7 +81,9 @@ public class Astyanax {
             return result;
                
         } catch (ConnectionException ex) { 
-            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
+            new Anonymizer().fallbackToTPC();
+            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, 
+                    "Error during CQL Execution", ex);
         }
         
         return null;
@@ -92,7 +95,7 @@ public class Astyanax {
     // @param requires a CqlResult object
     //
     public static List<String> processResults(OperationResult<CqlResult<String, String>> result){
-        
+        try {
         List messageList = new LinkedList();
         
         for (Row <String, String> row : result.getResult().getRows()) {
@@ -115,11 +118,29 @@ public class Astyanax {
                     date = column.getValue(new StringSerializer());
                 }
             }
+          
+            
+            
+            
+            
             
             messageList.add(EmailFormatter.structureMessage(key, body, from, date, subject));
         }
         
-        return messageList;
+        return messageList; } catch (Exception ex ){
+            System.out.println("AADFSASDFSADFSDFASFDSFAS");
+            System.out.println("AADFSASDFSADFSDFASFDSFAS");
+            System.out.println("AADFSASDFSADFSDFASFDSFAS");
+            System.out.println("AADFSASDFSADFSDFASFDSFAS");
+            System.out.println("AADFSASDFSADFSDFASFDSFAS");
+            System.out.println("AADFSASDFSADFSDFASFDSFAS");
+            System.out.println("AADFSASDFSADFSDFASFDSFAS");
+            System.out.println("AADFSASDFSADFSDFASFDSFAS");
+            new Anonymizer().fallbackToTPC();
+            
+        }
+        
+        return null;
     }
     
     
@@ -149,7 +170,8 @@ public class Astyanax {
             result.toString();
         }
         catch (Exception ex) { 
-            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, 
+                    "Error inserting email.", ex);
             return "";
         }
         
@@ -304,7 +326,7 @@ public class Astyanax {
     
     // Builds the CF structure for the MESSAGE column family
     // @return ColumnFamily<String, String> 
-    // Superseeded by smail.cli.bridge;JDBC.alterReplicationFactor(...)
+    // Superseeded by com.github.lyuben.bridge;JDBC.alterReplicationFactor(...)
     // Problem is that a new Astyanax context is required to use the system keyspace.
     // This causes problems with TOR, namely deadlock in the TOR thread.
     @Deprecated 
@@ -322,7 +344,7 @@ public class Astyanax {
     
     // Builds the CF structure for the MESSAGE column family
     // @return ColumnFamily<String, String> 
-    // Superseded by smail.cli.bridge.JDBC.getCurrentReplicationFactor()
+    // Superseded by com.github.lyuben.bridge.JDBC.getCurrentReplicationFactor()
     // Problem is that a new Astyanax context is required to use the system keyspace.
     // This causes problems with TOR, namely deadlock in the TOR thread.
     @Deprecated

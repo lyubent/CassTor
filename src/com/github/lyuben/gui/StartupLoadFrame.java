@@ -29,7 +29,7 @@ public class StartupLoadFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel_ProgressBar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/progressbar.gif"))); // NOI18N
+        jLabel_ProgressBar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/progressbar.gif")));
 
         jTextPane_WarningMsg.setEditable(false);
         jTextPane_WarningMsg.setToolTipText("Please read the licence, it's not that long or complex.");
@@ -43,7 +43,7 @@ public class StartupLoadFrame extends javax.swing.JFrame {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .add(jLabel_ProgressBar)
                 .add(0, 0, Short.MAX_VALUE))
-            .add(jScrollPane_Background)
+            .add(jScrollPane_Background, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)

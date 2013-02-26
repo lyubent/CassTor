@@ -1,5 +1,9 @@
 package com.github.lyuben.gui;
 
+import com.github.lyuben.bridge.Astyanax;
+import com.github.lyuben.cql.EmailCql;
+import com.github.lyuben.tor.Anonymizer;
+import com.github.lyuben.util.EmailFormatter;
 import com.netflix.astyanax.Keyspace;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -13,9 +17,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
-import com.github.lyuben.bridge.Astyanax;
-import com.github.lyuben.cql.EmailCql;
-import com.github.lyuben.util.EmailFormatter;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -157,7 +158,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
         jTextPane_FullMessage.setEditable(false);
         jScrollPane4.setViewportView(jTextPane_FullMessage);
 
-        jButton_Reply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/reply.png"))); // NOI18N
+        jButton_Reply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/reply.png")));
         jButton_Reply.setText("Reply");
         jButton_Reply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +166,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton_New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/new.png"))); // NOI18N
+        jButton_New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/new.png")));
         jButton_New.setText("New");
         jButton_New.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +174,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/delete.png"))); // NOI18N
+        jButton_Delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/delete.png")));
         jButton_Delete.setText("Delete");
         jButton_Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,11 +208,11 @@ public class MailHomeFrame extends javax.swing.JFrame {
                         .add(jButton_Delete))
                     .add(jButton_New, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel_Inbox.setBounds(4, 0, 0, 460);
+        jPanel_Inbox.setBounds(4, 0, 446, 460);
         jLayeredPane_Background.add(jPanel_Inbox, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jPanel_NewMessage.setToolTipText("");
@@ -220,7 +221,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
         jTextArea_NewMessage_Body.setRows(5);
         jScrollPane1.setViewportView(jTextArea_NewMessage_Body);
 
-        jButton_Send.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/send.png"))); // NOI18N
+        jButton_Send.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/send.png")));
         jButton_Send.setText("Send");
         jButton_Send.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,15 +229,15 @@ public class MailHomeFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel_SendTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/sendto_arrow.png"))); // NOI18N
+        jLabel_SendTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/sendto_arrow.png")));
 
-        jLabel_Title.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/sendto.png"))); // NOI18N
+        jLabel_Title.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/sendto.png")));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/message.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/message.png")));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/title_arrow.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/title_arrow.png")));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/title.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/title.png")));
 
         org.jdesktop.layout.GroupLayout jPanel_NewMessageLayout = new org.jdesktop.layout.GroupLayout(jPanel_NewMessage);
         jPanel_NewMessage.setLayout(jPanel_NewMessageLayout);
@@ -271,7 +272,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
                                         .add(jTextField_NewMessage_Title))))))
                     .add(jPanel_NewMessageLayout.createSequentialGroup()
                         .addContainerGap()
-                        .add(jScrollPane1)))
+                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_NewMessageLayout.setVerticalGroup(
@@ -338,14 +339,13 @@ public class MailHomeFrame extends javax.swing.JFrame {
     //
     //
     private void initInbox(){
+        // Note* catch exception here means that the logging in process correctly
         populateInbox(Astyanax.processResults(Astyanax.execCQL(
-                        this.keyspace, EmailCql.nondeletedUserEmail(_USERNAME_))));
+        this.keyspace, EmailCql.nondeletedUserEmail(_USERNAME_)))); 
     }
     
     private void jButton_InboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InboxActionPerformed
-
         location = "inbox";
-        
         jButton_Delete.setEnabled(true);
         jPanel_NewMessage.setVisible(false);
         jPanel_Inbox.setVisible(true);
@@ -355,9 +355,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_InboxActionPerformed
 
     private void jList_InboxMailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_InboxMailMouseClicked
-       
         try {
-            
             // Get the parts of the message we need
             String [] emailContent = new String []{ //title, from(sender), at (datE), body
                 EmailFormatter.applyRegexFilter(getjListSelectedIndexString(), "SUBJECT"), 
@@ -371,7 +369,10 @@ public class MailHomeFrame extends javax.swing.JFrame {
                 jTextPane_FullMessage.setText(EmailFormatter.structureDetailedMessage(emailContent));
             }
         } catch (Exception ex) {
-            Logger.getLogger(MailHomeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MailHomeFrame.class.getName()).log(Level.SEVERE, 
+                    "Error redisplaying and updating inbox", ex);
+            JOptionPane.showMessageDialog(this, "A problem occured!"
+                    , "Error updating the inbox.", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jList_InboxMailMouseClicked
 
@@ -402,7 +403,6 @@ public class MailHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_ReplyActionPerformed
 
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DeleteActionPerformed
-        
         if(isEmailSelected("deleting")){
             String key = EmailFormatter.applyRegexFilter(getjListSelectedIndexString(), "");
             
@@ -421,29 +421,23 @@ public class MailHomeFrame extends javax.swing.JFrame {
     private void jButton_SendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SendActionPerformed
         
         if(jPanel_NewMessage.isVisible()){
-
             jButton_Delete.setEnabled(true);
-
             // Insert the email into the db
             Astyanax.insertEmail(keyspace, _USERNAME_, Arrays.asList(
                     jTextField_NewMessage_To.getText(),     //receiver 
                     jTextField_NewMessage_Title.getText(),  //subject
                     jTextArea_NewMessage_Body.getText())); //body
-            
         } else {
             JOptionPane.showMessageDialog(this, "A problem occured!"
                     , "Error sending email", JOptionPane.ERROR_MESSAGE);
         }
-        
         jPanel_NewMessage.setVisible(false);
         jPanel_Inbox.setVisible(true);
         location = "inbox";
     }//GEN-LAST:event_jButton_SendActionPerformed
 
     private void jButton_TrashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_TrashActionPerformed
-
         location = "trash";
-        
         // Join all the emails I own that I've deleted.
         List<String> fullDeletedEmailList = new ArrayList<String>();
         //list for emails deleted by the sender where I am the sender
@@ -452,23 +446,19 @@ public class MailHomeFrame extends javax.swing.JFrame {
         //list for emails deleted by the receiver where I am the receiver
         fullDeletedEmailList.addAll(Astyanax.processResults(Astyanax.execCQL(
                         this.keyspace, EmailCql.deletedUserEmail(_USERNAME_))));
-        
         populateInbox(fullDeletedEmailList);
         
         jButton_Delete.setEnabled(false);
     }//GEN-LAST:event_jButton_TrashActionPerformed
 
     private void jButton_OutboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OutboxActionPerformed
-
         location = "sent";
         jButton_Delete.setEnabled(true);
-        
         populateInbox(Astyanax.processResults(Astyanax.execCQL(
                         this.keyspace, EmailCql.allSentUserEmail(_USERNAME_))));
     }//GEN-LAST:event_jButton_OutboxActionPerformed
 
     private void jButton_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ExitActionPerformed
-
         destroyFrame();
     }//GEN-LAST:event_jButton_ExitActionPerformed
 
@@ -481,11 +471,9 @@ public class MailHomeFrame extends javax.swing.JFrame {
         
         if(getjListSelectedIndexString().equals("")){
             JOptionPane.showMessageDialog(this, "You need to select an email before " + actionType + " it!"
-                    , "Email not selected", JOptionPane.ERROR_MESSAGE);
-            
+                    , "Email not selected", JOptionPane.ERROR_MESSAGE);   
             return false;
         }
-        
         return true;
     }
     
@@ -495,17 +483,14 @@ public class MailHomeFrame extends javax.swing.JFrame {
     // @param Requires a list of HTML representing the columns
     //
     private void populateInbox(List<String> dataList){
-        
         DefaultListModel messageList = new DefaultListModel();
         messageList.ensureCapacity(50);
         
         for(String message : dataList){
             messageList.addElement(message);
         }
-        
         jList_InboxMail.setToolTipText(null);
         jList_InboxMail.setModel(messageList);
-        
     }
     
     
@@ -513,7 +498,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
     // Multilevel try-catch to try to get native looking buttons / components
     // Makes the java application look nicer.
     //
-    private void setupLookAndFeel(){
+    private void setupLookAndFeel() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 // We want Mac first if we are on OSX or Microsoft first if on windows.
@@ -529,17 +514,24 @@ public class MailHomeFrame extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE, 
                     "Failed to setup look and feel, Look&Feel classes not found", ex);
+            JOptionPane.showMessageDialog(this, "A problem occured!"
+                    , "Error seting up GUI.", JOptionPane.ERROR_MESSAGE);
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE,
                     "Failed to instantiate the look and feel classes.", ex);
+            JOptionPane.showMessageDialog(this, "A problem occured!"
+                    , "Error seting up GUI.", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE,
                     "Don't have permissions to access look and feel classes.", ex);
+            JOptionPane.showMessageDialog(this, "A problem occured!"
+                    , "Error seting up GUI.", JOptionPane.ERROR_MESSAGE);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FirstRunSetupFrame.class.getName()).log(java.util.logging.Level.SEVERE,
                     "Look and feel look is not supported.", ex);
+            JOptionPane.showMessageDialog(this, "A problem occured!"
+                    , "Error seting up GUI.", JOptionPane.ERROR_MESSAGE);
         }
-        
     }
     
     
@@ -547,13 +539,11 @@ public class MailHomeFrame extends javax.swing.JFrame {
     // Gets the String containied in the selected item from jListInboxMail
     // @return String containing data in the list item.
     //
-    private String getjListSelectedIndexString(){
-        
+    private String getjListSelectedIndexString() {
         if(jList_InboxMail.getSelectedIndex() != -1){
             return jList_InboxMail.getModel().getElementAt(
                     jList_InboxMail.getSelectedIndex()).toString();
         }
-        
         return "";
     }
     
@@ -562,13 +552,11 @@ public class MailHomeFrame extends javax.swing.JFrame {
     // Hides components of the application that are not used to speed up app.
     // @void
     //
-    private void hideUnused(){
-        
+    private void hideUnused() {
         Border emptyBorder = BorderFactory.createEmptyBorder();
         jScrollPane1.setBorder(emptyBorder);
         jScrollPane2.setBorder(emptyBorder);
         jScrollPane4.setBorder(emptyBorder);
-        
         jPanel_NewMessage.setVisible(false);
     }
     

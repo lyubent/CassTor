@@ -81,7 +81,7 @@ public class LoginFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLayeredPane2 = new javax.swing.JLayeredPane();
         jTextField_UName = new javax.swing.JTextField();
         jPasswordField_Pw = new javax.swing.JPasswordField();
         jButton_Login = new javax.swing.JButton();
@@ -99,8 +99,8 @@ public class LoginFrame extends javax.swing.JFrame {
                 jTextField_UNameFocusLost(evt);
             }
         });
-        jTextField_UName.setBounds(125, 170, 230, 28);
-        jLayeredPane1.add(jTextField_UName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jTextField_UName.setBounds(130, 180, 230, 28);
+        jLayeredPane2.add(jTextField_UName, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jPasswordField_Pw.setForeground(new java.awt.Color(204, 204, 204));
         jPasswordField_Pw.setText("password");
@@ -109,31 +109,35 @@ public class LoginFrame extends javax.swing.JFrame {
                 jPasswordField_PwKeyPressed(evt);
             }
         });
-        jPasswordField_Pw.setBounds(125, 200, 230, 28);
-        jLayeredPane1.add(jPasswordField_Pw, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jPasswordField_Pw.setBounds(130, 210, 230, 28);
+        jLayeredPane2.add(jPasswordField_Pw, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jButton_Login.setText("Sign In");
+        jButton_Login.setText("Sign in");
         jButton_Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_LoginActionPerformed(evt);
             }
         });
         jButton_Login.setBounds(270, 240, 87, 29);
-        jLayeredPane1.add(jButton_Login, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.add(jButton_Login, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smail/cli/img/login.png"))); // NOI18N
-        jLabel1.setBounds(0, 0, 482, 396);
-        jLayeredPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel1.setBackground(new java.awt.Color(238, 238, 237));
+        jLabel1.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/login.png"))); // NOI18N
+        jLabel1.setText("icon");
+        jLabel1.setToolTipText("");
+        jLabel1.setBounds(0, 0, 480, 390);
+        jLayeredPane2.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jLayeredPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 487, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(jLayeredPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jLayeredPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 411, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .add(jLayeredPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 391, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -142,7 +146,6 @@ public class LoginFrame extends javax.swing.JFrame {
     
     
     private void jPasswordField_PwKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField_PwKeyPressed
-        
         if(evt.getKeyChar() == KeyEvent.VK_ENTER){
             login();
         }
@@ -199,8 +202,9 @@ public class LoginFrame extends javax.swing.JFrame {
                 return true;
             }    
         } catch (Exception ex) {
-            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+            for(int i=0;i<100;i++)System.out.println("HANDLING FAILIURE");
             handleLogginFailiure();
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return false;
@@ -226,7 +230,6 @@ public class LoginFrame extends javax.swing.JFrame {
         this.setVisible(true);
         JOptionPane.showMessageDialog(this, "A problem occred while trying to login",
                 "Error logging in.", JOptionPane.ERROR_MESSAGE);
-        new Anonymizer().fallbackToTPC();
     }
     
     
@@ -235,7 +238,6 @@ public class LoginFrame extends javax.swing.JFrame {
     // @void
     //
     private void hideUnused(){
-     
     }
     
     
@@ -243,7 +245,7 @@ public class LoginFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Login;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPasswordField jPasswordField_Pw;
     private javax.swing.JTextField jTextField_UName;
     // End of variables declaration//GEN-END:variables

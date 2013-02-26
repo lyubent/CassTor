@@ -1,5 +1,7 @@
 package com.github.lyuben.gui;
 
+import com.github.lyuben.util.ArchiveUtil;
+import com.github.lyuben.util.FileUtil;
 import com.github.lyuben.util.FramePositionHandler;
 import java.awt.FileDialog;
 import java.util.logging.Level;
@@ -7,8 +9,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import com.github.lyuben.util.ArchiveUtil;
-import com.github.lyuben.util.FileUtil;
 
 
 // @author lyubentodorov

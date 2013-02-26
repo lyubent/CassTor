@@ -1,5 +1,6 @@
 package com.github.lyuben.tor;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.silvertunnel.netlib.adapter.java.JvmGlobalUtil;
@@ -7,7 +8,6 @@ import org.silvertunnel.netlib.adapter.socket.SocketGlobalUtil;
 import org.silvertunnel.netlib.api.NetFactory;
 import org.silvertunnel.netlib.api.NetLayer;
 import org.silvertunnel.netlib.api.NetLayerIDs;
-import com.github.lyuben.Main;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -17,9 +17,9 @@ import com.github.lyuben.Main;
 public class Anonymizer {
     
     // Redirect all of the program's traffic using this netlayer obj.
-    private NetLayer netLayer;
     private Thread updateProgress;
     private Thread initTor;
+    private NetLayer netLayer;
     
     
     public Anonymizer() {
@@ -33,13 +33,14 @@ public class Anonymizer {
         try {
             JvmGlobalUtil.init();
             // Set the netlayer to use the TOR network
-            NetLayer netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TOR);
+            netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TOR);
             // Override the deafault net implementation with the TOR netlayer.
             JvmGlobalUtil.setNetLayerAndNetAddressNameService(netLayer, true);
 
             //Sleep long enough to allow tor init to be complete
             Thread.sleep(15000);
             return true;
+            
         } catch (InterruptedException ex) {
             Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
                     "Failed to connect to the TOR anonymity network.", ex);
@@ -49,18 +50,55 @@ public class Anonymizer {
     
     
     
-    // Falls back to TCP/IP incase TOR connection fails
     //
+    public void cleanNetLayer() throws IOException {
+        netLayer.clear();
+        netLayer.waitUntilReady();
+    }
+    
+    
+    
+    // Falls back to TCP/IP incase TOR connection fails
+    // @return Boolean representing success of the fallback
     //
     public boolean fallbackToTPC() {
         
         try {
+            
             JvmGlobalUtil.init();
             // Set the netlayer to use the TOR network
-            NetLayer netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TCPIP);
+            netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TCPIP);
             // Override the deafault net implementation with the TOR netlayer.
             JvmGlobalUtil.setNetLayerAndNetAddressNameService(netLayer, true);
-            System.out.println("Falling back to TCP/IP");
+            //netLayer.clear();
+            
+            
+            for(int i=0;i<100;i++)
+                System.out.println("Falling back to TCP/IP");
+                
+            System.out.println("NETLAYER STATYS = " + netLayer.getStatus().getReadyIndicator());
+            
+//            // New thread to reset the NetLayer otherwise GUI will 
+//            // stall during this error handling procedure
+//            new Thread () {
+//                @Override
+//                public void run () {
+//                    try {
+//                        Thread.sleep(10000);
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                    
+//                    JvmGlobalUtil.init();
+//                    // Set the netlayer to use the TCP/IP network
+//                    NetLayer netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TCPIP);
+//                    // Override the deafault net implementation with the new netlayer.
+//                    JvmGlobalUtil.setNetLayerAndNetAddressNameService(netLayer, true);
+//                    
+//                    for(int i=0;i<100;i++)
+//                        System.out.println("Falling back to TCP/IP");
+//                }
+//            }.start();
         } catch (Exception ex) {
             Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
                     "Failed to connect to the TCP/IP network.", ex);
