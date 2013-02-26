@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import com.github.lyuben.bridge.Astyanax;
 import com.github.lyuben.tor.Anonymizer;
 import com.github.lyuben.util.FileUtil;
+import java.io.IOException;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -230,6 +231,17 @@ public class LoginFrame extends javax.swing.JFrame {
         this.setVisible(true);
         JOptionPane.showMessageDialog(this, "A problem occred while trying to login",
                 "Error logging in.", JOptionPane.ERROR_MESSAGE);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Anonymizer anon = new Anonymizer();
+        try {
+            anon.cleanNetLayer();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
