@@ -6,10 +6,13 @@ import com.github.lyuben.tor.Anonymizer;
 import com.github.lyuben.util.Base64Crypto;
 import com.github.lyuben.util.DateUtil;
 import com.github.lyuben.util.EmailFormatter;
+import com.netflix.astyanax.AstyanaxContext;
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.MutationBatch;
+import com.netflix.astyanax.connectionpool.NodeDiscoveryType;
 import com.netflix.astyanax.connectionpool.OperationResult;
 import com.netflix.astyanax.connectionpool.exceptions.ConnectionException;
+import com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl;
 import com.netflix.astyanax.model.Column;
 import com.netflix.astyanax.model.ColumnFamily;
 import com.netflix.astyanax.model.ColumnList;
@@ -19,6 +22,7 @@ import com.netflix.astyanax.model.Row;
 import com.netflix.astyanax.serializers.BytesArraySerializer;
 import com.netflix.astyanax.serializers.IntegerSerializer;
 import com.netflix.astyanax.serializers.StringSerializer;
+import com.netflix.astyanax.thrift.ThriftFamilyFactory;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,6 +41,16 @@ public class Astyanax {
     private static final String __CLUSTER__ = "Test Cluster";
     private static final String __SEEDS__ = "134.36.36.188";
     //private static final String __SEEDS__ = "127.0.0.1:9160";
+    
+    
+    // Accessor to simplify passing ks name around
+    // @return String representing keyspace name
+    //
+    public static String getKSName() {
+        return __KEYSPACE__;
+    }
+    
+    
     
     // Executes a CQL3 statement creatin a table with composite key
     // FAILS - Astyanax can not execute cql3 
@@ -276,18 +290,17 @@ public class Astyanax {
     public static Keyspace getKeyspaceContext(){
         
         //Normal KS
-        com.netflix.astyanax.AstyanaxContext<Keyspace> context = 
-                new com.netflix.astyanax.AstyanaxContext.Builder()
+        AstyanaxContext<Keyspace> context = new AstyanaxContext.Builder()
         .forCluster(__CLUSTER__)
         .forKeyspace(__KEYSPACE__) //NetworkKS
         .withAstyanaxConfiguration(
          new com.netflix.astyanax.impl.AstyanaxConfigurationImpl()      
         .setDefaultReadConsistencyLevel(ConsistencyLevel.CL_ALL) // Data should be consistent
         .setDefaultWriteConsistencyLevel(ConsistencyLevel.CL_ALL)
-        .setDiscoveryType(com.netflix.astyanax.connectionpool.NodeDiscoveryType.NONE) // NONE FOR BASIK KS
+        .setDiscoveryType(NodeDiscoveryType.NONE) // NONE FOR BASIK KS
         .setCqlVersion("3.0.0")) //using CQL3 (fails, its still CQL2)
         .withConnectionPoolConfiguration(
-         new com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl("MyConnectionPool")
+         new ConnectionPoolConfigurationImpl("MyConnectionPool")
         .setPort(9160)
         //If queries take longer than a 10 seconds, timeout.
         .setConnectTimeout(10000)
@@ -295,7 +308,7 @@ public class Astyanax {
         .setSeeds(__SEEDS__))
         .withConnectionPoolMonitor(
          new com.netflix.astyanax.connectionpool.impl.Slf4jConnectionPoolMonitorImpl())
-        .buildKeyspace(com.netflix.astyanax.thrift.ThriftFamilyFactory.getInstance());
+        .buildKeyspace(ThriftFamilyFactory.getInstance());
         
         context.start();
         

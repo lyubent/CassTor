@@ -84,17 +84,16 @@ public class EmailCql {
     //
     public static String deleteEmail(String key, String location){
         
-        switch (location) {
-            case "inbox":
-                return "UPDATE " + __COLUMNFAMILY__ + " SET DELETED_RECEIVER = '" 
+        if(location.equals("inbox")) {
+            return "UPDATE " + __COLUMNFAMILY__ + " SET DELETED_RECEIVER = '" 
                         + Base64Crypto.encode("Yes") + "' WHERE KEY = '" + key + "';";
-            case "sent":
-                return "UPDATE " + __COLUMNFAMILY__ + " SET DELETED_SENDER = '" 
+        } else if(location.equals("sent")) {
+            return "UPDATE " + __COLUMNFAMILY__ + " SET DELETED_SENDER = '" 
                         + Base64Crypto.encode("Yes") + "' WHERE KEY = '" + key + "';";
-            case "trash":
-                return "";
-            default:
-                return "";   
+        } else if(location.equals("trash")) {
+            return "";
+        } else {
+            return "";
         }
     }
     

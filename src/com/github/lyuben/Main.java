@@ -4,12 +4,10 @@ import com.github.lyuben.gui.LoginFrame;
 import com.github.lyuben.gui.StartupLoadFrame;
 import com.github.lyuben.tor.Anonymizer;
 import com.netflix.astyanax.connectionpool.exceptions.ConnectionException;
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+ 
 // @author lyubentodorov
 // @licence - MIT
 // Available at http://lyuben.herokuapp.com/casstor/ 
@@ -17,16 +15,16 @@ import java.util.logging.Logger;
 //
 public class Main {
     
-    public static void main(String[] args) throws IOException, InterruptedException, ConnectionException {
+    public static void main(String[] args) {
         
         try {
-//            //Build schema, run only once on seed node.
-//            //com.github.lyuben.bridge.Schema.buildSchema(com.github.lyuben.bridge.Astyanax.getKeyspaceContext());
-//            
-//            //run tests
-//            //new com.github.lyuben.test.TestSuite().runTests();
-//            
-//            // TOR initialization threading.
+            //Build schema, run only once on seed node.
+            //com.github.lyuben.bridge.Schema.buildSchema(com.github.lyuben.bridge.Astyanax.getKeyspaceContext());
+            
+            //run tests
+            //new com.github.lyuben.test.TestSuite().runTests();
+            
+            // TOR initialization threading.
             new Thread () {
                 @Override
                 public void run () {
@@ -36,42 +34,23 @@ public class Main {
     
                     // Run the TOR initialisation procedure
                     Anonymizer anon = new Anonymizer();
-                     anon.runTor();
+                    //anon.runTor();
                     
-                    
-                    
-    try{
-        //"134.36.36.188".equals(InetAddress.getLocalHost().getHostAddress().toString())
-        new Thread () {
-    @Override
-    public void run () {
-    try {
-        System.out.println("\n\n\n\n\n\n\nCHECKING NETSTATS!!!\n\n\n\n\n");
-        InetAddress jj = InetAddress.getByName("dundee.ac.uk");
-        if(jj.isReachable(5000)){
-            System.out.println("SUCESS");
-            System.out.println("SUCESS");
-            System.out.println("SUCESS");
-            System.out.println("SUCESS");
-            System.out.println("SUCESS");
-        } else {
-            System.out.println("FAILED");
-            System.out.println("FAILED");
-            System.out.println("FAILED");
-            System.out.println("FAILED");
-            System.out.println("FAILED");
-        }
-    } catch (UnknownHostException ex) {
-        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IOException ex) {
-        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-    }};}.start();
-
-    } catch (Exception ex) {Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);}
-                    
-                    
-                    
-                    //anon.cleanNetLayer();
+                    try{
+                        // InetAddress test prvents deadlock in Astyanax threading.
+                        new Thread () {
+                            @Override
+                            public void run () {
+                                try {
+                                    InetAddress.getByName("dundee.ac.uk").isReachable(5000);
+                                } catch (java.net.UnknownHostException ex) {
+                                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (java.io.IOException ex) {
+                                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            };
+                        }.start(); // InetAddressThread
+                    } catch (Exception ex) {Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);}
                     
                     // Once TOR Layer connection is completed, hide the loader frame.
                     loader.dispose();
@@ -88,10 +67,9 @@ public class Main {
                                         "Error with SWING Components", ex);
                             }
                         }
-                    });
-    
+                    }); // SWING thread
                 }
-            }.start();
+            }.start(); //TOR thread
             
             
         } catch (Exception ex) {

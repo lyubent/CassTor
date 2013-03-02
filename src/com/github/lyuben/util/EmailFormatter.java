@@ -82,23 +82,17 @@ public class EmailFormatter {
         try {
             String pattern;
             
-            switch (filterType) {
-                case "SENDER":
-                    pattern = "\\$(.*?)\\$"; //Sender
-                    break;
-                case "SUBJECT":
-                    pattern = "`£(.*?)`£"; //Subject
-                    break;
-                case "BODY":
-                    pattern = "`\\!(.*?)`\\!"; //Body
-                    break;
-                case "DATE":
-                    pattern = "`~(.*?)`~"; //Date
-                    break;
-                default:
-                    // Key
-                    pattern = "%(.*?)%"; // Key
-                    break;
+            if(filterType.equals("SENDER")) {
+                pattern = "\\$(.*?)\\$"; //Sender
+            } else if(filterType.equals("SUBJECT")) {
+                pattern = "`£(.*?)`£"; //Subject
+            } else if(filterType.equals("BODY")) {
+                pattern = "`\\!(.*?)`\\!"; //Body
+            } else if(filterType.equals("DATE")) {
+                pattern = "`~(.*?)`~"; //Date
+            } else {
+                // Key
+                pattern = "%(.*?)%"; // Key
             }
 
             Pattern p = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);

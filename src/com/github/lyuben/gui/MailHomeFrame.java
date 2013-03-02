@@ -369,10 +369,10 @@ public class MailHomeFrame extends javax.swing.JFrame {
                 jTextPane_FullMessage.setText(EmailFormatter.structureDetailedMessage(emailContent));
             }
         } catch (Exception ex) {
-            Logger.getLogger(MailHomeFrame.class.getName()).log(Level.SEVERE, 
-                    "Error redisplaying and updating inbox", ex);
             JOptionPane.showMessageDialog(this, "A problem occured!"
                     , "Error updating the inbox.", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(MailHomeFrame.class.getName()).log(Level.SEVERE, 
+                    "Error redisplaying and updating inbox", ex);
         }
     }//GEN-LAST:event_jList_InboxMailMouseClicked
 

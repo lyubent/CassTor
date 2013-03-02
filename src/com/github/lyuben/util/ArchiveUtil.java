@@ -2,8 +2,6 @@ package com.github.lyuben.util;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
@@ -27,21 +25,15 @@ public class ArchiveUtil {
     
     // Unzips the cassandra server
     //
-    public static void unzip(){
+    public static void unzip() throws ZipException{
         String source = "cassandra.zip";
         String destination = __DESKTOPLOCATION__;
         String password = "password";
 
-        try {
-            ZipFile zipFile = new ZipFile(source);
-            zipFile.extractAll(destination);
-            //FileUtils.deleteRecursive(new File(__DESKTOPLOCATION__ + "__MACOSX"));
-            FileUtil.writeToLog("[SUCCESS]\tExtracted cassandra without problems.");
-        } catch (ZipException ex) {
-            FileUtil.writeToLog("[ERROR]\tFailed to extract cassandra.");
-            Logger.getLogger(ArchiveUtil.class.getName()).log(Level.SEVERE, 
-                    "Error unziping cassandra.", ex);
-        }
+        ZipFile zipFile = new ZipFile(source);
+        zipFile.extractAll(destination);
+        //FileUtils.deleteRecursive(new File(__DESKTOPLOCATION__ + "__MACOSX"));
+        FileUtil.writeToLog("[SUCCESS]\tExtracted cassandra without problems.");
     }
     
     

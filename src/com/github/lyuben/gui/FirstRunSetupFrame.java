@@ -1,5 +1,7 @@
 package com.github.lyuben.gui;
 
+import com.github.lyuben.bridge.Astyanax;
+import com.github.lyuben.bridge.JDBC;
 import com.github.lyuben.util.ArchiveUtil;
 import com.github.lyuben.util.FileUtil;
 import com.github.lyuben.util.FramePositionHandler;
@@ -9,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import net.lingala.zip4j.exception.ZipException;
 
 
 // @author lyubentodorov
@@ -137,6 +140,7 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
             
             //first try to extract cassandra to Desktop, then update the UI.
             extractCassandra();
+            JDBC.incrementReplicationFactor(Astyanax.getKSName());
             
             jButton_Okey.setVisible(true);
             jTextPane_Licence.setText(getStartupInstructions());
@@ -165,14 +169,23 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     
     
     private void extractCassandra() {
-        // Extracting Cassandra and setting up permissions.
-        ArchiveUtil.unzip();
-        ArchiveUtil.setExecPermissions();
-        FileUtil.writeToLog("[SUCCESS]\tExtracted cassandra to desktop.");
+        try {        
+            // Extracting Cassandra and setting up permissions.
+            ArchiveUtil.unzip();
+            ArchiveUtil.setExecPermissions();
+            FileUtil.writeToLog("[SUCCESS]\tExtracted cassandra to desktop.");
 
-        //Setup the YAML file to store the local ip
-        FileUtil.configureCassandraYAML();
-        FileUtil.writeToLog("[SUCCESS]\tConfigured YAML file.");
+            //Setup the YAML file to store the local ip
+            FileUtil.configureCassandraYAML();
+            FileUtil.writeToLog("[SUCCESS]\tConfigured YAML file.");
+        } catch (ZipException ex) {
+            FileUtil.writeToLog("[ERROR]\tFailed to extract cassandra.");
+            JOptionPane.showMessageDialog(this, "A problem occured!"
+                    , "Failed to extract cassandra.", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(FirstRunSetupFrame.class.getName()).log(Level.SEVERE, 
+                    "Error unziping cassandra.", ex);
+        }
+        
     }
     
     
@@ -182,10 +195,7 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     //
     private void setupFrame() {
         FramePositionHandler.centerFrame(this);
-        //jTextArea_Licence.setText(FileUtil.getTextFromFile(__LICENCEURL__));
         populateAndStyleLicence();
-       
-        
     }
     
     
@@ -227,7 +237,7 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
             pathFindingFileDialog.setTitle("Find cassandra.YAML");
             pathFindingFileDialog.setVisible(true);
 
-            return pathFindingFileDialog.getFiles()[0].getAbsolutePath();
+            return ""; //pathFindingFileDialog.getFiles()[0].getAbsolutePath();
         } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
             Logger.getLogger(FirstRunSetupFrame.class.getName()).log(Level.SEVERE, null, ex);
         }

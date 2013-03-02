@@ -122,21 +122,20 @@ public class FileUtil {
     // Writes log lines to the log file
     // log file found in root directory of this prog 
     //
-    public static void writeToLog(String logDetail){
+    public static void writeToLog(String logDetail) {
         try {
             PrintWriter out = new PrintWriter(
                     new BufferedWriter(new FileWriter("log", true)));
-            
+
             out.println(logDetail + "\tLogged at:" + new java.util.Date().toString());
             out.flush();
             out.close();
-            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                    "Error writing to the logfile, failed to find the file.", ex);
+                    "Error configuring cassandra.YAML, couldn't find the file.", ex);
         } catch (IOException ex) {
             Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                    "Error writing to the logfile, IOException occured.", ex);
+                    "Error configuring cassandra.YAML, IOException occured.", ex);
         }
     }
 

@@ -12,7 +12,7 @@ public class SchemaCql {
     //
     public static String updateReplicationFactor(int newReplicationFactor, String keyspaceName){
         return "ALTER KEYSPACE \"" + keyspaceName + "\" WITH REPLICATION = { " + 
-               "'class' : 'SimpleStrategy', 'replication_factor' : " + (newReplicationFactor+1) + " };";
+               "'class' : 'SimpleStrategy', 'replication_factor' : " + (2) + " };";
     }
     
     
