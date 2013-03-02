@@ -137,14 +137,8 @@ public class Astyanax {
         }
         
         return messageList; } catch (Exception ex ){
-            System.out.println("AADFSASDFSADFSDFASFDSFAS");
-            System.out.println("AADFSASDFSADFSDFASFDSFAS");
-            System.out.println("AADFSASDFSADFSDFASFDSFAS");
-            System.out.println("AADFSASDFSADFSDFASFDSFAS");
-            System.out.println("AADFSASDFSADFSDFASFDSFAS");
-            System.out.println("AADFSASDFSADFSDFASFDSFAS");
-            System.out.println("AADFSASDFSADFSDFASFDSFAS");
-            System.out.println("AADFSASDFSADFSDFASFDSFAS");
+            Logger.getLogger(Astyanax.class.getName()).log(Level.SEVERE, 
+                    "Error loading emails. Fallback initiated.", ex);
             new Anonymizer().fallbackToTPC();
             
         }

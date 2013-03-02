@@ -203,9 +203,9 @@ public class LoginFrame extends javax.swing.JFrame {
                 return true;
             }    
         } catch (Exception ex) {
-            for(int i=0;i<100;i++)System.out.println("HANDLING FAILIURE");
             handleLogginFailiure();
-            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, 
+                    "ERROR: Handling login failiure.", ex);
         }
         
         return false;

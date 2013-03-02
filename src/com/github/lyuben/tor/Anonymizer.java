@@ -72,33 +72,6 @@ public class Anonymizer {
             JvmGlobalUtil.setNetLayerAndNetAddressNameService(netLayer, true);
             //netLayer.clear();
             
-            
-            for(int i=0;i<100;i++)
-                System.out.println("Falling back to TCP/IP");
-                
-            System.out.println("NETLAYER STATYS = " + netLayer.getStatus().getReadyIndicator());
-            
-//            // New thread to reset the NetLayer otherwise GUI will 
-//            // stall during this error handling procedure
-//            new Thread () {
-//                @Override
-//                public void run () {
-//                    try {
-//                        Thread.sleep(10000);
-//                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                    
-//                    JvmGlobalUtil.init();
-//                    // Set the netlayer to use the TCP/IP network
-//                    NetLayer netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TCPIP);
-//                    // Override the deafault net implementation with the new netlayer.
-//                    JvmGlobalUtil.setNetLayerAndNetAddressNameService(netLayer, true);
-//                    
-//                    for(int i=0;i<100;i++)
-//                        System.out.println("Falling back to TCP/IP");
-//                }
-//            }.start();
         } catch (Exception ex) {
             Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
                     "Failed to connect to the TCP/IP network.", ex);

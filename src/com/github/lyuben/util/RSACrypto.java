@@ -34,8 +34,6 @@ public class RSACrypto {
     KeyPair kp = kpg.generateKeyPair();
     PublicKey pubk = kp.getPublic();
     PrivateKey prvk = kp.getPrivate();
-    
-    //System.out.println("" + pubk + "\n\n\n\n\n " + prvk);
 
     byte[] dataBytes =
         "J2EE Security for Servlets, EJBs and Web Services".getBytes();
@@ -43,16 +41,8 @@ public class RSACrypto {
     byte[] encBytes = encrypt(dataBytes, pubk, xform);
     
     byte[] decBytes = decrypt(encBytes, prvk, xform);
-//    byte[] decBytes = decrypt(encByteZZ , prvk, xform);
     
     String source = new BigInteger(encBytes).toString();
-    System.out.println(source);
     byte[] byteArray = source.getBytes("UTF-8");
-//    byte[] decBytes = decrypt(byteArray, prvk, xform);
-
-//    System.out.println("\n\n\n\n\n\n\n\n\n" + new BigInteger(encBytes));
-    System.out.println("\n\n\n\n\n\n\n\n\n" + new String(decBytes));
-    //boolean expected = java.util.Arrays.equals(dataBytes, decBytes);
-    //System.out.println("Test " + (expected ? "SUCCEEDED!" : "FAILED!"));
   }
 }

@@ -21,13 +21,14 @@ public class EmailFormatter {
             body += "...";
         }
         
-        System.out.println(
-                "key: " + key +
-                "\nbody: " + Base64Crypto.decode(body) +
-                "\nfrom: " + Base64Crypto.decode(from) +
-                "\ndate: " + Base64Crypto.decode(date) +
-                "\nsubj: " + Base64Crypto.decode(subject)
-                );
+//        //DEBUG
+//        System.out.println(
+//                "key: " + key +
+//                "\nbody: " + Base64Crypto.decode(body) +
+//                "\nfrom: " + Base64Crypto.decode(from) +
+//                "\ndate: " + Base64Crypto.decode(date) +
+//                "\nsubj: " + Base64Crypto.decode(subject)
+//                );
         
         String tagData = "<span " +
                "$" + Base64Crypto.decode(from) + "$ " +
