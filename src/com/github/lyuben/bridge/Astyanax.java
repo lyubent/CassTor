@@ -132,11 +132,6 @@ public class Astyanax {
                     date = column.getValue(new StringSerializer());
                 }
             }
-          
-            
-            
-            
-            
             
             messageList.add(EmailFormatter.structureMessage(key, body, from, date, subject));
         }
@@ -163,10 +158,10 @@ public class Astyanax {
     // @param Requires a keyspace context, the user's username and a list of input 
     //
     public static String insertEmail(Keyspace keyspace, String user, List<String> uinput){
-        
+    //DISONE    
         String __KEY__ = String.valueOf(user + "@" + DateUtil.getUnixTimestamp());
         ColumnFamily<String, String> mail = 
-                new ColumnFamily<String, String>( __COLUMNFAMILY__, // CF Name
+            new ColumnFamily<String, String>( __COLUMNFAMILY__, // CF Name
             StringSerializer.get(), StringSerializer.get());
         MutationBatch mbatch = keyspace.prepareMutationBatch();
 
@@ -197,9 +192,7 @@ public class Astyanax {
     // Inserts a dynamic range of colums specified bellow
     // @param Requires a keyspace context, the user's username and a list of input 
     //
-    /*************************************
-     * METHOD NOT YET FULLY IMPLEMENTED! *
-     *************************************/
+    @Deprecated
     public static boolean insertEmailAsBytes(Keyspace keyspace, String user, List<String> uinput){
         
         ColumnFamily<byte [], byte []> mail = 
@@ -219,7 +212,7 @@ public class Astyanax {
 //            .putColumn("DELETED_SENDER", "No", null)
 //            .putColumn("DELETED_RECEIVER", "No", null)
 //            .putColumn("DATE", DateUtil.getCurrentDate(), null);
-//        
+        
         try { 
             OperationResult<Void> result = mbatch.execute();
             result.toString();
@@ -288,19 +281,18 @@ public class Astyanax {
     // @return The keyspace within the context
     //
     public static Keyspace getKeyspaceContext(){
-        
         //Normal KS
-        AstyanaxContext<Keyspace> context = new AstyanaxContext.Builder()
+        com.netflix.astyanax.AstyanaxContext<Keyspace> context = 
+         new com.netflix.astyanax.AstyanaxContext.Builder()
         .forCluster(__CLUSTER__)
         .forKeyspace(__KEYSPACE__) //NetworkKS
         .withAstyanaxConfiguration(
          new com.netflix.astyanax.impl.AstyanaxConfigurationImpl()      
-        .setDefaultReadConsistencyLevel(ConsistencyLevel.CL_ALL) // Data should be consistent
-        .setDefaultWriteConsistencyLevel(ConsistencyLevel.CL_ALL)
-        .setDiscoveryType(NodeDiscoveryType.NONE) // NONE FOR BASIK KS
-        .setCqlVersion("3.0.0")) //using CQL3 (fails, its still CQL2)
+        .setDiscoveryType(com.netflix.astyanax.connectionpool.NodeDiscoveryType.NONE) // NONE FOR BASIK KS
+        .setCqlVersion("3.0.0")) //using CQL3
+                
         .withConnectionPoolConfiguration(
-         new ConnectionPoolConfigurationImpl("MyConnectionPool")
+         new com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl("MyConnectionPool")
         .setPort(9160)
         //If queries take longer than a 10 seconds, timeout.
         .setConnectTimeout(10000)
@@ -308,7 +300,7 @@ public class Astyanax {
         .setSeeds(__SEEDS__))
         .withConnectionPoolMonitor(
          new com.netflix.astyanax.connectionpool.impl.Slf4jConnectionPoolMonitorImpl())
-        .buildKeyspace(ThriftFamilyFactory.getInstance());
+        .buildKeyspace(com.netflix.astyanax.thrift.ThriftFamilyFactory.getInstance());
         
         context.start();
         

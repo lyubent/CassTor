@@ -15,10 +15,7 @@ import java.util.logging.Logger;
 //
 public class Schema {
     
-    private Keyspace keyspace;
-    
-    public Schema(Keyspace keyspace){
-        this.keyspace = keyspace;
+    public Schema(){
     }
     
     
@@ -29,7 +26,7 @@ public class Schema {
     //
     public static boolean buildSchema(Keyspace keyspace){
         try {
-            Schema.createKeyspace(keyspace);
+            Schema.createKeyspace(keyspace); //OK
             Schema.createIndexedColumnFamilyStrings(keyspace);
         } catch (Exception ex) {
             Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
@@ -68,7 +65,6 @@ public class Schema {
     //
     public static boolean createIndexedColumnFamilyStrings(Keyspace keyspace){
         try {
-            
             keyspace.createColumnFamily(Astyanax.getColumnFamilyStructure(), ImmutableMap.<String, Object>builder()
             .put("default_validation_class", "UTF8Type")
             .put("key_validation_class", "UTF8Type")
@@ -115,6 +111,7 @@ public class Schema {
     // Creates a CF with 3 indexed
     // @param Keyspace from an astyanax context initialiased with KS name
     //
+    @Deprecated
     public static boolean createIndexedColumnFamilyBytes(Keyspace keyspace){
         try {
             

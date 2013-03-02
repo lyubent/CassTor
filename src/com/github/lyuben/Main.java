@@ -19,7 +19,7 @@ public class Main {
         
         try {
             //Build schema, run only once on seed node.
-            //com.github.lyuben.bridge.Schema.buildSchema(com.github.lyuben.bridge.Astyanax.getKeyspaceContext());
+            com.github.lyuben.bridge.Schema.buildSchema(com.github.lyuben.bridge.Astyanax.getKeyspaceContext());
             
             //run tests
             //new com.github.lyuben.test.TestSuite().runTests();

@@ -39,13 +39,13 @@ public class TestSuite {
             
             //Alter the keyspace replication factor
             // Deprecated //org.junit.Assert.assertTrue(schemaTester.alterReplicationFactor());
-            org.junit.Assert.assertTrue(schemaTester.incrementReplicationFactorJDBC());
+            // org.junit.Assert.assertTrue(schemaTester.incrementReplicationFactorJDBC());
             
             //Insert and then remove 10 emails.
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 2; i++) {
                 
                 //Sleep long enough to allow keys to be 100% unique.
-                Thread.sleep(100);
+                Thread.sleep(1000);
                 
                 //insert and email into cassandra
                 String key = queryTester.insertEmail();
@@ -53,6 +53,7 @@ public class TestSuite {
                 
                 //delete an email from cassandra
                 //String key = "TestUsr@1359483724";
+                
                 org.junit.Assert.assertTrue(queryTester.deleteEmail(key));
             }
             
@@ -84,7 +85,7 @@ public class TestSuite {
         .withAstyanaxConfiguration(
          new com.netflix.astyanax.impl.AstyanaxConfigurationImpl()      
         .setDiscoveryType(com.netflix.astyanax.connectionpool.NodeDiscoveryType.NONE) // NONE FOR BASIK KS
-        .setCqlVersion("3.0.0")) //using CQL3 (fails, its still CQL2)
+        .setCqlVersion("3.0.0")) //using CQL3
                 
         .withConnectionPoolConfiguration(
          new com.netflix.astyanax.connectionpool.impl.ConnectionPoolConfigurationImpl("MyConnectionPool")
