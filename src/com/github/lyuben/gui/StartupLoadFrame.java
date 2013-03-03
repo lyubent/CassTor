@@ -3,6 +3,7 @@ package com.github.lyuben.gui;
 // @author lyubentodorov
 
 import com.github.lyuben.util.FramePositionHandler;
+import javax.swing.UIManager;
 
 // @licence - MIT
 // Available at http://lyuben.herokuapp.com/casstor/ 
@@ -67,6 +68,8 @@ public class StartupLoadFrame extends javax.swing.JFrame {
                 // We want Mac first if we are on OSX or Microsoft first if on windows.
                 // Avoids using Nimbus on OSX or Metal on Win7/8.
                 if ("Mac OS X".equals(info.getName())) {
+                    System.setProperty("apple.laf.useScreenMenuBar", "true");
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 } else if ("Windows".equals(info.getName())) {

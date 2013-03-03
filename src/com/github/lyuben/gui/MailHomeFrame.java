@@ -2,13 +2,11 @@ package com.github.lyuben.gui;
 
 import com.github.lyuben.bridge.Astyanax;
 import com.github.lyuben.cql.EmailCql;
-import com.github.lyuben.tor.Anonymizer;
 import com.github.lyuben.util.EmailFormatter;
 import com.netflix.astyanax.Keyspace;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,31 +57,23 @@ public class MailHomeFrame extends javax.swing.JFrame {
         jButton_Trash = new javax.swing.JButton();
         jButton_Exit = new javax.swing.JButton();
         jButton_Inbox = new javax.swing.JButton();
-        jLayeredPane_Background = new javax.swing.JLayeredPane();
-        jPanel_Inbox = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList_InboxMail = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextPane_FullMessage = new javax.swing.JTextPane();
-        jButton_Reply = new javax.swing.JButton();
         jButton_New = new javax.swing.JButton();
+        jButton_Reply = new javax.swing.JButton();
         jButton_Delete = new javax.swing.JButton();
-        jPanel_NewMessage = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea_NewMessage_Body = new javax.swing.JTextArea();
-        jTextField_NewMessage_To = new javax.swing.JTextField();
-        jTextField_NewMessage_Title = new javax.swing.JTextField();
-        jButton_Send = new javax.swing.JButton();
-        jLabel_SendTo = new javax.swing.JLabel();
-        jLabel_Title = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList_InboxMail = new javax.swing.JList();
         jMenuBar_TopMenu = new javax.swing.JMenuBar();
         jMenu_Mail = new javax.swing.JMenu();
-        jMenu_Folders = new javax.swing.JMenu();
+        jMenu_Mail_NewMessage = new javax.swing.JMenuItem();
+        jMenu_View = new javax.swing.JMenu();
+        jMenu_View_Inbox = new javax.swing.JMenuItem();
+        jMenu_View_Sent = new javax.swing.JMenuItem();
+        jMenu_View_Trash = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(660, 465));
 
         jPanel_Options.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -137,40 +127,27 @@ public class MailHomeFrame extends javax.swing.JFrame {
                 .add(jButton_Outbox)
                 .add(18, 18, 18)
                 .add(jButton_Trash)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 237, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jButton_Exit)
                 .add(50, 50, 50))
         );
 
-        jLayeredPane_Background.setBackground(javax.swing.UIManager.getDefaults().getColor("InternalFrame.activeTitleBackground"));
-
-        jPanel_Inbox.setBackground(new java.awt.Color(204, 204, 204));
-
-        jList_InboxMail.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jList_InboxMail.setSelectionBackground(new java.awt.Color(102, 204, 255));
-        jList_InboxMail.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList_InboxMailMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(jList_InboxMail);
-
         jTextPane_FullMessage.setEditable(false);
         jScrollPane4.setViewportView(jTextPane_FullMessage);
-
-        jButton_Reply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/reply.png")));
-        jButton_Reply.setText("Reply");
-        jButton_Reply.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ReplyActionPerformed(evt);
-            }
-        });
 
         jButton_New.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/new.png")));
         jButton_New.setText("New");
         jButton_New.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_NewActionPerformed(evt);
+            }
+        });
+
+        jButton_Reply.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/reply.png")));
+        jButton_Reply.setText("Reply");
+        jButton_Reply.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ReplyActionPerformed(evt);
             }
         });
 
@@ -182,134 +159,58 @@ public class MailHomeFrame extends javax.swing.JFrame {
             }
         });
 
-        org.jdesktop.layout.GroupLayout jPanel_InboxLayout = new org.jdesktop.layout.GroupLayout(jPanel_Inbox);
-        jPanel_Inbox.setLayout(jPanel_InboxLayout);
-        jPanel_InboxLayout.setHorizontalGroup(
-            jPanel_InboxLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-            .add(jPanel_InboxLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(jButton_New, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton_Reply)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jButton_Delete, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(19, 19, 19))
-            .add(jScrollPane4)
-            .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)
-        );
-        jPanel_InboxLayout.setVerticalGroup(
-            jPanel_InboxLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel_InboxLayout.createSequentialGroup()
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 180, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(4, 4, 4)
-                .add(jPanel_InboxLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel_InboxLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(jButton_Reply)
-                        .add(jButton_Delete))
-                    .add(jButton_New, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel_Inbox.setBounds(4, 0, 446, 460);
-        jLayeredPane_Background.add(jPanel_Inbox, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        jPanel_NewMessage.setToolTipText("");
-
-        jTextArea_NewMessage_Body.setColumns(20);
-        jTextArea_NewMessage_Body.setRows(5);
-        jScrollPane1.setViewportView(jTextArea_NewMessage_Body);
-
-        jButton_Send.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/send.png")));
-        jButton_Send.setText("Send");
-        jButton_Send.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_SendActionPerformed(evt);
+        jList_InboxMail.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jList_InboxMail.setSelectionBackground(new java.awt.Color(102, 204, 255));
+        jList_InboxMail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList_InboxMailMouseClicked(evt);
             }
         });
-
-        jLabel_SendTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/sendto_arrow.png")));
-
-        jLabel_Title.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/sendto.png")));
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/message.png")));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/title_arrow.png")));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/github/lyuben/img/title.png")));
-
-        org.jdesktop.layout.GroupLayout jPanel_NewMessageLayout = new org.jdesktop.layout.GroupLayout(jPanel_NewMessage);
-        jPanel_NewMessage.setLayout(jPanel_NewMessageLayout);
-        jPanel_NewMessageLayout.setHorizontalGroup(
-            jPanel_NewMessageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel_NewMessageLayout.createSequentialGroup()
-                .add(64, 64, 64)
-                .add(jLabel_SendTo)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .add(jPanel_NewMessageLayout.createSequentialGroup()
-                .add(jPanel_NewMessageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel_NewMessageLayout.createSequentialGroup()
-                        .add(24, 24, 24)
-                        .add(jPanel_NewMessageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel_NewMessageLayout.createSequentialGroup()
-                                .add(jLabel_Title)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jTextField_NewMessage_To))
-                            .add(jPanel_NewMessageLayout.createSequentialGroup()
-                                .add(25, 25, 25)
-                                .add(jLabel1)
-                                .add(jPanel_NewMessageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jPanel_NewMessageLayout.createSequentialGroup()
-                                        .add(jLabel2)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jLabel3)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jButton_Send, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 70, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .add(0, 43, Short.MAX_VALUE))
-                                    .add(jPanel_NewMessageLayout.createSequentialGroup()
-                                        .add(6, 6, 6)
-                                        .add(jTextField_NewMessage_Title))))))
-                    .add(jPanel_NewMessageLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel_NewMessageLayout.setVerticalGroup(
-            jPanel_NewMessageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel_NewMessageLayout.createSequentialGroup()
-                .add(19, 19, 19)
-                .add(jLabel_SendTo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(6, 6, 6)
-                .add(jPanel_NewMessageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jTextField_NewMessage_To, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel_Title))
-                .add(jPanel_NewMessageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel_NewMessageLayout.createSequentialGroup()
-                        .add(2, 2, 2)
-                        .add(jTextField_NewMessage_Title, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(4, 4, 4)
-                        .add(jPanel_NewMessageLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel2)
-                            .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 32, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jButton_Send)))
-                    .add(jPanel_NewMessageLayout.createSequentialGroup()
-                        .add(9, 9, 9)
-                        .add(jLabel1)))
-                .add(18, 18, 18)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 277, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
-        jPanel_NewMessage.setBounds(460, 0, 440, 450);
-        jLayeredPane_Background.add(jPanel_NewMessage, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jPanel_NewMessage.setBounds(0, 10, 440, 450);
+        jScrollPane2.setViewportView(jList_InboxMail);
 
         jMenu_Mail.setText("Mail");
+
+        jMenu_Mail_NewMessage.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        jMenu_Mail_NewMessage.setText("New Message");
+        jMenu_Mail_NewMessage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_NewActionPerformed(evt);
+            }
+        });
+        jMenu_Mail.add(jMenu_Mail_NewMessage);
+
         jMenuBar_TopMenu.add(jMenu_Mail);
 
-        jMenu_Folders.setText("Folders");
-        jMenuBar_TopMenu.add(jMenu_Folders);
+        jMenu_View.setText("View");
+
+        jMenu_View_Inbox.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, java.awt.event.InputEvent.CTRL_MASK));
+        jMenu_View_Inbox.setText("Inbox");
+        jMenu_View_Inbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_InboxActionPerformed(evt);
+            }
+        });
+        jMenu_View.add(jMenu_View_Inbox);
+
+        jMenu_View_Sent.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, java.awt.event.InputEvent.CTRL_MASK));
+        jMenu_View_Sent.setText("Sent");
+        jMenu_View_Sent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_OutboxActionPerformed(evt);
+            }
+        });
+        jMenu_View.add(jMenu_View_Sent);
+
+        jMenu_View_Trash.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, java.awt.event.InputEvent.CTRL_MASK));
+        jMenu_View_Trash.setText("Trash");
+        jMenu_View_Trash.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_TrashActionPerformed(evt);
+            }
+        });
+        jMenu_View.add(jMenu_View_Trash);
+
+        jMenuBar_TopMenu.add(jMenu_View);
 
         setJMenuBar(jMenuBar_TopMenu);
 
@@ -320,13 +221,33 @@ public class MailHomeFrame extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .add(jPanel_Options, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLayeredPane_Background, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 453, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jScrollPane4)
+                            .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .add(layout.createSequentialGroup()
+                        .add(6, 6, 6)
+                        .add(jButton_New, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 97, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jButton_Reply, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jButton_Delete, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 93, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel_Options, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(layout.createSequentialGroup()
-                .add(jLayeredPane_Background)
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 181, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jButton_New, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jButton_Reply)
+                    .add(jButton_Delete))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -347,8 +268,6 @@ public class MailHomeFrame extends javax.swing.JFrame {
     private void jButton_InboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InboxActionPerformed
         location = "inbox";
         jButton_Delete.setEnabled(true);
-        jPanel_NewMessage.setVisible(false);
-        jPanel_Inbox.setVisible(true);
         
         populateInbox(Astyanax.processResults(Astyanax.execCQL(
                         this.keyspace, EmailCql.nondeletedUserEmail(_USERNAME_))));
@@ -376,32 +295,33 @@ public class MailHomeFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jList_InboxMailMouseClicked
 
+    
+    
+    // Displays dialogue for sending a new message
+    // SHORTCUT - "Ctrl + N"
+    // @return Void
     private void jButton_NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_NewActionPerformed
-
-        jPanel_Inbox.setVisible(false);
-        jPanel_NewMessage.setVisible(true);
         
-        jTextField_NewMessage_To.setText("");
-        jTextField_NewMessage_Title.setText("");
-        jTextArea_NewMessage_Body.setText("");
+        new NewMessageForm(keyspace, _USERNAME_).setVisible(true);
     }//GEN-LAST:event_jButton_NewActionPerformed
 
+    
+    
     private void jButton_ReplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ReplyActionPerformed
         
-        if(isEmailSelected("replying to")) { 
-            //switch panel visibility
-            jPanel_Inbox.setVisible(false);
-            jPanel_NewMessage.setVisible(true);
-        
-            //populate to and title for the reply
-            jTextField_NewMessage_To.setText(EmailFormatter.
-                    applyRegexFilter(getjListSelectedIndexString(), "SENDER"));
-            jTextField_NewMessage_Title.setText("RE: " + EmailFormatter.
-                    applyRegexFilter(getjListSelectedIndexString(), "SUBJECT"));
-            jTextArea_NewMessage_Body.setText("");
+        if(isEmailSelected("replying to")) {
+            //retrieve subject title and sender's username for the reply
+            String sender = EmailFormatter.applyRegexFilter(
+                    getjListSelectedIndexString(), "SENDER");
+            String subject = "RE: " + EmailFormatter.applyRegexFilter(
+                    getjListSelectedIndexString(), "SUBJECT");
+            // show new form to send the message
+            new NewMessageForm(keyspace, _USERNAME_, sender, subject).setVisible(true);
         }
     }//GEN-LAST:event_jButton_ReplyActionPerformed
 
+    
+    
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DeleteActionPerformed
         if(isEmailSelected("deleting")){
             String key = EmailFormatter.applyRegexFilter(getjListSelectedIndexString(), "");
@@ -418,24 +338,8 @@ public class MailHomeFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton_DeleteActionPerformed
 
-    private void jButton_SendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SendActionPerformed
-        
-        if(jPanel_NewMessage.isVisible()){
-            jButton_Delete.setEnabled(true);
-            // Insert the email into the db
-            Astyanax.insertEmail(keyspace, _USERNAME_, Arrays.asList(
-                    jTextField_NewMessage_To.getText(),     //receiver 
-                    jTextField_NewMessage_Title.getText(),  //subject
-                    jTextArea_NewMessage_Body.getText())); //body
-        } else {
-            JOptionPane.showMessageDialog(this, "A problem occured!"
-                    , "Error sending email", JOptionPane.ERROR_MESSAGE);
-        }
-        jPanel_NewMessage.setVisible(false);
-        jPanel_Inbox.setVisible(true);
-        location = "inbox";
-    }//GEN-LAST:event_jButton_SendActionPerformed
-
+    
+    
     private void jButton_TrashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_TrashActionPerformed
         location = "trash";
         // Join all the emails I own that I've deleted.
@@ -447,17 +351,21 @@ public class MailHomeFrame extends javax.swing.JFrame {
         fullDeletedEmailList.addAll(Astyanax.processResults(Astyanax.execCQL(
                         this.keyspace, EmailCql.deletedUserEmail(_USERNAME_))));
         populateInbox(fullDeletedEmailList);
-        
         jButton_Delete.setEnabled(false);
     }//GEN-LAST:event_jButton_TrashActionPerformed
 
+    
+    
     private void jButton_OutboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OutboxActionPerformed
         location = "sent";
         jButton_Delete.setEnabled(true);
         populateInbox(Astyanax.processResults(Astyanax.execCQL(
                         this.keyspace, EmailCql.allSentUserEmail(_USERNAME_))));
+        
     }//GEN-LAST:event_jButton_OutboxActionPerformed
 
+    
+    
     private void jButton_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ExitActionPerformed
         destroyFrame();
     }//GEN-LAST:event_jButton_ExitActionPerformed
@@ -554,10 +462,8 @@ public class MailHomeFrame extends javax.swing.JFrame {
     //
     private void hideUnused() {
         Border emptyBorder = BorderFactory.createEmptyBorder();
-        jScrollPane1.setBorder(emptyBorder);
         jScrollPane2.setBorder(emptyBorder);
         jScrollPane4.setBorder(emptyBorder);
-        jPanel_NewMessage.setVisible(false);
     }
     
     
@@ -581,12 +487,10 @@ public class MailHomeFrame extends javax.swing.JFrame {
     }
     
     
-    
     // Closes the frame and redisplays login frame.
     //
     //
     private void destroyFrame(){
-        
         this.setVisible(false);
         parentFrame.setLocation(this.getLocation());
         parentFrame.setVisible(true);
@@ -601,27 +505,18 @@ public class MailHomeFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton_New;
     private javax.swing.JButton jButton_Outbox;
     private javax.swing.JButton jButton_Reply;
-    private javax.swing.JButton jButton_Send;
     private javax.swing.JButton jButton_Trash;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel_SendTo;
-    private javax.swing.JLabel jLabel_Title;
-    private javax.swing.JLayeredPane jLayeredPane_Background;
     private javax.swing.JList jList_InboxMail;
     private javax.swing.JMenuBar jMenuBar_TopMenu;
-    private javax.swing.JMenu jMenu_Folders;
     private javax.swing.JMenu jMenu_Mail;
-    private javax.swing.JPanel jPanel_Inbox;
-    private javax.swing.JPanel jPanel_NewMessage;
+    private javax.swing.JMenuItem jMenu_Mail_NewMessage;
+    private javax.swing.JMenu jMenu_View;
+    private javax.swing.JMenuItem jMenu_View_Inbox;
+    private javax.swing.JMenuItem jMenu_View_Sent;
+    private javax.swing.JMenuItem jMenu_View_Trash;
     private javax.swing.JPanel jPanel_Options;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea_NewMessage_Body;
-    private javax.swing.JTextField jTextField_NewMessage_Title;
-    private javax.swing.JTextField jTextField_NewMessage_To;
     private javax.swing.JTextPane jTextPane_FullMessage;
     // End of variables declaration//GEN-END:variables
 

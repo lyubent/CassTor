@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 import com.github.lyuben.bridge.Astyanax;
 import com.github.lyuben.tor.Anonymizer;
 import com.github.lyuben.util.FileUtil;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.IOException;
 
 // @author lyubentodorov

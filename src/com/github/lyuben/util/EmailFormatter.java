@@ -15,45 +15,45 @@ public class EmailFormatter {
     // @param requires multiple strings that represent parts of the email
     //
     public static String structureMessage(String key, String body, String from, String date, String subject){
-                
+        
+        String fullBody = body;
+        fullBody = org.apache.commons.lang.StringEscapeUtils.escapeHtml(
+                escape(Base64Crypto.decode(fullBody)));
+        
+        // Un-encode
+        body = escape(Base64Crypto.decode(body));
+        subject = escape(Base64Crypto.decode(subject));
+        date = escape(Base64Crypto.decode(date));
+        from = escape(Base64Crypto.decode(from));
+        
         if(body.length() > 75){
             body = body.substring(0, 59);
             body += "...";
         }
         
-//        //DEBUG
-//        System.out.println(
-//                "key: " + key +
-//                "\nbody: " + Base64Crypto.decode(body) +
-//                "\nfrom: " + Base64Crypto.decode(from) +
-//                "\ndate: " + Base64Crypto.decode(date) +
-//                "\nsubj: " + Base64Crypto.decode(subject)
-//                );
-        
         String tagData = "<span " +
-               "$" + Base64Crypto.decode(from) + "$ " +
-               "`£" + Base64Crypto.decode(subject) + "`£ " + 
-               "`!" + Base64Crypto.decode(body) + "`! " + 
-               "`~" + Base64Crypto.decode(date) + "`~ >" +
+               "$" + from + "$ " +
+               "`£" + subject + "`£ " +
+               "`!" + fullBody + "`! " + 
+               "`~" + date + 
+               "`~ >" +
                "</span>";
         
         String data = "<html>" + 
                "<div id=\"" + 
-                    "%" + key + "%\" " + 
-                    
+                    "%" + key + "%\" " +
                "style=\"height:15px;padding:5px;\">" + 
-               "<b>" + Base64Crypto.decode(subject) + "</b><br/>" + 
-               Base64Crypto.decode(from) + " <span style=\"color:white;\"> . </span> sent-on " + 
-               Base64Crypto.decode(date) +
+               "<b>" + subject + "</b><br/>" + 
+               from + " <span style=\"color:white;\"> . </span> sent-on " + 
+               date +
                  "<br/><span style=\"color:gray;\">" + 
-               Base64Crypto.decode(body) + "</span>" +
-               "</div style='max-height:0px;height:0px;overflow:hidden;" +
+               body + "</span>" +
+               "<div style='max-height:0px;height:0px;overflow:hidden;'>" +
                
                // stores content between "tags" that can be stripped out.
                tagData + "</div>" +
                 
                "</html>";
-        
         return data;
     }
     
@@ -70,7 +70,8 @@ public class EmailFormatter {
                "<span style=\"color:#383838;\">From <span style=\"color:#cd5c5c\">" + emailContent[1] + 
                "</span> sent on " + emailContent[2] + "</span>" + 
                "<br/></div><div style=\"padding:12px;style=\"font-size:13px;\">" + 
-               "<span>" + emailContent[3] + "</span></div>" 
+               "<span>" + org.apache.commons.lang.StringEscapeUtils.unescapeHtml(
+                emailContent[3]) + "</span></div>" 
                + "</html>"; 
     }
     
@@ -112,5 +113,19 @@ public class EmailFormatter {
             return "";
         }
         
+    }
+    
+    
+    
+    // Custom escape for escaping HTML and Java strings
+    // @return Retuns the clean string
+    //
+    public static String escape(String toEscape) {
+        return toEscape.replaceAll("\\\\", "&#92;")
+                       .replaceAll("\"", "&#34;")
+                       .replaceAll("'", "&#146;")
+                       .replaceAll("\t", "&#09;")
+                       .replaceAll("\n", "<br>")
+                       .replaceAll("/", "&#47;");
     }
 }
