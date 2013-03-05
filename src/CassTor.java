@@ -18,10 +18,11 @@ public class CassTor {
         try {
             //Build schema, run only once on seed node.
             //com.github.lyuben.bridge.Schema.buildSchema(com.github.lyuben.bridge.Astyanax.getKeyspaceContext());
-
+            //System.exit(0);
+            
             //run tests
             //new com.github.lyuben.test.TestSuite().runTests();
-
+            
             // Display a loding frame white TOR initialises
             StartupLoadFrame loader = new StartupLoadFrame();
             loader.setVisible(true);

@@ -165,7 +165,7 @@ public class Schema {
         try {
             keyspace.createKeyspace(ImmutableMap.<String, Object>builder()
                 .put("strategy_options", ImmutableMap.<String, Object>builder()
-                .put("replication_factor", "2").build())
+                .put("replication_factor", "3").build())
                 .put("strategy_class","SimpleStrategy").build());
             return true; // Success
             
