@@ -39,7 +39,7 @@ public class TestSuite {
             
             //Alter the keyspace replication factor
             // Deprecated //org.junit.Assert.assertTrue(schemaTester.alterReplicationFactor());
-            // org.junit.Assert.assertTrue(schemaTester.incrementReplicationFactorJDBC());
+            org.junit.Assert.assertTrue(schemaTester.incrementReplicationFactorJDBC());
             
             //Insert and then remove 10 emails.
             for (int i = 0; i < 2; i++) {

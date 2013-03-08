@@ -41,15 +41,15 @@ public class LoginFrame extends javax.swing.JFrame {
     // Runs cassandra unzip routine if it is the first run.
     //
     private boolean isFirstRun() {
-        if(FileUtil.getTextFromFile("log", true) == null) {
+        if(FileUtil.isFirstRun()) {
             // First run - displaying licence.
             new FirstRunSetupFrame(this).setVisible(true);
             
             return true;
-        } 
-        
-        this.setVisible(true);
-        return false;
+        } else {
+            this.setVisible(true);
+            return false;
+        }
     }
     
     

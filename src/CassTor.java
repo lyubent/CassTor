@@ -1,8 +1,13 @@
 
+import com.github.lyuben.gui.FirstRunSetupFrame;
 import com.github.lyuben.gui.LoginFrame;
 import com.github.lyuben.gui.StartupLoadFrame;
 import com.github.lyuben.tor.Anonymizer;
+import com.github.lyuben.util.FileUtil;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +27,8 @@ public class CassTor {
             
             //run tests
             //new com.github.lyuben.test.TestSuite().runTests();
+            //System.exit(0);
+            
             
             // Display a loding frame white TOR initialises
             StartupLoadFrame loader = new StartupLoadFrame();
@@ -40,7 +47,7 @@ public class CassTor {
 
             // Once TOR Layer connection is completed, hide the loader frame.
             loader.dispose();
-
+            
             // SWING GUI threading.
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
                 @Override

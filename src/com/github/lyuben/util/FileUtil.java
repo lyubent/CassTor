@@ -1,5 +1,7 @@
 package com.github.lyuben.util;
 
+import com.github.lyuben.gui.FirstRunSetupFrame;
+import com.github.lyuben.gui.LoginFrame;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -27,7 +29,7 @@ import org.xml.sax.SAXException;
 public class FileUtil {
     
     private static final String __CASSANDRACONFIGPATH__ = 
-            System.getProperty("user.home") + "/Desktop/cassandra/conf/cassandra.yaml";
+        System.getProperty("user.home") + "/Desktop/cassandra/conf/cassandra.yaml";
     
     public FileUtil() {
     }
@@ -100,7 +102,7 @@ public class FileUtil {
             BufferedWriter fileOut = new BufferedWriter(new FileWriter(__CASSANDRACONFIGPATH__));
             for (String line : file) {
                 //Replace the block with the machine's local IP address needed for joining the cassandra ring.
-                line = line.replaceFirst("<INTERFACE_IP>", NetworkUtil.getInterfaceIP() + " # ADDED BY SCRIPT");
+                line = line.replaceFirst("<INTERFACE_IP>", NetworkUtil.getInterfaceIP());
                 fileOut.write(line + "\n");
             }
             
@@ -137,6 +139,15 @@ public class FileUtil {
             Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
                     "Error configuring cassandra.YAML, IOException occured.", ex);
         }
+    }
+    
+    
+    
+    // Checks if log file contains data 
+    // Determines if program has been previously run.
+    //
+    public static boolean isFirstRun() {
+        return FileUtil.getTextFromFile("log", true) == null;
     }
 
     

@@ -1,5 +1,6 @@
 package com.github.lyuben.bridge;
 
+import com.github.lyuben.cql.SchemaCql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;  
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.github.lyuben.cql.SchemaCql;
 
 // @author lyubentodorov
 // @licence - MIT
