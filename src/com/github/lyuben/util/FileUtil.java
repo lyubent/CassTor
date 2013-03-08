@@ -1,7 +1,5 @@
 package com.github.lyuben.util;
 
-import com.github.lyuben.gui.FirstRunSetupFrame;
-import com.github.lyuben.gui.LoginFrame;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -30,10 +28,6 @@ public class FileUtil {
     
     private static final String __CASSANDRACONFIGPATH__ = 
         System.getProperty("user.home") + "/Desktop/cassandra/conf/cassandra.yaml";
-    
-    public FileUtil() {
-    }
-    
     
     
     // Reads text from a file and returns it as a string
@@ -87,25 +81,26 @@ public class FileUtil {
         
         try {
             
-            //Create a reader to read the file
+            // Create a reader to read the file
             BufferedReader br = new BufferedReader(new FileReader(__CASSANDRACONFIGPATH__));
             java.util.List<String> file = new java.util.ArrayList();
             
-            //Read the file in line by line and store it in a List of Strings
+            // Read the file in line by line and store it in a List of Strings
             String currentLine = "";
             while ((currentLine = br.readLine()) != null) {
                file.add(currentLine);
             }
             br.close();
             
-            //Write the List of strings line by line back to the same file
+            // Write the List of strings line by line back to the same file
             BufferedWriter fileOut = new BufferedWriter(new FileWriter(__CASSANDRACONFIGPATH__));
             for (String line : file) {
                 //Replace the block with the machine's local IP address needed for joining the cassandra ring.
                 line = line.replaceFirst("<INTERFACE_IP>", NetworkUtil.getInterfaceIP());
+                line = line.replaceFirst("<LIB_LOCATION>", System.getProperty("user.home") + "/Desktop/cassandra/" + "var/lib");
                 fileOut.write(line + "\n");
             }
-            
+            // Clean and close the stream.
             fileOut.flush();
             fileOut.close();
             
@@ -204,6 +199,18 @@ public class FileUtil {
               Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
                       "IOException when trying to read in XML data", ex);
           }
+    }
+    
+    
+    // Creates a location to store the cassandra logs and data
+    // Created locally to allow for non root execution
+    public static void makeLogVarDirs() {
+        new File(System.getProperty("user.home") + "/Desktop/cassandra/var").mkdir();
+        new File(System.getProperty("user.home") + "/Desktop/cassandra/var/lib").mkdir();
+        new File(System.getProperty("user.home") + "/Desktop/cassandra/var/lib/cassandra").mkdir();
+        new File(System.getProperty("user.home") + "/Desktop/cassandra/var/lib/cassandra/commitlog").mkdir();
+        new File(System.getProperty("user.home") + "/Desktop/cassandra/var/lib/cassandra/data").mkdir();
+        new File(System.getProperty("user.home") + "/Desktop/cassandra/var/lib/cassandra/saved_caches").mkdir();
     }
     
 }

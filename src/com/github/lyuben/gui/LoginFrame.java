@@ -1,19 +1,16 @@
 package com.github.lyuben.gui;
 
+import com.github.lyuben.bridge.Astyanax;
+import com.github.lyuben.tor.Anonymizer;
 import com.github.lyuben.util.FramePositionHandler;
 import com.netflix.astyanax.Keyspace;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import com.github.lyuben.bridge.Astyanax;
-import com.github.lyuben.tor.Anonymizer;
-import com.github.lyuben.util.FileUtil;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.io.IOException;
 
 // @author lyubentodorov
 // @licence - MIT
@@ -25,31 +22,12 @@ public class LoginFrame extends javax.swing.JFrame {
     private Keyspace keyspace;
     
     public LoginFrame() {
+        
         keyspace = Astyanax.getKeyspaceContext();
         setupLookAndFeel();
         initComponents();
         hideUnused();
         setupFrame();
-        
-        //Check if program is running for the 1st time.
-        isFirstRun();
-    }
-    
-    
-    
-    // Checks if program is runnig for the first time
-    // Runs cassandra unzip routine if it is the first run.
-    //
-    private boolean isFirstRun() {
-        if(FileUtil.isFirstRun()) {
-            // First run - displaying licence.
-            new FirstRunSetupFrame(this).setVisible(true);
-            
-            return true;
-        } else {
-            this.setVisible(true);
-            return false;
-        }
     }
     
     

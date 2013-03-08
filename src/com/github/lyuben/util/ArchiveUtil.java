@@ -16,7 +16,7 @@ public class ArchiveUtil {
     private static final String __DESKTOPLOCATION__ = 
             System.getProperty("user.home") + "/Desktop/";
     private static final String __CASSANDRASERVLOCATION__ = 
-            System.getProperty("user.home") + "/Desktop/cassandra/bin/";
+            System.getProperty("user.home") + "/Desktop/cassandra/";
     
     public ArchiveUtil() {
         
@@ -32,7 +32,7 @@ public class ArchiveUtil {
 
         ZipFile zipFile = new ZipFile(source);
         zipFile.extractAll(destination);
-        //FileUtils.deleteRecursive(new File(__DESKTOPLOCATION__ + "__MACOSX"));
+        FileUtil.makeLogVarDirs();
         FileUtil.writeToLog("[SUCCESS]\tExtracted cassandra without problems.");
     }
     
@@ -42,22 +42,21 @@ public class ArchiveUtil {
     public static void setExecPermissions() {
         
         java.util.List<File> executableFiles = Arrays.asList(
-        new File(__CASSANDRASERVLOCATION__ + "cassandra"),
-        new File(__CASSANDRASERVLOCATION__ + "cassandra-cli"),
-        new File(__CASSANDRASERVLOCATION__ + "cqlsh"),
-        new File(__CASSANDRASERVLOCATION__ + "debug-cql"),
-        new File(__CASSANDRASERVLOCATION__ + "json2sstable"),
-        new File(__CASSANDRASERVLOCATION__ + "nodetool"),
-        new File(__CASSANDRASERVLOCATION__ + "shuffle"),
-        new File(__CASSANDRASERVLOCATION__ + "sstable2json"),
-        new File(__CASSANDRASERVLOCATION__ + "sstablekeys"),
-        new File(__CASSANDRASERVLOCATION__ + "sstableloader"),
-        new File(__CASSANDRASERVLOCATION__ + "sstablescrub"),
-        new File(__CASSANDRASERVLOCATION__ + "stop-server"));
+        new File(__CASSANDRASERVLOCATION__ + "bin/cassandra"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/cassandra-cli"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/cqlsh"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/debug-cql"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/json2sstable"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/nodetool"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/shuffle"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/sstable2json"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/sstablekeys"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/sstableloader"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/sstablescrub"),
+        new File(__CASSANDRASERVLOCATION__ + "bin/stop-server"));
         
         for(File cassandraFile : executableFiles) {
             cassandraFile.setExecutable(true);
         }
     }
-    
 }

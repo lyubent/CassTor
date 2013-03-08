@@ -196,6 +196,7 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     private void setupFrame() {
         FramePositionHandler.centerFrame(this);
         populateAndStyleLicence();
+        this.setVisible(true);
     }
     
     
