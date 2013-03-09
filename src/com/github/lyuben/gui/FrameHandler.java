@@ -1,27 +1,23 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.github.lyuben.gui;
 
 import com.github.lyuben.tor.Anonymizer;
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author lyubentodorov
- */
+// @author lyubentodorov
+// @licence - MIT
+// Available at http://lyuben.herokuapp.com/casstor/ 
+// Source at https://github.com/lyubent/CassTor/ 
+//
 public abstract class FrameHandler {
     
+    // Displays email client frame for sending emails.
+    //
     public static void displayMainFrames() {
-//        new Thread () {	
-//            @Override
-//            public void run(){
-                System.out.println("fadsfas");
+        new Thread () {	
+            @Override
+            public void run(){
                 // Display a loding frame white TOR initialises
                 StartupLoadFrame loader = new StartupLoadFrame();
                 loader.setVisible(true);
@@ -44,18 +40,20 @@ public abstract class FrameHandler {
                     public void run() {
                         try {
                             //Prepare the login frame
-                            LoginFrame loginFrame = new LoginFrame();
+                            new LoginFrame().setVisible(true);
                         } catch (Exception ex) {
                             Logger.getLogger(FrameHandler.class.getName()).log(Level.SEVERE,
                                     "Error with SWING Components", ex);
                         }
                     }
                 }); // SWING thread
-//            }}.start();
+        }}.start();
     }
     
+    
+    // Displays frame for unzipping and bootstraping cassandra.
+    //
     public static void displayFirstRunFrames(){
-        
         // SWING GUI threading.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override

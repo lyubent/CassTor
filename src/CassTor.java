@@ -1,5 +1,7 @@
 
+import com.github.lyuben.bridge.Astyanax;
 import com.github.lyuben.gui.FrameHandler;
+import com.github.lyuben.gui.NewMessageForm;
 import com.github.lyuben.util.FileUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,15 +25,14 @@ public class CassTor {
             //System.exit(0);
             
             
-//            if(FileUtil.isFirstRun()) {
-//                System.out.println("BACON");
-//                FrameHandler.displayFirstRunFrames();
-//            } else {
-                System.out.println("BACONd");
+            if(FileUtil.isFirstRun()) {
+                FrameHandler.displayFirstRunFrames();
+            } else {
                 FrameHandler.displayMainFrames();
-//            }
+            }
 
         } catch (Exception ex) {
+            
             Logger.getLogger(CassTor.class.getName()).log(Level.SEVERE,
                     "Error in main thread.", ex);
         }

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 
@@ -409,6 +410,9 @@ public class MailHomeFrame extends javax.swing.JFrame {
     private void setupLookAndFeel() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                //Native menu.
+                System.setProperty("apple.laf.useScreenMenuBar", "true");
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 // We want Mac first if we are on OSX or Microsoft first if on windows.
                 // Avoids using Nimbus on OSX or Metal on Win7/8.
                 if ("Mac OS X".equals(info.getName())) {

@@ -6,12 +6,12 @@ import com.github.lyuben.util.ArchiveUtil;
 import com.github.lyuben.util.FileUtil;
 import com.github.lyuben.util.FramePositionHandler;
 import java.awt.FileDialog;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import net.lingala.zip4j.exception.ZipException;
 
 
 // @author lyubentodorov
@@ -21,7 +21,8 @@ import net.lingala.zip4j.exception.ZipException;
 //
 public class FirstRunSetupFrame extends javax.swing.JFrame {
     
-    private static final String __LICENCEURL__ = "LICENCE.md";
+    private static final String __LICENCEURL__ =
+        FileUtil.getAppName() + "LICENCE.md";
     private LoginFrame parentFrame;
     
     public FirstRunSetupFrame(LoginFrame parentFrame) {
@@ -30,6 +31,24 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
         initComponents();
         hideUnused();
         setupFrame();
+
+        JOptionPane.showMessageDialog(this, 
+                
+            System.getProperty("user.dir") + 
+            "\nLicence?: " + new File(__LICENCEURL__).isFile() +
+            "\nLog?: " + new File("log").isFile() +
+            "\nApp Licence?: " + new File(System.getProperty("user.dir") + "Contents/Resources/Java/" + __LICENCEURL__).isFile() +
+            "\nApp Log?: " + new File(System.getProperty("user.dir") + "Contents/Resources/Java/log").isFile() +
+            "\nAppDir Licence?: " + new File(System.getProperty("user.dir") + FileUtil.getAppName() + "/Contents/Resources/Java/" + __LICENCEURL__).isFile() +
+            "\n" + System.getProperty("user.dir") + FileUtil.getAppName() + "/LICENCE.md\n" +
+            __LICENCEURL__ +
+            "\nAppDir Log?: " + new File(System.getProperty("user.dir") + FileUtil.getAppName() + "/Contents/Resources/Java/log").isFile()
+            ,
+
+
+
+            System.getProperty("user.dir"),
+            JOptionPane.WARNING_MESSAGE);
     }
     
     
@@ -138,12 +157,17 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
             jCheckBox_AcceptTermsAndConditions.setVisible(false);
             jButton_Accept.setVisible(false);
             
+            
             //first try to extract cassandra to Desktop, then update the UI.
             extractCassandra();
+            JOptionPane.showMessageDialog(this, "Extracted cassandra", "extra casandra", JOptionPane.DEFAULT_OPTION);
             JDBC.incrementReplicationFactor(Astyanax.getKSName());
+            JOptionPane.showMessageDialog(this, "++rep factor", "increased rep", JOptionPane.DEFAULT_OPTION);
             
             jButton_Okey.setVisible(true);
+            JOptionPane.showMessageDialog(this, "setbutnvisble", "setbtnvis", JOptionPane.DEFAULT_OPTION);
             jTextPane_Licence.setText(getStartupInstructions());
+            JOptionPane.showMessageDialog(this, "get startup instructions", "get inst", JOptionPane.DEFAULT_OPTION);
         } else {
             JOptionPane.showMessageDialog(this, "You haven't agreed to terms and conditions."
                     + "\nPlease Read and accept the terms and conditions!",
@@ -178,13 +202,15 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
             //Setup the YAML file to store the local ip
             FileUtil.configureCassandraYAML();
             FileUtil.writeToLog("[SUCCESS]\tConfigured YAML file.");
-        } catch (ZipException ex) {
+        } catch (Exception ex) {
             FileUtil.writeToLog("[ERROR]\tFailed to extract cassandra.");
-            JOptionPane.showMessageDialog(this, "A problem occured!"
+            JOptionPane.showMessageDialog(this, "A problem occured while "
+                    + "extracting cassandra.\nThe Cassandra.zip resource was not found,"
+                    + "\nReinstalling the package should fix this problem."
                     , "Failed to extract cassandra.", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(FirstRunSetupFrame.class.getName()).log(Level.SEVERE, 
                     "Error unziping cassandra.", ex);
-        }
+        }  
         
     }
     

@@ -34,22 +34,22 @@ public class FileUtil {
     //
     //
     public static String getTextFromFile(String fileURL) {
+        
+        
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileURL));
             String currentLine = "";
             String fileData = "";
+            
             while ((currentLine = br.readLine()) != null) {
                fileData += "\n" + currentLine;
             }
             br.close();
-            
+
             return fileData;
-        } catch (FileNotFoundException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                    "Failed to get data from file, the file was not found.", ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                    "IOException occured while trying to get data from the file.", ex);
+                    "Failed to getTextFromFile.", ex);
         }
         
         return "";
@@ -60,16 +60,10 @@ public class FileUtil {
     //
     //
     //
-    public static String getTextFromFile(String fileURL, boolean onlyFirstLine) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(fileURL));
-            return br.readLine();
-            
-        } catch (Exception ex) {
-            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, "Problem opening log file", ex);
-        }
-        
-        return "";
+    public static String getTextFromFile(String fileURL, boolean onlyFirstLine) 
+            throws FileNotFoundException, IOException {
+        BufferedReader br = new BufferedReader(new FileReader(fileURL));
+        return br.readLine();
     }
     
     
@@ -77,40 +71,29 @@ public class FileUtil {
     // Opens the cassandra.yaml configuration file and updates the listen and
     // rpc address to the local address of the current machine allowing it to bootstrap
     // with the seed node and join the cluster ring.
-    public static void configureCassandraYAML() {
-        
-        try {
-            
-            // Create a reader to read the file
-            BufferedReader br = new BufferedReader(new FileReader(__CASSANDRACONFIGPATH__));
-            java.util.List<String> file = new java.util.ArrayList();
-            
-            // Read the file in line by line and store it in a List of Strings
-            String currentLine = "";
-            while ((currentLine = br.readLine()) != null) {
-               file.add(currentLine);
-            }
-            br.close();
-            
-            // Write the List of strings line by line back to the same file
-            BufferedWriter fileOut = new BufferedWriter(new FileWriter(__CASSANDRACONFIGPATH__));
-            for (String line : file) {
-                //Replace the block with the machine's local IP address needed for joining the cassandra ring.
-                line = line.replaceFirst("<INTERFACE_IP>", NetworkUtil.getInterfaceIP());
-                line = line.replaceFirst("<LIB_LOCATION>", System.getProperty("user.home") + "/Desktop/cassandra/" + "var/lib");
-                fileOut.write(line + "\n");
-            }
-            // Clean and close the stream.
-            fileOut.flush();
-            fileOut.close();
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                    "Error configuring cassandra.YAML, couldn't find the file.", ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                    "Error configuring cassandra.YAML, IOException occured.", ex);
+    public static void configureCassandraYAML() throws FileNotFoundException, IOException {
+        // Create a reader to read the file
+        BufferedReader br = new BufferedReader(new FileReader(__CASSANDRACONFIGPATH__));
+        java.util.List<String> file = new java.util.ArrayList();
+
+        // Read the file in line by line and store it in a List of Strings
+        String currentLine = "";
+        while ((currentLine = br.readLine()) != null) {
+           file.add(currentLine);
         }
+        br.close();
+
+        // Write the List of strings line by line back to the same file
+        BufferedWriter fileOut = new BufferedWriter(new FileWriter(__CASSANDRACONFIGPATH__));
+        for (String line : file) {
+            //Replace the block with the machine's local IP address needed for joining the cassandra ring.
+            line = line.replaceFirst("<INTERFACE_IP>", NetworkUtil.getInterfaceIP());
+            line = line.replaceFirst("<LIB_LOCATION>", System.getProperty("user.home") + "/Desktop/cassandra/" + "var/lib");
+            fileOut.write(line + "\n");
+        }
+        // Clean and close the stream.
+        fileOut.flush();
+        fileOut.close();
 
     }
     
@@ -119,20 +102,17 @@ public class FileUtil {
     // Writes log lines to the log file
     // log file found in root directory of this prog 
     //
-    public static void writeToLog(String logDetail) {
+    public static void writeToLog (String logDetail) {
+        PrintWriter out = null;
         try {
-            PrintWriter out = new PrintWriter(
-                    new BufferedWriter(new FileWriter("log", true)));
-
+            out = new PrintWriter(new BufferedWriter(new FileWriter(
+                getAppName() + "log", true)));
             out.println(logDetail + "\tLogged at:" + new java.util.Date().toString());
             out.flush();
-            out.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                    "Error configuring cassandra.YAML, couldn't find the file.", ex);
         } catch (IOException ex) {
-            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                    "Error configuring cassandra.YAML, IOException occured.", ex);
+            Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            out.close();
         }
     }
     
@@ -141,8 +121,35 @@ public class FileUtil {
     // Checks if log file contains data 
     // Determines if program has been previously run.
     //
-    public static boolean isFirstRun() {
-        return FileUtil.getTextFromFile("log", true) == null;
+    public static boolean isFirstRun() throws FileNotFoundException, IOException {
+        System.out.println(System.getProperty("user.dir"));
+        return FileUtil.getTextFromFile(getAppName() + "log", true) == null;
+    }
+    
+    
+    
+    // OS Dependant method. 
+    // Targeted at OSX users
+    // Typical URL "/Users/lyubentodorov/Desktop/Dev/CassTor_v3/CassTor.app/Contents/Resources/Java/LICENCE.md"
+    public static String getAppName() {
+        if(System.getProperty("os.name").equals("Mac OS X")) {
+            // Find the full path of resources, required to work out the App name.
+            String resourecePath = "".getClass().getResource("/com/github/lyuben/img/title.png")
+              .getPath().replaceAll("!", "").replaceFirst("file:","");
+            //Split by directories
+            String[] dirArray = resourecePath.split("/");
+
+            // Loop through each directory and check names
+            for(String currentDir : dirArray){
+                // If its  an app return it's name + the OSX app structure tree
+                if(currentDir.contains(".app")){
+                    return  System.getProperty("user.dir") + "/" +
+                            currentDir + "/Contents/Resources/Java/";
+                }
+            }
+        }
+        // Not OSX or JAR is not bundled as app.
+        return System.getProperty("user.dir") + "/";
     }
 
     

@@ -1,10 +1,9 @@
 package com.github.lyuben.gui;
 
-// @author lyubentodorov
-
 import com.github.lyuben.util.FramePositionHandler;
 import javax.swing.UIManager;
 
+// @author lyubentodorov
 // @licence - MIT
 // Available at http://lyuben.herokuapp.com/casstor/ 
 // Source at https://github.com/lyubent/CassTor/ 

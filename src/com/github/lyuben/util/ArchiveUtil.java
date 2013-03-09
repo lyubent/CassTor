@@ -26,7 +26,7 @@ public class ArchiveUtil {
     // Unzips the cassandra server
     //
     public static void unzip() throws ZipException{
-        String source = "cassandra.zip";
+        String source = FileUtil.getAppName() + "cassandra.zip";
         String destination = __DESKTOPLOCATION__;
         String password = "password";
 

@@ -25,16 +25,12 @@ public class JDBC {
     // of a specified keyspace.
     // @return Boolean representing status of the update.
     public static boolean incrementReplicationFactor(String keyspaceName){
-        try {
-            String query = SchemaCql.updateReplicationFactor( 
-                    JDBC.getCurrentReplicationFactor(keyspaceName), keyspaceName);
-            
-            return jdbcExecCQLUpdate(query, keyspaceName);
-        } catch (Exception ex){
-            java.util.logging.Logger.getLogger(JDBC.class.getName()).log(java.util.logging.Level.SEVERE, 
-                "Failed to alter the replication factor.", ex);
-            return false;
-        }
+        
+        String query = SchemaCql.updateReplicationFactor( 
+                JDBC.getCurrentReplicationFactor(keyspaceName), keyspaceName);
+
+        return jdbcExecCQLUpdate(query, keyspaceName);
+        
     }
     
     

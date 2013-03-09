@@ -29,7 +29,9 @@ public class Anonymizer {
     
     // Runs the initialisation and status updates of the TOR connection.
     //
-    public boolean runTor() {
+    public void runTor() {
+        // Originally in its' own thread but because of the forbiden use of
+        // InetAddress objects, we have to wait for the execution to finish.
         try {
             JvmGlobalUtil.init();
             // Set the netlayer to use the TOR network
@@ -39,13 +41,10 @@ public class Anonymizer {
 
             //Sleep long enough to allow tor init to be complete
             Thread.sleep(15000);
-            return true;
-            
         } catch (InterruptedException ex) {
             Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
-                    "Failed to connect to the TOR anonymity network.", ex);
+                "Failed to connect to the TOR anonymity network.", ex);
         }
-        return false;
     }
     
     
@@ -64,13 +63,17 @@ public class Anonymizer {
     public boolean fallbackToTPC() {
         
         try {
-            
-            JvmGlobalUtil.init();
-            // Set the netlayer to use the TOR network
             netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TCPIP);
-            // Override the deafault net implementation with the TOR netlayer.
-            JvmGlobalUtil.setNetLayerAndNetAddressNameService(netLayer, true);
-            //netLayer.clear();
+            netLayer.clear();
+            netLayer.waitUntilReady();
+            
+            
+//            JvmGlobalUtil.init();
+//            // Set the netlayer to use the TOR network
+//            netLayer = NetFactory.getInstance().getNetLayerById(NetLayerIDs.TCPIP);
+//            // Override the deafault net implementation with the TOR netlayer.
+//            JvmGlobalUtil.setNetLayerAndNetAddressNameService(netLayer, true);
+//            //netLayer.clear();
             
         } catch (Exception ex) {
             Logger.getLogger(Anonymizer.class.getName()).log(Level.SEVERE, 
