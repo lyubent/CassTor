@@ -31,7 +31,7 @@ public class FileUtil {
     
     
     // Reads text from a file and returns it as a string
-    //
+    // Iterates through the file line-by-line.
     //
     public static String getTextFromFile(String fileURL) {
         
@@ -57,8 +57,7 @@ public class FileUtil {
     
     
     
-    //
-    //
+    // Opens a text file and returns the first line of text.
     //
     public static String getTextFromFile(String fileURL, boolean onlyFirstLine) 
             throws FileNotFoundException, IOException {
@@ -209,8 +208,10 @@ public class FileUtil {
     }
     
     
+    
     // Creates a location to store the cassandra logs and data
     // Created locally to allow for non root execution
+    //
     public static void makeLogVarDirs() {
         new File(System.getProperty("user.home") + "/Desktop/cassandra/var").mkdir();
         new File(System.getProperty("user.home") + "/Desktop/cassandra/var/lib").mkdir();

@@ -60,7 +60,7 @@ public abstract class FrameHandler {
             public void run() {
                 try {
                     //Prepare the login frame
-                    new FirstRunSetupFrame(new LoginFrame());
+                    new FirstRunSetupFrame();
                 } catch (Exception ex) {
                     Logger.getLogger(FrameHandler.class.getName()).log(Level.SEVERE,
                             "Error with SWING Components", ex);

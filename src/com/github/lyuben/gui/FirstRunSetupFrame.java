@@ -23,10 +23,8 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     
     private static final String __LICENCEURL__ =
         FileUtil.getAppName() + "LICENCE.md";
-    private LoginFrame parentFrame;
     
-    public FirstRunSetupFrame(LoginFrame parentFrame) {
-        this.parentFrame = parentFrame;
+    public FirstRunSetupFrame() {
         setupLookAndFeel();
         initComponents();
         hideUnused();
@@ -181,12 +179,11 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     // Destroys this frame and displays the parent Login frame.
     //
     private void jButton_OkeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OkeyActionPerformed
-        JOptionPane.showMessageDialog(this, "The application is now ready to run\n" +
-                "assuming Cassandra is running!",
-                "Please make sure Cassandra is running.", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "The application is now ready to run!\n" +
+            "Please restart the application.\nThe secure email client will begin\n loading.",
+            "Ready to start!", JOptionPane.WARNING_MESSAGE);
         
         this.setVisible(false);
-        parentFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton_OkeyActionPerformed
     
