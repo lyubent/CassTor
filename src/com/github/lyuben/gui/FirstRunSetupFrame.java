@@ -29,24 +29,6 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
         initComponents();
         hideUnused();
         setupFrame();
-
-        JOptionPane.showMessageDialog(this, 
-                
-            System.getProperty("user.dir") + 
-            "\nLicence?: " + new File(__LICENCEURL__).isFile() +
-            "\nLog?: " + new File("log").isFile() +
-            "\nApp Licence?: " + new File(System.getProperty("user.dir") + "Contents/Resources/Java/" + __LICENCEURL__).isFile() +
-            "\nApp Log?: " + new File(System.getProperty("user.dir") + "Contents/Resources/Java/log").isFile() +
-            "\nAppDir Licence?: " + new File(System.getProperty("user.dir") + FileUtil.getAppName() + "/Contents/Resources/Java/" + __LICENCEURL__).isFile() +
-            "\n" + System.getProperty("user.dir") + FileUtil.getAppName() + "/LICENCE.md\n" +
-            __LICENCEURL__ +
-            "\nAppDir Log?: " + new File(System.getProperty("user.dir") + FileUtil.getAppName() + "/Contents/Resources/Java/log").isFile()
-            ,
-
-
-
-            System.getProperty("user.dir"),
-            JOptionPane.WARNING_MESSAGE);
     }
     
     
@@ -155,17 +137,12 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
             jCheckBox_AcceptTermsAndConditions.setVisible(false);
             jButton_Accept.setVisible(false);
             
-            
             //first try to extract cassandra to Desktop, then update the UI.
             extractCassandra();
-            JOptionPane.showMessageDialog(this, "Extracted cassandra", "extra casandra", JOptionPane.DEFAULT_OPTION);
             JDBC.incrementReplicationFactor(Astyanax.getKSName());
-            JOptionPane.showMessageDialog(this, "++rep factor", "increased rep", JOptionPane.DEFAULT_OPTION);
             
             jButton_Okey.setVisible(true);
-            JOptionPane.showMessageDialog(this, "setbutnvisble", "setbtnvis", JOptionPane.DEFAULT_OPTION);
             jTextPane_Licence.setText(getStartupInstructions());
-            JOptionPane.showMessageDialog(this, "get startup instructions", "get inst", JOptionPane.DEFAULT_OPTION);
         } else {
             JOptionPane.showMessageDialog(this, "You haven't agreed to terms and conditions."
                     + "\nPlease Read and accept the terms and conditions!",
@@ -180,11 +157,12 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     //
     private void jButton_OkeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OkeyActionPerformed
         JOptionPane.showMessageDialog(this, "The application is now ready to run!\n" +
-            "Please restart the application.\nThe secure email client will begin\n loading.",
+            "Please restart the application.\nThe secure email client will begin\nloading.",
             "Ready to start!", JOptionPane.WARNING_MESSAGE);
         
         this.setVisible(false);
         this.dispose();
+        System.exit(0); // faster
     }//GEN-LAST:event_jButton_OkeyActionPerformed
     
     
