@@ -6,7 +6,7 @@ import com.github.lyuben.util.ArchiveUtil;
 import com.github.lyuben.util.FileUtil;
 import com.github.lyuben.util.FramePositionHandler;
 import java.awt.FileDialog;
-import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -161,6 +161,17 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
             "Ready to start!", JOptionPane.WARNING_MESSAGE);
         
         this.setVisible(false);
+        
+        try {
+            FileUtil.startCassandraServer();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Failed to start Cassandra.\n" +
+                "The program will now exit",
+                "Error - Cassandra startup failed.", JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(FirstRunSetupFrame.class.getName()).log(Level.SEVERE, 
+                    "Error starting cassandra.", ex);
+        }
+        
         this.dispose();
         System.exit(0); // faster
     }//GEN-LAST:event_jButton_OkeyActionPerformed

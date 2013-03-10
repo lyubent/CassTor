@@ -28,7 +28,8 @@ public class FileUtil {
     
     private static final String __CASSANDRACONFIGPATH__ = 
         System.getProperty("user.home") + "/Desktop/cassandra/conf/cassandra.yaml";
-    
+    private static final String __CASSANDRABINPATH__ = 
+        System.getProperty("user.home") + "/Desktop/cassandra/bin/cassandra";
     
     // Reads text from a file and returns it as a string
     // Iterates through the file line-by-line.
@@ -53,6 +54,19 @@ public class FileUtil {
         }
         
         return "";
+    }
+    
+    
+    
+    //
+    public static void startCassandraServer() throws IOException {
+        
+        if(System.getProperty("os.name").toLowerCase().contains("win")) {
+            // Windows.
+        }
+        
+        //Unix systems.
+        Process p = Runtime.getRuntime().exec(__CASSANDRABINPATH__);
     }
     
     
@@ -131,7 +145,7 @@ public class FileUtil {
     // Targeted at OSX users
     // Typical URL "/Users/lyubentodorov/Desktop/Dev/CassTor_v3/CassTor.app/Contents/Resources/Java/LICENCE.md"
     public static String getAppName() {
-        if(System.getProperty("os.name").equals("Mac OS X")) {
+        if(System.getProperty("os.name").toLowerCase().contains("mac")) {
             // Find the full path of resources, required to work out the App name.
             String resourecePath = "".getClass().getResource("/com/github/lyuben/img/title.png")
               .getPath().replaceAll("!", "").replaceFirst("file:","");
