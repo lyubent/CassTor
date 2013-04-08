@@ -10,20 +10,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class FileUtil {
     
     private static final String __CASSANDRACONFIGPATH__ = 
@@ -31,9 +24,12 @@ public class FileUtil {
     private static final String __CASSANDRABINPATH__ = 
         System.getProperty("user.home") + "/Desktop/cassandra/bin/cassandra";
     
-    // Reads text from a file and returns it as a string
-    // Iterates through the file line-by-line.
-    //
+    /*
+     * Reads text from a file and returns it as a string
+     * Iterates through the file line-by-line.
+     * 
+     * @return String representing text retreived from a file
+     */
     public static String getTextFromFile(String fileURL) {
         
         
@@ -58,7 +54,10 @@ public class FileUtil {
     
     
     
-    //
+    /**
+     * Executes a system statement starting the Cassandra server as a background process.
+     * @throws IOException 
+     */
     public static void startCassandraServer() throws IOException {
         
         if(System.getProperty("os.name").toLowerCase().contains("win")) {
@@ -70,9 +69,11 @@ public class FileUtil {
     }
     
     
-    
-    // Opens a text file and returns the first line of text.
-    //
+   /**
+    * Opens a text file and returns the first line of text.
+    * @param fileURL
+    * @param onlyFirstLine 
+    */
     public static String getTextFromFile(String fileURL, boolean onlyFirstLine) 
             throws FileNotFoundException, IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileURL));
@@ -80,10 +81,15 @@ public class FileUtil {
     }
     
     
-    
-    // Opens the cassandra.yaml configuration file and updates the listen and
-    // rpc address to the local address of the current machine allowing it to bootstrap
-    // with the seed node and join the cluster ring.
+   
+   /**
+    * Opens the cassandra.yaml configuration file and updates the listen and
+    * rpc address to the local address of the current machine allowing it to bootstrap
+    * with the seed node and join the cluster ring.
+    * 
+    * @throws IOException
+    * @throws FileNotFoundException
+    */
     public static void configureCassandraYAML() throws FileNotFoundException, IOException {
         // Create a reader to read the file
         BufferedReader br = new BufferedReader(new FileReader(__CASSANDRACONFIGPATH__));
@@ -111,10 +117,10 @@ public class FileUtil {
     }
     
     
-    
-    // Writes log lines to the log file
-    // log file found in root directory of this prog 
-    //
+   /** 
+    * Writes log lines to the log file
+    * log file found in root directory of this prog 
+    */
     public static void writeToLog (String logDetail) {
         PrintWriter out = null;
         try {
@@ -131,9 +137,13 @@ public class FileUtil {
     
     
     
-    // Checks if log file contains data 
-    // Determines if program has been previously run.
-    //
+   /** 
+    * Checks if log file contains data 
+    * Determines if program has been previously run.
+    * 
+    * @throws IOException
+    * @throws FileNotFoundException
+    */
     public static boolean isFirstRun() throws FileNotFoundException, IOException {
         System.out.println(System.getProperty("user.dir"));
         return FileUtil.getTextFromFile(getAppName() + "log", true) == null;
@@ -141,9 +151,11 @@ public class FileUtil {
     
     
     
-    // OS Dependant method. 
-    // Targeted at OSX users
-    // Typical URL "/Users/lyubentodorov/Desktop/Dev/CassTor_v3/CassTor.app/Contents/Resources/Java/LICENCE.md"
+    /**
+     * OS Dependant method. 
+     * Targeted at OSX users
+     * Typical URL "/Users/lyubentodorov/Desktop/Dev/CassTor_v3/CassTor.app/Contents/Resources/Java/LICENCE.md"
+     */
     public static String getAppName() {
         if(System.getProperty("os.name").toLowerCase().contains("mac")) {
             // Find the full path of resources, required to work out the App name.
@@ -164,68 +176,12 @@ public class FileUtil {
         // Not OSX or JAR is not bundled as app.
         return System.getProperty("user.dir") + "/";
     }
-
     
     
-    // Used to find all the tags inside and XML file
-    // Currently not used. Was part of getXMLData() function.
-    //
-    @Deprecated
-    private static String getTagValue(String sTag, Element eElement) {
-	NodeList nlList = eElement.getElementsByTagName(sTag).item(0).getChildNodes();
-        Node nValue = (Node) nlList.item(0);
-	return nValue.getNodeValue();
-    }
-    
-    
-    
-    // Gets data from an XML file and displayes it
-    // Currently not used. Was part of key exchange systet but is scrapped 
-    // due to security issues.
-    @Deprecated
-    public static void getXMLData() {
- 
-	  try {
- 
-		File fXmlFile = new File("file.xml");
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		Document doc = dBuilder.parse(fXmlFile);
-		doc.getDocumentElement().normalize();
- 
-		System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-		NodeList nList = doc.getElementsByTagName("detail");
-		System.out.println("-----------------------");
- 
-		for (int temp = 0; temp < nList.getLength(); temp++) {
- 
-		   Node nNode = nList.item(temp);
-		   if (nNode.getNodeType() == Node.ELEMENT_NODE) {
- 
-		      Element eElement = (Element) nNode;
- 
-		      System.out.println("User : " + getTagValue("username", eElement));
-		      System.out.println("Key : " + getTagValue("key", eElement));
- 
-		   }
-		}
-	  } catch (ParserConfigurationException ex){
-              Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                      "ParserConfigurationException when trying to read in XML data", ex);
-          } catch (SAXException ex){
-              Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                      "SAXException when trying to read in XML data", ex);
-          } catch (IOException ex){
-              Logger.getLogger(FileUtil.class.getName()).log(Level.SEVERE, 
-                      "IOException when trying to read in XML data", ex);
-          }
-    }
-    
-    
-    
-    // Creates a location to store the cassandra logs and data
-    // Created locally to allow for non root execution
-    //
+   /** 
+    * Creates a location to store the cassandra logs and data
+    * Created locally to allow for non root execution
+    */
     public static void makeLogVarDirs() {
         new File(System.getProperty("user.home") + "/Desktop/cassandra/var").mkdir();
         new File(System.getProperty("user.home") + "/Desktop/cassandra/var/lib").mkdir();

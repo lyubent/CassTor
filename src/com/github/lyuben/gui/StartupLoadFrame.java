@@ -3,11 +3,12 @@ package com.github.lyuben.gui;
 import com.github.lyuben.util.FramePositionHandler;
 import javax.swing.UIManager;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class StartupLoadFrame extends javax.swing.JFrame {
     
     public StartupLoadFrame() {
@@ -16,9 +17,9 @@ public class StartupLoadFrame extends javax.swing.JFrame {
         setupFrame();
     }
 
-    // Initialises JPanel components 
-    // Builds the main form
-    //
+    /**
+     * Initialises JPanel components Builds the main form
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -58,9 +59,10 @@ public class StartupLoadFrame extends javax.swing.JFrame {
 
     
     
-    // Multilevel try-catch to try to get native looking buttons / components
-    // Makes the java application look nicer.
-    //
+    /**
+     * Multilevel try-catch to try to get native looking buttons / components
+     * Makes the java application look nicer.
+     */
     private void setupLookAndFeel(){
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -94,9 +96,9 @@ public class StartupLoadFrame extends javax.swing.JFrame {
     
     
     
-    // Sets up frame related configs
-    // @void
-    //
+    /**
+     * Sets up frame related configs
+     */
     private void setupFrame() {
         FramePositionHandler.centerFrame(this);
         this.setTitle("Loading SecTor");

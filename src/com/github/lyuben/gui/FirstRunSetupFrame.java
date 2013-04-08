@@ -14,11 +14,12 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class FirstRunSetupFrame extends javax.swing.JFrame {
     
     private static final String __LICENCEURL__ =
@@ -126,9 +127,11 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    // User has accepted the terms and conditions
-    // We can now display Cassandra setup instructions and extract Cassandra.
-    //
+    /**
+     * User has accepted the terms and conditions
+     * We can now display Cassandra setup instructions and extract Cassandra.
+     * @param evt 
+     */
     private void jButton_AcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AcceptActionPerformed
         if(jCheckBox_AcceptTermsAndConditions.isSelected()){
             
@@ -152,9 +155,11 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
 
     
     
-    // Display cassandra startup instructions and launch login interface
-    // Destroys this frame and displays the parent Login frame.
-    //
+    /**
+     * Display cassandra startup instructions and launch login interface
+     * Destroys this frame and displays the parent Login frame.
+     * @param evt 
+     */
     private void jButton_OkeyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OkeyActionPerformed
         JOptionPane.showMessageDialog(this, "The application is now ready to run!\n" +
             "Please restart the application.\nThe secure email client will begin\nloading.",
@@ -177,7 +182,9 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_OkeyActionPerformed
     
     
-    
+    /**
+     * Extracts cassandra and updates log file.
+     */
     private void extractCassandra() {
         try {        
             // Extracting Cassandra and setting up permissions.
@@ -202,9 +209,9 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     
     
     
-    // Sets up the frame when its initialized
-    //
-    //
+    /**
+     * Sets up the frame when its initialized
+     */
     private void setupFrame() {
         FramePositionHandler.centerFrame(this);
         populateAndStyleLicence();
@@ -213,18 +220,18 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     
     
     
-    // Hides components of the application that are not used to speed up app.
-    // @void
-    //
+    /**
+     * Hides components of the application that are not used to speed up app.
+     */
     private void hideUnused(){
         jButton_Okey.setVisible(false);
     }
     
     
     
-    // Configures and sets up layout for the Licence textarea
-    //
-    //
+    /**
+     * Configures and sets up layout for the Licence textarea
+     */
     private void populateAndStyleLicence(){
         SimpleAttributeSet sa = new SimpleAttributeSet();
         StyleConstants.setAlignment(sa, StyleConstants.ALIGN_JUSTIFIED);
@@ -238,31 +245,10 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
     
     
     
-    // Displayes a dialogue for user to browse to cassandra.yaml and select it
-    // inorder to find the path to the file
-    // Replaced with automatic extraction to the desktop.
-    @Deprecated
-    private String findCassandraConfigPath() {
-        try {
-            FileDialog pathFindingFileDialog = new  FileDialog(this);
-            
-            // Set the FileChooser dialogue title and display the dialogue.
-            pathFindingFileDialog.setTitle("Find cassandra.YAML");
-            pathFindingFileDialog.setVisible(true);
-
-            return ""; //pathFindingFileDialog.getFiles()[0].getAbsolutePath();
-        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
-            Logger.getLogger(FirstRunSetupFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return "";
-    }
-    
-    
-    
-    // Returns the startup instructions
-    // Tradeoff, bad coding VS opening uncessessary buffers.
-    //
+    /**
+     * Tradeoff, bad coding VS opening uncessessary buffers.
+     * @return Returns the startup instructions
+     */
     private String getStartupInstructions() {
         return "Extracting and configuring Cassandra has completed successfully.\n\n" +
                "Starting Cassandra:\n\n" +

@@ -2,13 +2,18 @@ package com.github.lyuben.util;
 
 import javax.swing.JFrame;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class FramePositionHandler {
     
+    /**
+     * Used for moving a new GuI frame to th center of the screen.
+     * @param frameToCenter 
+     */
     public static void centerFrame(JFrame frameToCenter){
         java.awt.Dimension dim = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
  

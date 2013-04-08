@@ -1,14 +1,13 @@
 package com.github.lyuben.test;
 
 import com.netflix.astyanax.Keyspace;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class QueryingTest {
     
     private Keyspace keyspace;
@@ -20,9 +19,12 @@ public class QueryingTest {
     
     
     
-    // Test to insert an email into Cassandra
-    // Tested and working - 29 Jan 2013
-    //
+    /**
+     * Test to insert an email into Cassandra
+     * 
+     * @return String representing value of the key for the newly inserted email. NULL implies failure.
+     * @throws Exception 
+     */
     public String insertEmail() throws Exception{
         
         String key = "key" + String.valueOf(System.currentTimeMillis()).substring(0, 2);
@@ -43,9 +45,13 @@ public class QueryingTest {
     
     
     
-    // Test to delete an email from Cassandra
-    // Tested and working - 29 Jan 2013
-    //
+    /**
+     * Test to delete an email from Cassandra
+     * 
+     * @param __KEY__ - The unique identifier of an email
+     * @return boolean representing status of deleting an email.
+     * @throws Exception 
+     */
     public boolean deleteEmail(String __KEY__) throws Exception {
         
         System.out.print("\tTest:\tDeleting email\t");

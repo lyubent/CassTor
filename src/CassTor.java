@@ -1,19 +1,12 @@
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-
-
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class CassTor {
 
     public static void main(String[] args) {
-
         try {
             //Build schema, run only once on seed node.
             //com.github.lyuben.bridge.Schema.buildSchema(com.github.lyuben.bridge.Astyanax.getKeyspaceContext());System.exit(0);
@@ -28,7 +21,6 @@ public class CassTor {
             }
 
         } catch (Exception ex) {
-            
             java.util.logging.Logger.getLogger(CassTor.class.getName()).log(
                 java.util.logging.Level.SEVERE, "Error in main thread.", ex);
         }

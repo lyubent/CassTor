@@ -1,10 +1,11 @@
 package com.github.lyuben.test;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class SchemaTest {
     
     private com.netflix.astyanax.Keyspace keyspace;
@@ -15,27 +16,12 @@ public class SchemaTest {
     
     
     
-    // Test to create a keyspace into Cassandra
-    // Tested and working - 28 Jan 2013
-    //
-    public boolean alterReplicationFactor() throws Exception{
-        
-        System.out.print("\tTest:\tAltering repliction factor\t");
-        
-        if(com.github.lyuben.bridge.Astyanax.alterReplicationFactor(keyspace)) {
-            System.out.println("...\talteded RF successfully!");
-            return true;
-        } else {
-            System.out.println("...\tfailed to alter RF!");
-            throw new Exception();
-        }
-    }
-    
-    
-    
-    // Test to create a keyspace into Cassandra
-    // Tested and working - 28 Jan 2013
-    //
+    /**
+     * Test to create a keyspace into Cassandra
+     * 
+     * @return boolean representing status of the replication factor alteration
+     * @throws Exception 
+     */
     public boolean incrementReplicationFactorJDBC() throws Exception{
         
         System.out.print("\tTest:\tAltering repliction factor\t");
@@ -51,9 +37,12 @@ public class SchemaTest {
     
     
     
-    // Test to create a keyspace into Cassandra
-    // Tested and working - 28 Jan 2013
-    //
+    /**
+     * Test to create a keyspace into Cassandra
+     * 
+     * @return boolean representing success of retrieving current replication factor
+     * @throws Exception 
+     */
     public boolean getCurrentReplicationFactorJDBC() throws Exception{
         
         System.out.print("\tTest:\tRetreiving current repliction factor\t");
@@ -69,9 +58,12 @@ public class SchemaTest {
     
     
     
-    // Test to create a keyspace into Cassandra
-    // Tested and working - 28 Jan 2013
-    //
+    /**
+     * Test to create a keyspace into Cassandra
+     * 
+     * @return boolean representing success of creating a Keyspace in cassandra
+     * @throws Exception 
+     */
     public boolean createKS() throws Exception{
         
         System.out.print("\tTest:\tCreating KS\t");
@@ -87,9 +79,12 @@ public class SchemaTest {
     
     
     
-    // Tested and working - 28 Jan 2013
-    // Test to createa a Column Family into Cassandra
-    //
+    /**
+     * Test to create a Column Family into Cassandra
+     * 
+     * @return boolean representing success of creating keyspace in cassandra
+     * @throws Exception 
+     */
     public boolean createCF() throws Exception{
         
         System.out.print("\tTest:\tCreating CF\t");
@@ -106,9 +101,12 @@ public class SchemaTest {
     
     
     
-    // Tested and working - 28 Jan 2013
-    // Drops an existing column family from Cassandra
-    //
+    /**
+     * Drops an existing column family from Cassandra
+     * 
+     * @return boolean representing success of deleting column family in cassandra
+     * @throws Exception 
+     */
     public boolean dropCF() throws Exception{
         
         System.out.print("\tTest:\tDroping CF\t");
@@ -125,9 +123,12 @@ public class SchemaTest {
     
     
     
-    // Tested and working - 28 Jan 2013
-    // Drops an existing keyspace from Cassandra
-    //
+    /**
+     * Drops an existing keyspace from Cassandra
+     * 
+     * @return boolean representing success of deleting keyspace in cassandra
+     * @throws Exception 
+     */
     public boolean dropKS() throws Exception{
         
         System.out.print("\tTest:\tDroping KS\t");

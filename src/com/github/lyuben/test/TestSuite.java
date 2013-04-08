@@ -4,11 +4,13 @@ import com.netflix.astyanax.Keyspace;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class TestSuite {
     
     //private static final String __SEEDS__ = "127.0.0.1";
@@ -19,6 +21,9 @@ public class TestSuite {
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_GREEN = "\u001B[32m";
     
+    /**
+     * Runs a suite of tests for verifying builds.
+     */
     @Test
     public void runTests(){
         SchemaTest schemaTester = new SchemaTest(getTestAstyanaxContext());
@@ -73,9 +78,11 @@ public class TestSuite {
         }
     }
     
-    
-    
-    //Test context, we dont want to mess with the live data when testing.
+    /**
+     * Test context, we dont want to mess with the live data when testing.
+     * 
+     * @return An astyanax context used for persisting data to cassandra.
+     */
     private Keyspace getTestAstyanaxContext(){
         
         com.netflix.astyanax.AstyanaxContext<Keyspace> context = 

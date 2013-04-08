@@ -12,11 +12,12 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class LoginFrame extends javax.swing.JFrame {
     
     private Keyspace keyspace;
@@ -125,7 +126,10 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    
+    /**
+     * If enter pressed or login clicked begin login process.
+     * @param evt 
+     */
     private void jPasswordField_PwKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField_PwKeyPressed
         if(evt.getKeyChar() == KeyEvent.VK_ENTER){
             login();
@@ -133,7 +137,10 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField_PwKeyPressed
 
     
-    
+    /**
+     * On button click begin the login process.
+     * @param evt 
+     */
     private void jButton_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LoginActionPerformed
         login();
     }//GEN-LAST:event_jButton_LoginActionPerformed
@@ -158,9 +165,9 @@ public class LoginFrame extends javax.swing.JFrame {
     
     
     
-    // Sets up frame related configs
-    // @void
-    //
+    /**
+     * Sets up frame related configs
+     */
     private void setupFrame() {
         FramePositionHandler.centerFrame(this);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -168,9 +175,10 @@ public class LoginFrame extends javax.swing.JFrame {
     }
     
     
-    // Carries out the login process hiding and displaying necessary forms
-    // @return boolean representing sucess of updating viewport
-    //
+    /**
+     * Carries out the login process hiding and displaying necessary forms
+     * @return boolean representing sucess of updating viewport
+     */
     private boolean login() {
         
         try {
@@ -193,9 +201,12 @@ public class LoginFrame extends javax.swing.JFrame {
     
     
     
-    // Carries out authentication process
-    // @return boolean representing 
-    //
+    /**
+     * Carries out authentication process
+     * @param username
+     * @param password
+     * @return boolean representing authentication success.
+     */
     private boolean authenticate(String username, char [] password) {
         
         jTextField_UName.setText(String.valueOf(username));
@@ -204,9 +215,10 @@ public class LoginFrame extends javax.swing.JFrame {
     
     
     
-    // Called when an exception is caught while logging in
-    // @void - Displays a popup dialogue informing the user of the failiure.
-    //
+    /**
+     * Called when an exception is caught while logging in
+     * Displays a popup dialogue informing the user of the failiure.
+     */
     private void handleLogginFailiure() {
         this.setVisible(true);
         JOptionPane.showMessageDialog(this, "A problem occred while trying to login",
@@ -226,9 +238,9 @@ public class LoginFrame extends javax.swing.JFrame {
     
     
     
-    // Hides components of the application that are not used to speed up app.
-    // @void
-    //
+    /**
+     * Hides components of the application that are not used to speed up app.
+     */
     private void hideUnused(){
     }
     

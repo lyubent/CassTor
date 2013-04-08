@@ -6,11 +6,12 @@ import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class ArchiveUtil {
     
     private static final String __DESKTOPLOCATION__ = 
@@ -22,9 +23,11 @@ public class ArchiveUtil {
         
     }
     
-    
-    // Unzips the cassandra server
-    //
+    /**
+     * Unzips the cassandra server
+     * 
+     * @throws ZipException 
+     */
     public static void unzip() throws ZipException{
         String source = FileUtil.getAppName() + "cassandra.zip";
         String destination = __DESKTOPLOCATION__;
@@ -37,8 +40,9 @@ public class ArchiveUtil {
     }
     
     
-    // Setting up the correct permissions as ZIP files cannot keep file permissions.
-    //
+    /**
+     * Setting up the correct permissions as ZIP files cannot keep file permissions.
+     */
     public static void setExecPermissions() {
         
         java.util.List<File> executableFiles = Arrays.asList(

@@ -4,16 +4,24 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class EmailFormatter {
     
-    // Builds the message in HTML to be displayed in the list view.
-    // @param requires multiple strings that represent parts of the email
-    //
+    /**
+     * Builds the message in HTML to be displayed in the list view.
+     * 
+     * @param key - identifier of the email
+     * @param body - body of the message
+     * @param from - who sent the message
+     * @param date - when the message was sent
+     * @param subject 
+     * @return String representing the structure of an email.
+     */
     public static String structureMessage(String key, String body, String from, String date, String subject){
         
         String fullBody = body;
@@ -59,9 +67,12 @@ public class EmailFormatter {
     
     
     
-    // Structures the detailed email message to be displayed using HMTL
-    // @return returns string representing the structured email
-    //
+    /**
+     * Structures the detailed email message to be displayed using HMTL.
+     * 
+     * @param emailContent
+     * @return returns string representing the structured email
+     */
     public static String structureDetailedMessage(String [] emailContent){
         
         return "<html>" + 
@@ -77,9 +88,13 @@ public class EmailFormatter {
     
     
     
-    // Uses regular expressions to find the KEY, Sender or title  of the selected list item in jListInboxMail
-    // @return returns a string representing the KEY for the selected cassandra row
-    //
+    /**
+     * Uses regular expressions to find the KEY, Sender or title  of the selected list item in jListInboxMail
+     * 
+     * @param template
+     * @param filterType
+     * @return returns a string representing the KEY for the selected cassandra row
+     */
     public static String applyRegexFilter(String template, String filterType){
         try {
             String pattern;
@@ -117,9 +132,13 @@ public class EmailFormatter {
     
     
     
-    // Custom escape for escaping HTML and Java strings
-    // @return Retuns the clean string
-    //
+    
+    /**
+     * Custom escape for escaping HTML and Java strings.
+     * 
+     * @param toEscape
+     * @return Returns the clean string
+     */
     public static String escape(String toEscape) {
         return toEscape.replaceAll("\\\\", "&#92;")
                        .replaceAll("\"", "&#34;")

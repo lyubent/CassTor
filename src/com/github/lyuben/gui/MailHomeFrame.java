@@ -17,11 +17,12 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class MailHomeFrame extends javax.swing.JFrame {
     
     private Keyspace keyspace;
@@ -47,9 +48,10 @@ public class MailHomeFrame extends javax.swing.JFrame {
         hideUnused();
     }
 
-    // Initialises JPanel components 
-    // Builds the main form
-    //
+    
+    /**
+     * Initialises JPanel components, Builds the main form
+     */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -257,15 +259,20 @@ public class MailHomeFrame extends javax.swing.JFrame {
 
     
     
-    // Sets up the original inbox 
-    //
-    //
+    /**
+     * Sets up the original inbox 
+     */
     private void initInbox(){
         // Note* catch exception here means that the logging in process correctly
         populateInbox(Astyanax.processResults(Astyanax.execCQL(
         this.keyspace, EmailCql.nondeletedUserEmail(_USERNAME_)))); 
     }
     
+    /**
+     * On a button click, re-populate and re-display the inbox.
+     * 
+     * @param evt 
+     */
     private void jButton_InboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InboxActionPerformed
         location = "inbox";
         jButton_Delete.setEnabled(true);
@@ -274,6 +281,11 @@ public class MailHomeFrame extends javax.swing.JFrame {
                         this.keyspace, EmailCql.nondeletedUserEmail(_USERNAME_))));
     }//GEN-LAST:event_jButton_InboxActionPerformed
 
+    
+    /**
+     * On selection of a list item, update the detailed message box with the selected email.
+     * @param evt 
+     */
     private void jList_InboxMailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList_InboxMailMouseClicked
         try {
             // Get the parts of the message we need
@@ -297,17 +309,19 @@ public class MailHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jList_InboxMailMouseClicked
 
     
-    
-    // Displays dialogue for sending a new message
-    // SHORTCUT - "Ctrl + N"
-    // @return Void
+    /**
+     * Displays dialogue for sending a new message - SHORTCUT - "Ctrl + N"
+     * @param evt 
+     */
     private void jButton_NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_NewActionPerformed
-        
         new NewMessageForm(keyspace, _USERNAME_).setVisible(true);
     }//GEN-LAST:event_jButton_NewActionPerformed
 
     
-    
+    /**
+     * When button is clicked open a dialogue to send a new or reply message.
+     * @param evt 
+     */
     private void jButton_ReplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ReplyActionPerformed
         
         if(isEmailSelected("replying to")) {
@@ -322,7 +336,11 @@ public class MailHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_ReplyActionPerformed
 
     
-    
+    /**
+     * Delete an email
+     * 
+     * @param evt 
+     */
     private void jButton_DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_DeleteActionPerformed
         if(isEmailSelected("deleting")){
             String key = EmailFormatter.applyRegexFilter(getjListSelectedIndexString(), "");
@@ -340,7 +358,11 @@ public class MailHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_DeleteActionPerformed
 
     
-    
+    /**
+     * Display deleted emails
+     * 
+     * @param evt 
+     */
     private void jButton_TrashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_TrashActionPerformed
         location = "trash";
         // Join all the emails I own that I've deleted.
@@ -356,7 +378,11 @@ public class MailHomeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_TrashActionPerformed
 
     
-    
+    /**
+     * Display sent mails.
+     * 
+     * @param evt 
+     */
     private void jButton_OutboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OutboxActionPerformed
         location = "sent";
         jButton_Delete.setEnabled(true);
@@ -373,9 +399,12 @@ public class MailHomeFrame extends javax.swing.JFrame {
 
     
     
-    // Checks if an index from the jListInbox has been selected before replying
-    // and displays an error if not.
-    // @return boolean representing the selected item.
+    /**
+     * Checks if an index from the jListInbox has been selected before replying
+     * and displays an error if not.
+     * @param actionType
+     * @return boolean representing the selected item.
+     */
     private boolean isEmailSelected(String actionType){
         
         if(getjListSelectedIndexString().equals("")){
@@ -388,9 +417,10 @@ public class MailHomeFrame extends javax.swing.JFrame {
     
     
     
-    // Populates the jList with a user's emails
-    // @param Requires a list of HTML representing the columns
-    //
+    /**
+     * Populates the jList with a user's emails
+     * @param dataList Requires a list of HTML representing the columns
+     */
     private void populateInbox(List<String> dataList){
         DefaultListModel messageList = new DefaultListModel();
         messageList.ensureCapacity(50);
@@ -404,9 +434,10 @@ public class MailHomeFrame extends javax.swing.JFrame {
     
     
     
-    // Multilevel try-catch to try to get native looking buttons / components
-    // Makes the java application look nicer.
-    //
+    /**
+     * Multilevel try-catch to try to get native looking buttons / components
+     * Makes the java application look nicer.
+     */
     private void setupLookAndFeel() {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -448,9 +479,11 @@ public class MailHomeFrame extends javax.swing.JFrame {
     
     
     
-    // Gets the String containied in the selected item from jListInboxMail
-    // @return String containing data in the list item.
-    //
+    /**
+     * Gets the String containied in the selected item from jListInboxMail
+     * 
+     * @return String containing data in the list item.
+     */
     private String getjListSelectedIndexString() {
         if(jList_InboxMail.getSelectedIndex() != -1){
             return jList_InboxMail.getModel().getElementAt(
@@ -461,9 +494,9 @@ public class MailHomeFrame extends javax.swing.JFrame {
     
     
     
-    // Hides components of the application that are not used to speed up app.
-    // @void
-    //
+    /**
+     * Hides components of the application that are not used to speed up app.
+     */
     private void hideUnused() {
         Border emptyBorder = BorderFactory.createEmptyBorder();
         jScrollPane2.setBorder(emptyBorder);
@@ -472,9 +505,9 @@ public class MailHomeFrame extends javax.swing.JFrame {
     
     
     
-    // Sets up frame related configs
-    // @void
-    //
+    /**
+     * Sets up frame related configs
+     */
     private void setupFrame(){
         
         //this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -491,9 +524,10 @@ public class MailHomeFrame extends javax.swing.JFrame {
     }
     
     
-    // Closes the frame and redisplays login frame.
-    //
-    //
+    
+    /**
+     * Closes the frame and redisplays login frame.
+     */
     private void destroyFrame(){
         this.setVisible(false);
         parentFrame.setLocation(this.getLocation());

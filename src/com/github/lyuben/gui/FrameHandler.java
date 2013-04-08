@@ -5,15 +5,17 @@ import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/ 
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public abstract class FrameHandler {
     
-    // Displays email client frame for sending emails.
-    //
+    /**
+     * Displays email client frame for sending emails.
+     */
     public static void displayMainFrames() {
         new Thread () {	
             @Override
@@ -51,8 +53,9 @@ public abstract class FrameHandler {
     }
     
     
-    // Displays frame for unzipping and bootstraping cassandra.
-    //
+    /**
+     * Displays frame for unzipping and bootstraping cassandra.
+     */
     public static void displayFirstRunFrames(){
         // SWING GUI threading.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {

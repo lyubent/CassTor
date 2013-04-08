@@ -10,20 +10,25 @@ import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// @author lyubentodorov
-// @licence - MIT
-// Available at http://lyuben.herokuapp.com/casstor/    
-// Source at https://github.com/lyubent/CassTor/ 
-//
+/**
+ * @author lyubentodorov
+ * @licence - MIT
+ * Available at http://lyuben.herokuapp.com/casstor/ 
+ * Source at https://github.com/lyubent/CassTor/ 
+ */
 public class JDBC {
     
     private static final String __SEED__ = "134.36.36.188";
     private static final String __JDBCDriverClassPath__ =
             "org.apache.cassandra.cql.jdbc.CassandraDriver";
     
-    // Calls cql update query execution to update the replication factor
-    // of a specified keyspace.
-    // @return Boolean representing status of the update.
+    /**
+     * Calls cql update query execution to update the replication factor
+     * of a specified keyspace.
+     * 
+     * @param keyspaceName
+     * @return boolean representing status of the update.
+     */
     public static boolean incrementReplicationFactor(String keyspaceName){
         
         String query = SchemaCql.updateReplicationFactor( 
@@ -35,9 +40,11 @@ public class JDBC {
     
     
     
-    // Finds the current replication factor of the specified keyspace.
-    // @return An integer representing the KS replication factor.
-    //
+    /**
+     * Finds the current replication factor of the specified keyspace.
+     * @param keyspaceName
+     * @return An integer representing the KS replication factor.
+     */
     public static int getCurrentReplicationFactor(String keyspaceName){
         try {
             String query = SchemaCql.getCurrentReplicationFactor(keyspaceName);
@@ -60,9 +67,12 @@ public class JDBC {
     
     
     
-    // Executed a CQL query.
-    // @return ResultSet storing the data.
-    //
+    /**
+     * Executed a CQL query.
+     * @param query
+     * @param keyspaceName
+     * @return ResultSet storing the data.
+     */
     private static ResultSet jdbcExecCQLQuery(String query, String keyspaceName) {
         
         try {
@@ -90,9 +100,12 @@ public class JDBC {
     
     
     
-    // Executes a CQL update query.
-    // @return Boolean representing status of the update.
-    //
+    /**
+     * Executes a CQL update query.
+     * @param query
+     * @param keyspaceName
+     * @return boolean representing status of the update.
+     */
     private static boolean jdbcExecCQLUpdate(String query, String keyspaceName) {
         
         try {
