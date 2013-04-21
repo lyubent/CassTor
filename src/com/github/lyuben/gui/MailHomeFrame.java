@@ -1,7 +1,7 @@
 package com.github.lyuben.gui;
 
 import com.github.lyuben.bridge.Astyanax;
-import com.github.lyuben.cql.EmailCql;
+import com.github.lyuben.cql.EmailCqlFactory;
 import com.github.lyuben.util.EmailFormatter;
 import com.netflix.astyanax.Keyspace;
 import java.awt.event.WindowAdapter;
@@ -265,7 +265,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
     private void initInbox(){
         // Note* catch exception here means that the logging in process correctly
         populateInbox(Astyanax.processResults(Astyanax.execCQL(
-        this.keyspace, EmailCql.nondeletedUserEmail(_USERNAME_)))); 
+        this.keyspace, EmailCqlFactory.nondeletedUserEmail(_USERNAME_)))); 
     }
     
     /**
@@ -278,7 +278,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
         jButton_Delete.setEnabled(true);
         
         populateInbox(Astyanax.processResults(Astyanax.execCQL(
-                        this.keyspace, EmailCql.nondeletedUserEmail(_USERNAME_))));
+                        this.keyspace, EmailCqlFactory.nondeletedUserEmail(_USERNAME_))));
     }//GEN-LAST:event_jButton_InboxActionPerformed
 
     
@@ -314,7 +314,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
      * @param evt 
      */
     private void jButton_NewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_NewActionPerformed
-        new NewMessageForm(keyspace, _USERNAME_).setVisible(true);
+        new NewMessageFrame(keyspace, _USERNAME_).setVisible(true);
     }//GEN-LAST:event_jButton_NewActionPerformed
 
     
@@ -331,7 +331,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
             String subject = "RE: " + EmailFormatter.applyRegexFilter(
                     getjListSelectedIndexString(), "SUBJECT");
             // show new form to send the message
-            new NewMessageForm(keyspace, _USERNAME_, sender, subject).setVisible(true);
+            new NewMessageFrame(keyspace, _USERNAME_, sender, subject).setVisible(true);
         }
     }//GEN-LAST:event_jButton_ReplyActionPerformed
 
@@ -346,7 +346,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
             String key = EmailFormatter.applyRegexFilter(getjListSelectedIndexString(), "");
             
             // Set email as deleted
-            Astyanax.execCQL(keyspace, EmailCql.deleteEmail(key, location));
+            Astyanax.execCQL(keyspace, EmailCqlFactory.deleteEmail(key, location));
             
             // Remove item from the list
             DefaultListModel updatedModel = (DefaultListModel) jList_InboxMail.getModel();
@@ -369,10 +369,10 @@ public class MailHomeFrame extends javax.swing.JFrame {
         List<String> fullDeletedEmailList = new ArrayList<String>();
         //list for emails deleted by the sender where I am the sender
         fullDeletedEmailList.addAll(Astyanax.processResults(Astyanax.execCQL(
-                        this.keyspace, EmailCql.deletedSenderEmail(_USERNAME_))));
+                        this.keyspace, EmailCqlFactory.deletedSenderEmail(_USERNAME_))));
         //list for emails deleted by the receiver where I am the receiver
         fullDeletedEmailList.addAll(Astyanax.processResults(Astyanax.execCQL(
-                        this.keyspace, EmailCql.deletedUserEmail(_USERNAME_))));
+                        this.keyspace, EmailCqlFactory.deletedUserEmail(_USERNAME_))));
         populateInbox(fullDeletedEmailList);
         jButton_Delete.setEnabled(false);
     }//GEN-LAST:event_jButton_TrashActionPerformed
@@ -387,7 +387,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
         location = "sent";
         jButton_Delete.setEnabled(true);
         populateInbox(Astyanax.processResults(Astyanax.execCQL(
-                        this.keyspace, EmailCql.allSentUserEmail(_USERNAME_))));
+                        this.keyspace, EmailCqlFactory.allSentUserEmail(_USERNAME_))));
         
     }//GEN-LAST:event_jButton_OutboxActionPerformed
 

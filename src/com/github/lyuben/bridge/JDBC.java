@@ -1,6 +1,6 @@
 package com.github.lyuben.bridge;
 
-import com.github.lyuben.cql.SchemaCql;
+import com.github.lyuben.cql.SchemaCqlFactory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,7 +31,7 @@ public class JDBC {
      */
     public static boolean incrementReplicationFactor(String keyspaceName){
         
-        String query = SchemaCql.updateReplicationFactor( 
+        String query = SchemaCqlFactory.updateReplicationFactor( 
                 JDBC.getCurrentReplicationFactor(keyspaceName), keyspaceName);
 
         return jdbcExecCQLUpdate(query, keyspaceName);
@@ -47,7 +47,7 @@ public class JDBC {
      */
     public static int getCurrentReplicationFactor(String keyspaceName){
         try {
-            String query = SchemaCql.getCurrentReplicationFactor(keyspaceName);
+            String query = SchemaCqlFactory.getCurrentReplicationFactor(keyspaceName);
             ResultSet rs = jdbcExecCQLQuery(query, keyspaceName);
             
             Pattern p = Pattern.compile("\\d+", Pattern.CASE_INSENSITIVE);

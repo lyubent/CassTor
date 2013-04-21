@@ -1,7 +1,7 @@
 package com.github.lyuben.bridge;
 
-import com.github.lyuben.cql.EmailCql;
-import com.github.lyuben.cql.SchemaCql;
+import com.github.lyuben.cql.EmailCqlFactory;
+import com.github.lyuben.cql.SchemaCqlFactory;
 import com.github.lyuben.tor.Anonymizer;
 import com.github.lyuben.util.Base64Crypto;
 import com.github.lyuben.util.DateUtil;
@@ -171,7 +171,7 @@ public class Astyanax {
      */
     public static boolean deleteEmail(Keyspace keyspace, String __KEY__){
         
-       if(Astyanax.execCQL(keyspace, EmailCql.hardDeleteEmail(__KEY__)) == null) {
+       if(Astyanax.execCQL(keyspace, EmailCqlFactory.hardDeleteEmail(__KEY__)) == null) {
             return false;
         }
         

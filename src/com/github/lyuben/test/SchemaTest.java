@@ -68,7 +68,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tCreating KS\t");
         
-        if(com.github.lyuben.bridge.Schema.createKeyspace(keyspace)) {
+        if(com.github.lyuben.bridge.SchemaManager.createKeyspace(keyspace)) {
             System.out.println("...\tcreated KS successfully!");
             return true;
         } else {
@@ -89,7 +89,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tCreating CF\t");
         
-        if(com.github.lyuben.bridge.Schema.createIndexedColumnFamilyStrings(keyspace)) {
+        if(com.github.lyuben.bridge.SchemaManager.createIndexedColumnFamilyStrings(keyspace)) {
             System.out.println("...\tcreated CF successfully!");
             return true;
         } else {
@@ -111,7 +111,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tDroping CF\t");
         
-        if(com.github.lyuben.bridge.Schema.dropColumnFamily(keyspace, 
+        if(com.github.lyuben.bridge.SchemaManager.dropColumnFamily(keyspace, 
                 com.github.lyuben.bridge.Astyanax.getColumnFamilyStructure())) {
             System.out.println("...\tdroped CF successfully!");
             return true;
@@ -133,7 +133,7 @@ public class SchemaTest {
         
         System.out.print("\tTest:\tDroping KS\t");
         
-        if(com.github.lyuben.bridge.Schema.dropKeyspace(keyspace)) {
+        if(com.github.lyuben.bridge.SchemaManager.dropKeyspace(keyspace)) {
             System.out.println("...\tdroped KS successfully!");
             return true;
         } else {

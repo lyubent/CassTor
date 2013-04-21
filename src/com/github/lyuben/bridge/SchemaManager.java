@@ -13,11 +13,7 @@ import java.util.logging.Logger;
  * Available at http://lyuben.herokuapp.com/casstor/ 
  * Source at https://github.com/lyubent/CassTor/ 
  */
-public class Schema {
-    
-    public Schema(){
-    }
-    
+public class SchemaManager {
     
     
     /**
@@ -29,10 +25,10 @@ public class Schema {
      */
     public static boolean buildSchema(Keyspace keyspace){
         try {
-            Schema.createKeyspace(keyspace); //OK
-            Schema.createIndexedColumnFamilyStrings(keyspace);
+            SchemaManager.createKeyspace(keyspace); //OK
+            SchemaManager.createIndexedColumnFamilyStrings(keyspace);
         } catch (Exception ex) {
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
                     "Failed to build Schema.", ex);
             return false;
         }
@@ -53,11 +49,11 @@ public class Schema {
     public static boolean destroySchema(Keyspace keyspace){
         try {
             //drop CF
-            Schema.dropColumnFamily(keyspace, Astyanax.getColumnFamilyStructure());
+            SchemaManager.dropColumnFamily(keyspace, Astyanax.getColumnFamilyStructure());
             //drop KS
-            Schema.dropKeyspace(keyspace);
+            SchemaManager.dropKeyspace(keyspace);
         } catch (Exception ex) {
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
                     "Failed to destroy the Schema.", ex);
             return false;
         }
@@ -107,7 +103,7 @@ public class Schema {
              .build()); // build CF
             
         } catch (ConnectionException ex) { 
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
                     "Failed to create Indexed Column Family of strings.", ex);
             return false; //err
         }
@@ -131,7 +127,7 @@ public class Schema {
             return true; // Success
             
         } catch (ConnectionException ex) {
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
                     "Failed to create Keyspace", ex);
         }
         
@@ -151,7 +147,7 @@ public class Schema {
         try {
             keyspace.dropColumnFamily(CF_COMPOSITE);
         } catch (ConnectionException ex) {
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
                     "Failed to drop Column Family", ex);
             return false;
         }
@@ -171,7 +167,7 @@ public class Schema {
         try {
             keyspace.dropKeyspace();
         } catch (Exception ex) {
-            Logger.getLogger(Schema.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
                     "Failed to drop keyspace", ex);
             return false;
         }

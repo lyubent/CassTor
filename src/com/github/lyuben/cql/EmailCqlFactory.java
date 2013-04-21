@@ -8,7 +8,7 @@ import com.github.lyuben.util.Base64Crypto;
  * Available at http://lyuben.herokuapp.com/casstor/ 
  * Source at https://github.com/lyubent/CassTor/ 
  */
-public class EmailCql {
+public abstract class EmailCqlFactory {
    
     private static final String __COLUMNFAMILY__ = "MESSAGE_CF";
     

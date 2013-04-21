@@ -14,7 +14,7 @@ import javax.swing.WindowConstants;
  * Available at http://lyuben.herokuapp.com/casstor/ 
  * Source at https://github.com/lyubent/CassTor/ 
  */
-public class NewMessageForm extends javax.swing.JFrame {
+public class NewMessageFrame extends javax.swing.JFrame {
 
     private Keyspace keyspace;
     private String _USERNAME_ = "";
@@ -24,7 +24,7 @@ public class NewMessageForm extends javax.swing.JFrame {
      * @param keyspace - KS used for interfacing with cassandra.
      * @param username - Username of current user.
      */
-    public NewMessageForm(Keyspace keyspace, String username) {
+    public NewMessageFrame(Keyspace keyspace, String username) {
         this.keyspace = keyspace;
         this._USERNAME_ = username;
         initComponents();
@@ -40,7 +40,7 @@ public class NewMessageForm extends javax.swing.JFrame {
      * @param sender
      * @param subject 
      */
-    public NewMessageForm(Keyspace keyspace, String username, String sender, String subject) {
+    public NewMessageFrame(Keyspace keyspace, String username, String sender, String subject) {
         this.keyspace = keyspace;
         this._USERNAME_ = username;
         initComponents();

@@ -15,9 +15,9 @@ public class CassTor {
             //new com.github.lyuben.test.TestSuite().runTests();System.exit(0);
             
             if(com.github.lyuben.util.FileUtil.isFirstRun()) {
-                com.github.lyuben.gui.FrameHandler.displayFirstRunFrames();
+                com.github.lyuben.modelview.FrameController.displayFirstRunFrames();
             } else {
-                com.github.lyuben.gui.FrameHandler.displayMainFrames();
+                com.github.lyuben.modelview.FrameController.displayMainFrames();
             }
 
         } catch (Exception ex) {

@@ -6,7 +6,7 @@ package com.github.lyuben.cql;
  * Available at http://lyuben.herokuapp.com/casstor/ 
  * Source at https://github.com/lyubent/CassTor/ 
  */
-public class SchemaCql {
+public abstract class SchemaCqlFactory {
     private static final String __COLUMNFAMILY__ = "MESSAGE_CF";
     
     /**
