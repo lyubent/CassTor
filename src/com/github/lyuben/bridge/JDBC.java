@@ -73,8 +73,7 @@ public class JDBC {
      * @param keyspaceName
      * @return ResultSet storing the data.
      */
-    private static ResultSet jdbcExecCQLQuery(String query, String keyspaceName) {
-        
+    public static ResultSet jdbcExecCQLQuery(String query, String keyspaceName) {
         try {
             Class.forName(__JDBCDriverClassPath__);
             Connection con = DriverManager.getConnection(

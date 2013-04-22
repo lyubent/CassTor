@@ -8,6 +8,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -46,6 +48,7 @@ public class MailHomeFrame extends javax.swing.JFrame {
         initInbox();
         setupFrame();
         hideUnused();
+        pollServer();
     }
 
     
@@ -533,6 +536,20 @@ public class MailHomeFrame extends javax.swing.JFrame {
         parentFrame.setLocation(this.getLocation());
         parentFrame.setVisible(true);
         this.dispose();
+    }
+    
+    
+    /**
+     * Polls server - queried every 5 seconds to update the inbox.
+     */
+    private void pollServer() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+              initInbox(); 
+            }
+        }, 5000, 5000);
     }
     
     

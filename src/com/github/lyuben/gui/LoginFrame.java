@@ -2,6 +2,8 @@ package com.github.lyuben.gui;
 
 import com.github.lyuben.bridge.Astyanax;
 import com.github.lyuben.tor.Anonymizer;
+import com.github.lyuben.util.AuthenticationHandler;
+import com.github.lyuben.util.BCrypto;
 import com.github.lyuben.util.FramePositionHandler;
 import com.netflix.astyanax.Keyspace;
 import java.awt.Color;
@@ -182,8 +184,8 @@ public class LoginFrame extends javax.swing.JFrame {
     private boolean login() {
         
         try {
-            if(authenticate(jTextField_UName.getText(), jPasswordField_Pw.getPassword())) {
-                
+            if(authenticate(jTextField_UName.getText(), new String(jPasswordField_Pw.getPassword()))) {
+                System.out.println("AUTHED!!!!");
                 // Create and display the new form each time a user logs in.
                 // Cleaner to create new form than tidying and re-initializing old one.
                 this.setVisible(false);
@@ -207,17 +209,47 @@ public class LoginFrame extends javax.swing.JFrame {
      * @param password
      * @return boolean representing authentication success.
      */
-    private boolean authenticate(String username, char [] password) {
+    private boolean authenticate(String username, String password) {
+        // check if registered 
+        if(AuthenticationHandler.isAvailable(username)) {
+            
+            // register new user
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            JOptionPane.showConfirmDialog(null, "This username is avaiable.\nDo you wish to register\n"
+                    + "with the supplied password?",
+                "Register", dialogButton);
+            
+            if(dialogButton == JOptionPane.YES_NO_OPTION) {
+                //register
+                AuthenticationHandler.register(username, password);
+                //login
+                return true;
+            } else {
+                // user chose not to register
+            }
+        } else {
+            String hashedPw = AuthenticationHandler.getHashedPw(username);
+            
+            if(BCrypto.checkPassword(password.toString(), hashedPw)) {
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect username / password.\n"
+                        + "Contact the Administartor if\n"
+                        + "you've forgotton your password",
+                "Correct Password!", JOptionPane.OK_OPTION);
+            }
+        }
         
         jTextField_UName.setText(String.valueOf(username));
-        return true;
+        
+        return false;
     }
     
     
     
     /**
      * Called when an exception is caught while logging in
-     * Displays a popup dialogue informing the user of the failiure.
+     * Displays a popup dialogue informing the user of the failure.
      */
     private void handleLogginFailiure() {
         this.setVisible(true);

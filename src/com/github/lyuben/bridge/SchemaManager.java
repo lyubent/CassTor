@@ -1,5 +1,6 @@
 package com.github.lyuben.bridge;
 
+import com.github.lyuben.cql.SchemaCqlFactory;
 import com.google.common.collect.ImmutableMap;
 import com.netflix.astyanax.Keyspace;
 import com.netflix.astyanax.connectionpool.exceptions.ConnectionException;
@@ -27,6 +28,8 @@ public class SchemaManager {
         try {
             SchemaManager.createKeyspace(keyspace); //OK
             SchemaManager.createIndexedColumnFamilyStrings(keyspace);
+            SchemaManager.createUserKS();
+            SchemaManager.createUserCF();
         } catch (Exception ex) {
             Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
                     "Failed to build Schema.", ex);
@@ -52,6 +55,10 @@ public class SchemaManager {
             SchemaManager.dropColumnFamily(keyspace, Astyanax.getColumnFamilyStructure());
             //drop KS
             SchemaManager.dropKeyspace(keyspace);
+            //drop user cf
+            SchemaManager.dropUserCF();
+            //drop user ks
+            SchemaManager.dropUserKS();
         } catch (Exception ex) {
             Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
                     "Failed to destroy the Schema.", ex);
@@ -174,4 +181,51 @@ public class SchemaManager {
         
         return true;
     }
+    
+    
+    public static boolean createUserKS() {
+        try {
+            JDBC.jdbcExecCQLQuery(SchemaCqlFactory.createUserKS(), "system");
+        } catch (Exception ex) {
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
+                    "Failed to create user keyspace", ex);
+        }
+        return true;
+    }
+    
+    
+    public static boolean createUserCF() {
+        try {
+            JDBC.jdbcExecCQLQuery(SchemaCqlFactory.createUserCF(), "casstor");
+        } catch (Exception ex) {
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
+                    "Failed to create user keyspace", ex);
+        }
+        return true;
+    }
+    
+    
+    
+    public static boolean dropUserKS() {
+        try {
+            JDBC.jdbcExecCQLQuery("DROP KEYSPACE casstor", "system");
+        } catch (Exception ex) {
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
+                    "Failed to create user keyspace", ex);
+        }
+        return true;
+    }
+    
+    
+    
+    public static boolean dropUserCF() {
+        try {
+            JDBC.jdbcExecCQLQuery("DROP TABLE users", "casstor");
+        } catch (Exception ex) {
+            Logger.getLogger(SchemaManager.class.getName()).log(Level.SEVERE, 
+                    "Failed to create user keyspace", ex);
+        }
+        return true;
+    }
+    
 }
