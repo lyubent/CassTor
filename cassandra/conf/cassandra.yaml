@@ -25,7 +25,7 @@ commitlog_segment_size_in_mb: 32
 seed_provider:
     - class_name: org.apache.cassandra.locator.SimpleSeedProvider
       parameters:
-          - seeds: "134.36.36.188"
+          - seeds: "134.36.36.217"
 
 flush_largest_memtables_at: 0.75
 reduce_cache_sizes_at: 0.85
