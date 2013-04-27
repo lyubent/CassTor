@@ -253,17 +253,15 @@ public class FirstRunSetupFrame extends javax.swing.JFrame {
         return "Extracting and configuring Cassandra has completed successfully.\n\n" +
                "Starting Cassandra:\n\n" +
                "Mac\n" +
-               "1) Open a terminal\n" +
-               "2) Navigate to the cassandra on the desktop\n" +
-               "$ cd ~/Desktop/cassandra\n" +
-               "3) Start the server calling the cassandra executable\n" +
-               "$ sudo ./bin/cassandra\n\n" +
+               "You are ready to go!\n\n" +
                "Windows\n" +
-               "1) Open a command prompt\n" +
-               "2) Navigate to cassandra on the desktop\n" +
-               "> cd desktop/cassandra\n" +
-               "3) Call the cassandra.bat startup script\n" +
-               "> cassandra.bat";
+               "You need to setup an environment variable\n" +
+               "1) Press the windows key.\n" +
+               "2) Type 'env' and select 'Edit the system environment variable'\n" +
+               "3) Select enviroment variables\n" +
+               "4) Select 'New...'\n" +
+               "5) Type CASSANDRA_HOME in the Variable name\n" +
+               "6) Type the path to your dekptop in  the value";
     }
     
     

@@ -4,9 +4,9 @@ import com.github.lyuben.gui.FirstRunSetupFrame;
 import com.github.lyuben.gui.LoginFrame;
 import com.github.lyuben.gui.StartupLoadFrame;
 import com.github.lyuben.tor.Anonymizer;
-import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jdesktop.layout.GroupLayout;
 
 /**
  * @author lyubentodorov

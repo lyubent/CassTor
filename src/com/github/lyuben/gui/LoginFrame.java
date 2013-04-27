@@ -88,6 +88,14 @@ public class LoginFrame extends javax.swing.JFrame {
 
         jPasswordField_Pw.setForeground(new java.awt.Color(204, 204, 204));
         jPasswordField_Pw.setText("password");
+        jPasswordField_Pw.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPasswordField_PwFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jPasswordField_PwFocusLost(evt);
+            }
+        });
         jPasswordField_Pw.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPasswordField_PwKeyPressed(evt);
@@ -164,6 +172,16 @@ public class LoginFrame extends javax.swing.JFrame {
             jTextField_UName.setForeground(Color.LIGHT_GRAY);
         }
     }//GEN-LAST:event_jTextField_UNameFocusLost
+
+    private void jPasswordField_PwFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField_PwFocusGained
+        this.jPasswordField_Pw.setText("");
+    }//GEN-LAST:event_jPasswordField_PwFocusGained
+
+    private void jPasswordField_PwFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField_PwFocusLost
+        if(new String(this.jPasswordField_Pw.getPassword()).equals("")) {
+            this.jPasswordField_Pw.setText("lolzcake");
+        }
+    }//GEN-LAST:event_jPasswordField_PwFocusLost
     
     
     
@@ -210,16 +228,20 @@ public class LoginFrame extends javax.swing.JFrame {
      * @return boolean representing authentication success.
      */
     private boolean authenticate(String username, String password) {
+        if(jTextField_UName.getText().trim().equals("Username")) {
+            JOptionPane.showMessageDialog(null, 
+                "Please supply a username and password!",
+                "Register", JOptionPane.WARNING_MESSAGE);
+        }
         // check if registered 
-        if(AuthenticationHandler.isAvailable(username)) {
+        else if(AuthenticationHandler.isAvailable(username)) {
             
             // register new user
-            int dialogButton = JOptionPane.YES_NO_OPTION;
-            JOptionPane.showConfirmDialog(null, "This username is avaiable.\nDo you wish to register\n"
+            int dialogButton = JOptionPane.showConfirmDialog(null, "This username is avaiable.\nDo you wish to register\n"
                     + "with the supplied password?",
-                "Register", dialogButton);
+                "Register", JOptionPane.YES_NO_OPTION);
             
-            if(dialogButton == JOptionPane.YES_NO_OPTION) {
+            if(dialogButton == JOptionPane.YES_OPTION) {
                 //register
                 AuthenticationHandler.register(username, password);
                 //login
