@@ -152,7 +152,8 @@ public class LoginFrame extends javax.swing.JFrame {
      * @param evt 
      */
     private void jButton_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LoginActionPerformed
-        login();
+        login(); // CQL + TOR does not work.
+        
     }//GEN-LAST:event_jButton_LoginActionPerformed
 
     
@@ -200,21 +201,35 @@ public class LoginFrame extends javax.swing.JFrame {
      * @return boolean representing sucess of updating viewport
      */
     private boolean login() {
-        
+
         try {
-            if(authenticate(jTextField_UName.getText(), new String(jPasswordField_Pw.getPassword()))) {
-                System.out.println("AUTHED!!!!");
-                // Create and display the new form each time a user logs in.
-                // Cleaner to create new form than tidying and re-initializing old one.
-                this.setVisible(false);
+
+            if(this.jTextField_UName.getText().equals("testacc") && new String(this.jPasswordField_Pw.getPassword()).equals("testpw")){
                 MailHomeFrame mail = new MailHomeFrame(jTextField_UName.getText(), this, keyspace);
                 return true;
-            }    
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect username / password combination",
+                "Authinticating error", JOptionPane.ERROR_MESSAGE);
+            }
         } catch (Exception ex) {
-            handleLogginFailiure();
-            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, 
-                    "ERROR: Handling login failiure.", ex);
+            JOptionPane.showMessageDialog(this, "A problem occred while trying to login",
+                "Error logging in.", JOptionPane.ERROR_MESSAGE);
         }
+        
+//        try {
+//            if(authenticate(jTextField_UName.getText(), new String(jPasswordField_Pw.getPassword()))) {
+//                System.out.println("AUTHED!!!!");
+//                // Create and display the new form each time a user logs in.
+//                // Cleaner to create new form than tidying and re-initializing old one.
+//                this.setVisible(false);
+//                MailHomeFrame mail = new MailHomeFrame(jTextField_UName.getText(), this, keyspace);
+//                return true;
+//            }
+//        } catch (Exception ex) {
+//            handleLogginFailiure();
+//            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE,
+//                    "ERROR: Handling login failiure.", ex);
+//        }
         
         return false;
     }
