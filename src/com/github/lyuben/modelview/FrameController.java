@@ -29,7 +29,7 @@ public abstract class FrameController {
 
                 // Run the TOR initialisation procedure
                 Anonymizer anon = new Anonymizer();
-                //anon.runTor();
+                anon.runTor();
 
                 // Once TOR Layer connection is completed, hide the loader frame.
                 loader.dispose();
